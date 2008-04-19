@@ -1,4 +1,5 @@
 class CreatePages < ActiveRecord::Migration
+  
   def self.up
     create_table :pages do |t|
       t.string :name
@@ -33,9 +34,20 @@ MARKDOWN
     end
     
     page.save || raise
+    
+    page = Page.new do |page|
+      page.name   = 'not_found'
+      page.title  = '404 - Page not found'
+      page.body_markdown = <<-MARKDOWN
+Sorry, but this page could not be found.
+MARKDOWN
+    end
+    
+    page.save || raise
   end
-
+  
   def self.down
     drop_table :pages
   end
+  
 end

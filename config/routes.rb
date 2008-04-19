@@ -2,9 +2,16 @@ ActionController::Routing::Routes.draw do |map|
   
   map.root :controller => 'home'
   
-  map.page_by_name '/pages/:name', :controller => 'pages', :action => :show
-  map.resources :pages
+  map.plugins '/plugins', :controller => 'plugins'
+  map.plugin_by_name '/:name/plugin',
+    :controller => 'plugins', :action => 'show'
   
-  map.resources :plugins
+  map.page_by_name '/:name',
+    :controller => 'pages', :action => 'show'
   
+  map.namespace :content_management do |cms|
+    cms.resources :pages
+    cms.resources :plugins
+  end
+
 end

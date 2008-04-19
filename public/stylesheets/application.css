@@ -2,7 +2,9 @@ a {
 	color: Red;
 	text-decoration: none;
 }
+a:hover { text-decoration: underline; }
 a:visited { color: DarkRed; }
+
 body {
 	border-left: 120px solid Black;
 	border-right: 120px solid Black;
@@ -12,7 +14,10 @@ body {
 	padding: 1em 2em;
 }
 
-h1 { margin: 0; text-decoration: underline; }
+h1 {
+	margin: 0;
+	text-decoration: underline;
+}
 
 img { border: none; }
 
@@ -29,6 +34,9 @@ img { border: none; }
 #navigation ul li {
 	float: left;
 	margin-right: 2em;
+}
+#navigation ul li a:visited {
+	color: Red;
 }
 
 #listOfPlugins {

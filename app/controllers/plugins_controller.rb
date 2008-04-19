@@ -5,7 +5,7 @@ class PluginsController < ApplicationController
     
     respond_to do |wants|
       wants.html
-      wants.js    { render :partial => 'index' }
+      wants.js
     end
   end
   

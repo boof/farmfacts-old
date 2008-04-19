@@ -1,0 +1,4 @@
+<% content_tag_for :tr, page do %>
+<td><%= page.title -%></td>
+<td><%= link_to page_by_name_path(page.name), page_by_name_path(page.name) -%></td>
+<% end %>

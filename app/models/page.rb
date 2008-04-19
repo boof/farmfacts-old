@@ -3,7 +3,7 @@ class Page < ActiveRecord::Base
   
   def self.find_by_name(name)
     find :first, :conditions => {:name => name} or
-    raise ActiveRecord::RecordNotFound, "`#{name}' not found for Page"
+    find :first, :conditions => {:name => 'not_found'}
   end
   
   validates_uniqueness_of :name
