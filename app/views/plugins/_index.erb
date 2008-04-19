@@ -1,0 +1,15 @@
+<h2>Plugins</h2>
+
+<% @plugins.each do |plugin| %>
+<h3 class="pluginName"><%= plugin.name -%></h3>
+
+<div class="pluginFeed">
+	<ul>
+		<% plugin.feed.entries.last(2).each do |entry| %>
+		<li>&middot; <%= link_to entry.title, entry.link, :title => entry.time %></li>
+		<% end %>
+	</ul>
+</div>
+<% end %>
+
+<p><%= link_to 'Submit a plugin...', new_plugin_path %></p>

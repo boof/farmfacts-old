@@ -1,0 +1,49 @@
+a {
+	color: Red;
+	text-decoration: none;
+}
+a:visited { color: DarkRed; }
+body {
+	border-left: 120px solid Black;
+	border-right: 120px solid Black;
+	font-size: 80%;
+	font-family: Verdana, sans-serif;
+	margin: 0;
+	padding: 1em 2em;
+}
+
+h1 { margin: 0; text-decoration: underline; }
+
+img { border: none; }
+
+#logo,
+#navigation {
+	float: left;
+	margin-right: 2em;
+}
+
+#navigation ul {
+	list-style-type: none;
+	padding-left: 0;
+}
+#navigation ul li {
+	float: left;
+	margin-right: 2em;
+}
+
+#listOfPlugins {
+	background-color: #FAFAFA;
+	float: right;
+	font-size: 75%;
+	height: 360px;
+	padding: 0 1.5em;
+	width: 240px;
+}
+#listOfPlugins div.pluginFeed ul {
+	list-style-type: none;
+	padding-left: 0;
+}
+#listOfPlugins div.pluginFeed ul li {
+	overflow: hidden;
+	width: 220px;
+}
