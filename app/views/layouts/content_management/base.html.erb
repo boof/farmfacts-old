@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+	<title><%= page_title %></title>
+	<%= javascript_include_tag :defaults %>
+	<%= stylesheet_link_tag 'application' %>
+
+</head>
+<body>
+
+	<%= link_to image_tag('ruby-sequel.png', :alt => 'Ruby Sequel'), root_path, :id => 'logo' %>
+	<h1>Ruby Sequel - The Database Toolkit for Ruby</h1>
+	<div id="navigation">
+		<ul>
+			<li><%= link_to 'Pages', content_management_pages_path %></li>
+			<li><%= link_to 'Plugins', content_management_plugins_path %></li>
+		</ul>
+	</div>
+
+	<div id="content"><%= yield %></div>
+
+	<div id="footer">
+		<p>
+			<a href="http://github.com/boof/www-ruby-sequel-org/tree/master">boof's www-ruby-sequel-org at master &mdash; GitHub</a>
+		</p>
+	</div>
+
+	<%= javascript_tag '$$(".noJS").each(function(e){e.hide();});' %>
+
+</body>
+</html>

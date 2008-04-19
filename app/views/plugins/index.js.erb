@@ -1,7 +1,8 @@
 <h2>Plugins</h2>
 
 <% @plugins.each do |plugin| %>
-<h3 class="pluginName"><%= plugin.name -%></h3>
+<hr />
+<h3 class="pluginName"><%= link_to plugin.name, plugin_by_name_path(plugin) -%>:</h3>
 
 <div class="pluginFeed">
 	<ul>

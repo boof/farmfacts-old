@@ -59,4 +59,10 @@ Rails::Initializer.run do |config|
 end
 
 require 'rubygems'
+
 require 'feed_tools'
+FeedTools::DatabaseFeedCache.module_eval do
+  # Prevent extra query, but HTML5 IS REALLY SLOW!
+  def self.set_up_correctly?() true end
+end
+FeedTools.configurations[:feed_cache] = 'FeedTools::DatabaseFeedCache'

@@ -9,7 +9,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 2) do
+ActiveRecord::Schema.define(:version => 3) do
+
+  create_table "cached_feeds", :force => true do |t|
+    t.string   "url"
+    t.string   "href"
+    t.string   "title"
+    t.string   "link"
+    t.text     "feed_data"
+    t.string   "feed_data_type"
+    t.text     "http_headers"
+    t.datetime "last_retrieved"
+  end
+
+  add_index "cached_feeds", ["href"], :name => "index_cached_feeds_on_href", :unique => true
 
   create_table "pages", :force => true do |t|
     t.string   "name"

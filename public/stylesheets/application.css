@@ -44,14 +44,73 @@ img { border: none; }
 	float: right;
 	font-size: 75%;
 	height: 360px;
+	margin-left: 3em;
+	margin-bottom: 1em;
 	padding: 0 1.5em;
 	width: 240px;
+}
+#listOfPlugins h3.pluginName {
+	font-weight: normal;
+	margin: 0;
 }
 #listOfPlugins div.pluginFeed ul {
 	list-style-type: none;
 	padding-left: 0;
+	margin: 3px;
 }
 #listOfPlugins div.pluginFeed ul li {
 	overflow: hidden;
 	width: 220px;
 }
+
+#content {
+	margin: 3em;
+	height: 100%;
+}
+
+
+#footer {
+	clear: both;
+	text-align: right;
+}
+
+#footer p {
+	font-size: 80%;
+	margin: 0;
+}
+
+table thead tr th.cmAction, table tbody tr td.cmAction {
+	text-align: center;
+	width: 20px;
+}
+
+tbody tr.cmAction {
+	background-color: #FAFAFA;
+	border-top: 1px dotted DarkRed;
+	border-bottom: 1px dotted DarkRed;
+	color: Black;
+}
+
+#cmPages {
+	border-collapse: collapse;
+	width: 100%;
+}
+#cmPages thead tr th { text-align: left; }
+#cmPages thead tr th.cmPageTitle,
+#cmPages tbody tr td.cmPageTitle { width: 60%; }
+#cmPages thead tr th.cmPagePath,
+#cmPages tbody tr td.cmPagePath {}
+#cmPages tbody tr td img { vertical-align: bottom; }
+#cmPages tbody tr td { padding: 2px; }
+
+#cmPlugins {
+	border-collapse: collapse;
+	width: 100%;
+}
+#cmPlugins thead tr th { text-align: left; }
+#cmPlugins thead tr th.cmPluginName
+#cmPlugins tbody tr td.cmPluginName { width: 60%; }
+#cmPlugins thead tr th.cmPluginFeed,
+#cmPlugins tbody tr td.cmPluginFeed {}
+#cmPlugins tbody tr td img { vertical-align: bottom; }
+#cmPlugins tbody tr td { padding: 2px; }

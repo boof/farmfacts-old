@@ -19,11 +19,18 @@
 			<li><%= link_to 'Plugins', plugins_path -%></li>
 			<li><%= link_to 'Documentation', page_by_name_path('documentation') -%></li>
 			<li><%= link_to 'Community', page_by_name_path('community') -%></li>
-			<li><a href="/wiki">Wiki</a></li>
+			<li><a href="http://code.google.com/p/ruby-sequel/w/list">Wiki</a></li>
+			<li><a href="http://code.google.com/p/ruby-sequel/issues/list">Bug Tracker</a></li>
 		</ul>
 	</div>
 
-	<%= yield %>
+	<div id="content"><%= yield %></div>
+
+	<div id="footer">
+		<p>
+			<a href="http://github.com/boof/www-ruby-sequel-org/tree/master">boof's www-ruby-sequel-org at master &mdash; GitHub</a>
+		</p>
+	</div>
 
 	<%= javascript_tag '$$(".noJS").each(function(e){e.hide();});' %>
 

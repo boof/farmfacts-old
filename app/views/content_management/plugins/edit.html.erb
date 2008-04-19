@@ -1,0 +1,11 @@
+<br style="clear: both;" />
+
+<h2>Edit Plugin</h2>
+
+<% form_for [:content_management, @plugin] do |form| %>
+	<%= render :partial => 'form', :object => form %>
+	<p>
+		<%= button_to_function 'Back', 'window.location = "/content_management/plugins"' %>
+		<%= submit_tag 'Update' %>
+	</p>
+<% end %>

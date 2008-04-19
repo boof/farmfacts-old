@@ -1,0 +1,14 @@
+<%= error_messages_for 'plugin', :object => form.object %>
+
+<div>
+	<label for="plugin_name">Name</label><br />
+	<%= form.text_field :name, :size => 60 %>
+</div>
+<div>
+	<label for="plugin_feed_path">Feed</label><br />
+	<%= form.text_field :feed_path %>
+</div>
+<div>
+	<label for="plugin_description_markdown">Description (<%= link_to 'Markdown', 'http://daringfireball.net/projects/markdown/syntax' %>)</label><br />
+	<%= form.text_area :description_markdown, :cols => 78 %>
+</div>

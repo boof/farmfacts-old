@@ -1,0 +1,11 @@
+<br style="clear: both;" />
+
+<h2>New Page</h2>
+
+<% form_for [:content_management, @page] do |form| %>
+	<%= render :partial => 'form', :object => form %>
+	<p>
+		<%= button_to_function 'Back', 'window.location = "/content_management/pages"' %>
+		<%= submit_tag 'Create' %>
+	</p>
+<% end %>
