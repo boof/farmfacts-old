@@ -2,10 +2,12 @@ class CreatePlugins < ActiveRecord::Migration
   def self.up
     create_table :plugins do |t|
       t.string :name
+      t.text :description_markdown
       t.text :description
       
-      t.string :feed
-      t.string :homepage
+      t.string :feed_path
+      
+      t.references :author
       
       t.timestamps
     end

@@ -7,13 +7,13 @@ class Page < ActiveRecord::Base
   end
   
   validates_uniqueness_of :name
-  validates_presence_of :title, :body_textile
+  validates_presence_of :title, :body_markdown
   
-  before_save :textilize_body
+  before_save :markdown_body
   
   protected
-  def textilize_body
-    self[:body] = textilize_without_paragraph self[:body_textile]
+  def markdown_body
+    self[:body] = markdown self[:body_markdown]
   end
   
 end

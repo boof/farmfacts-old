@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(:version => 2) do
   create_table "pages", :force => true do |t|
     t.string   "name"
     t.string   "title"
-    t.text     "body_textile"
+    t.text     "body_markdown"
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -24,8 +24,10 @@ ActiveRecord::Schema.define(:version => 2) do
 
   create_table "plugins", :force => true do |t|
     t.string   "name"
+    t.text     "description_markdown"
     t.text     "description"
-    t.string   "feed"
+    t.string   "feed_path"
+    t.integer  "author_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

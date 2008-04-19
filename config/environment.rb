@@ -38,7 +38,7 @@ Rails::Initializer.run do |config|
   # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
     :session_key => '_www_session',
-    :secret      => '5f365e00082d35ee6caaaaaf9bb73c64fc7085d57223a9dd3b4b8b5254029a6710a5fcae902f1ba251e7113eea369fb808c7abddd4786ccffe156820767fad03'
+    :secret      => '5f365e0082d35eed572234b8b5e902f1a369fb804786ccf0767fad03'
   }
 
   # Use the database for sessions instead of the cookie-based default,
@@ -58,6 +58,5 @@ Rails::Initializer.run do |config|
   # config.active_record.default_timezone = :utc
 end
 
-require 'rexml'
-require 'net/http'
-require 'uri'
+require 'rubygems'
+require 'feed_tools'
