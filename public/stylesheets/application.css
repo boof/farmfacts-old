@@ -1,16 +1,18 @@
 a {
-	color: Red;
+	color: DarkRed;
 	text-decoration: none;
 }
 a:hover { text-decoration: underline; }
-a:visited { color: DarkRed; }
+a:visited { color: Brown; }
 
 body {
-	border-left: 120px solid Black;
 	border-right: 120px solid Black;
+	border-bottom: 20px solid transparent;
+	border-left: 120px solid Black;
 	font-size: 80%;
 	font-family: Verdana, sans-serif;
 	margin: 0;
+	overflow: scroll;
 	padding: 1em 2em;
 }
 
@@ -20,6 +22,8 @@ h1 {
 }
 
 img { border: none; }
+
+textarea { width: 100%; }
 
 #logo,
 #navigation {
@@ -36,31 +40,28 @@ img { border: none; }
 	margin-right: 2em;
 }
 #navigation ul li a:visited {
-	color: Red;
+	color: DarkRed;
 }
 
 #listOfPlugins {
 	background-color: #FAFAFA;
+	border: 1px dotted Brown;
 	float: right;
 	font-size: 75%;
-	height: 360px;
-	margin-left: 3em;
-	margin-bottom: 1em;
-	padding: 0 1.5em;
-	width: 240px;
+	margin: 3em 0 3em 3em;
+	padding: 1.5em;
+	width: 220px;
+}
+#listOfPlugins h2 {
+	text-decoration: underline;
+	margin-top: 0;
 }
 #listOfPlugins h3.pluginName {
 	font-weight: normal;
+	margin: 1em 0 0 0;
+}
+#listOfPlugins p {
 	margin: 0;
-}
-#listOfPlugins div.pluginFeed ul {
-	list-style-type: none;
-	padding-left: 0;
-	margin: 3px;
-}
-#listOfPlugins div.pluginFeed ul li {
-	overflow: hidden;
-	width: 220px;
 }
 
 #content {
@@ -79,15 +80,17 @@ img { border: none; }
 	margin: 0;
 }
 
+td { vertical-align: top; }
 table thead tr th.cmAction, table tbody tr td.cmAction {
 	text-align: center;
 	width: 20px;
 }
+table tbody tr td img { vertical-align: bottom; }
 
 tbody tr.cmAction {
 	background-color: #FAFAFA;
-	border-top: 1px dotted DarkRed;
-	border-bottom: 1px dotted DarkRed;
+	border-top: 1px dotted Brown;
+	border-bottom: 1px dotted Brown;
 	color: Black;
 }
 
@@ -100,7 +103,6 @@ tbody tr.cmAction {
 #cmPages tbody tr td.cmPageTitle { width: 60%; }
 #cmPages thead tr th.cmPagePath,
 #cmPages tbody tr td.cmPagePath {}
-#cmPages tbody tr td img { vertical-align: bottom; }
 #cmPages tbody tr td { padding: 2px; }
 
 #cmPlugins {
@@ -108,9 +110,8 @@ tbody tr.cmAction {
 	width: 100%;
 }
 #cmPlugins thead tr th { text-align: left; }
-#cmPlugins thead tr th.cmPluginName
-#cmPlugins tbody tr td.cmPluginName { width: 60%; }
+#cmPlugins thead tr th.cmPluginName,
+#cmPlugins tbody tr td.cmPluginName { min-width: 160px; }
 #cmPlugins thead tr th.cmPluginFeed,
-#cmPlugins tbody tr td.cmPluginFeed {}
-#cmPlugins tbody tr td img { vertical-align: bottom; }
+#cmPlugins tbody tr td.cmPluginFeed { width: 75%; }
 #cmPlugins tbody tr td { padding: 2px; }
