@@ -1,19 +1,24 @@
 class ContentManagement::PagesController < ContentManagement::Base
   
   def index
-    @pages = Page.find :all, :order => :name
+    @pages = Page.find :all, :order => :name, :include => :publication
     @page_title = 'Content Management - Pages'
   end
   
+  def show
+    @page = Page.find params[:id]
+    @page_title = "Content Management - Preview Page '#{ @page.title }'"
+  end
+  
   def new
-    @page = Page.new
+    @page ||= Page.new
     @page_title = 'Content Management - New Page'
     
     render :action => :new
   end
   
   def edit
-    @page = Page.find params[:id]
+    @page ||= Page.find params[:id]
     @page_title = "Content Management - Edit Page '#{ @page.title }'"
     
     render :action => :edit
@@ -41,6 +46,16 @@ class ContentManagement::PagesController < ContentManagement::Base
         send :edit
       end
     end
+  end
+  
+  def publish
+    user.publish 'Page', params[:id]
+    redirect_to :action => :index
+  end
+  
+  def revoke
+    user.revoke 'Page', params[:id]
+    redirect_to :action => :index
   end
   
   def destroy

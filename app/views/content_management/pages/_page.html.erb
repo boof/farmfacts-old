@@ -1,8 +1,7 @@
 <% content_tag_for :tr, page do %>
-<td class="cmPageTitle"><%= page.title -%></td>
-<td class="cmAction"><%= link_to image_tag('icons/action_go.gif'), page_by_name_path(page.name) -%></td>
-<td class="cmPagePath"><%= page_by_name_path page.name -%></td>
-
-<td class="cmAction"><%= link_to image_tag('icons/page_edit.gif'), edit_content_management_page_path(page) -%></td>
+<td class="cmPageTitle"><%= link_to h(page.title), edit_content_management_page_path(page) -%></td>
+<td class="cmPageLastModified"><%= page.updated_at %></td>
+<td class="cmPagePath"><%= link_to page_by_name_path(page.name), content_management_page_path(page) -%></td>
+<td class="cmAction"><%= link_to_publish_or_revoke page %></td>
 <td class="cmAction"><%= link_to image_tag('icons/page_delete.gif'), content_management_page_path(page), :method => :delete, :confirm => "Delete '#{ page.name }'?" -%></td>
 <% end %>

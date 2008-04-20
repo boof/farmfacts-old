@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 3) do
+ActiveRecord::Schema.define(:version => 5) do
 
   create_table "cached_feeds", :force => true do |t|
     t.string   "url"
@@ -24,10 +24,19 @@ ActiveRecord::Schema.define(:version => 3) do
 
   add_index "cached_feeds", ["href"], :name => "index_cached_feeds_on_href", :unique => true
 
+  create_table "logins", :force => true do |t|
+    t.string  "username",                    :null => false
+    t.string  "password_salt", :limit => 10, :null => false
+    t.string  "password_hash", :limit => 32, :null => false
+    t.integer "user_id",                     :null => false
+  end
+
+  add_index "logins", ["username"], :name => "index_logins_on_username", :unique => true
+
   create_table "pages", :force => true do |t|
-    t.string   "name"
-    t.string   "title"
-    t.text     "body_markdown"
+    t.string   "name",          :null => false
+    t.string   "title",         :null => false
+    t.text     "body_markdown", :null => false
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -36,13 +45,27 @@ ActiveRecord::Schema.define(:version => 3) do
   add_index "pages", ["name"], :name => "index_pages_on_name", :unique => true
 
   create_table "plugins", :force => true do |t|
-    t.string   "name"
-    t.text     "description_markdown"
-    t.text     "description"
-    t.string   "feed_path"
-    t.integer  "author_id"
+    t.string "name",                 :null => false
+    t.string "contributor_name"
+    t.string "contributor_email"
+    t.text   "description_markdown", :null => false
+    t.text   "description"
+    t.string "feed_path"
+    t.string "documentation_path"
+  end
+
+  create_table "publications", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "publishable_id"
+    t.string   "publishable_type"
+    t.boolean  "revoked"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "users", :force => true do |t|
+    t.string "name",  :null => false
+    t.string "email", :null => false
   end
 
 end
