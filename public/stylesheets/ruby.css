@@ -1,0 +1,46 @@
+pre code {
+	background-color: Black;
+	color: White;
+	display: block;
+	font-size: 120%;
+	overflow: auto;
+	padding: 1em 1em 1em 3em;
+}
+
+
+.ruby .keyword {
+	background-color: Black;
+	color: #cda869;
+}
+.ruby .punct {
+	background-color: Black;
+	color: Silver;
+	font-weight: bold;
+}
+.ruby .class {
+	background-color: Black;
+	color: #cf694b;
+	font-weight: bold;
+}
+.ruby .constant {
+	background-color: Black;
+	color: #cf694b;
+}
+.ruby .ident {}
+.ruby .comment {
+	background-color: Black;
+	color: Silver;
+	font-style: italic;
+}
+.ruby .symbol {
+	background-color: Black;
+	color: #f9ed97;
+}
+.ruby .string {
+	background-color: Black;
+	color: #8e9c69;
+}
+.ruby .number {
+	background-color: Black;
+	color: #cf694b;
+}
