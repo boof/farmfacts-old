@@ -8,18 +8,16 @@
 			<th class="cmPluginName">Name</th>
 			<th class="cmPluginFeed">Feed</th>
 			<th class="cmAction"></th>
-			<th class="cmAction"></th>
 		</tr>
 	</thead>
-	
 	<tbody>
 		<tr class="cmAction">
-			<td colspan="3"></td>
+			<td colspan="2"></td>
 			<td class="cmAction"><%= link_to image_tag('icons/page_new.gif'), new_content_management_plugin_path %></td>
 		</tr>
 		<%= render :partial => 'plugin', :collection => @plugins %>
 		<tr class="cmAction">
-			<td colspan="3"></td>
+			<td colspan="2"></td>
 			<td class="cmAction"><%= link_to image_tag('icons/page_new.gif'), new_content_management_plugin_path %></td>
 		</tr>
 	</tbody>

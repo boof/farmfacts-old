@@ -2,7 +2,7 @@
 	<% @feed.entries.each do |entry| %>
 	<li>
 		<%= entry.title -%> (<%= entry.time -%>)
-		<%= entry.summary %>
+		<%= entry.summary.gsub("\n", '<br />') %>
 	</li>
 	<% end %>
 </ul>

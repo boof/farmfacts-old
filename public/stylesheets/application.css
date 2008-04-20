@@ -9,7 +9,7 @@ body {
 	border-right: 120px solid Black;
 	border-bottom: 20px solid transparent;
 	border-left: 120px solid Black;
-	font-size: 80%;
+	font-size: 70%;
 	font-family: Verdana, sans-serif;
 	margin: 0;
 	overflow: scroll;
@@ -80,6 +80,8 @@ textarea { width: 100%; }
 	margin: 0;
 }
 
+p.lastModified { font-size: 80%; }
+
 td { vertical-align: top; }
 table thead tr th.cmAction, table tbody tr td.cmAction {
 	text-align: center;
@@ -100,7 +102,9 @@ tbody tr.cmAction {
 }
 #cmPages thead tr th { text-align: left; }
 #cmPages thead tr th.cmPageTitle,
-#cmPages tbody tr td.cmPageTitle { width: 60%; }
+#cmPages tbody tr td.cmPageTitle { width: 45%; }
+#cmPages thead tr th.cmPageLastModified,
+#cmPages tbody tr td.cmPageLastModified { width: 185px; }
 #cmPages thead tr th.cmPagePath,
 #cmPages tbody tr td.cmPagePath {}
 #cmPages tbody tr td { padding: 2px; }
@@ -115,3 +119,5 @@ tbody tr.cmAction {
 #cmPlugins thead tr th.cmPluginFeed,
 #cmPlugins tbody tr td.cmPluginFeed { width: 75%; }
 #cmPlugins tbody tr td { padding: 2px; }
+#cmPlugins tbody tr td.cmPluginFeed ul { list-style-type: none; }
+#cmPlugins tbody tr td.cmPluginFeed ul li pre { white-space: normal; }
