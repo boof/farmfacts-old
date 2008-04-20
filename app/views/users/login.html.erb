@@ -1,0 +1,16 @@
+<br style="clear: both;" />
+
+<h2>Login</h2>
+
+<% form_for @login, :url => authentication_path do |form| %>
+	<div>
+		<label for="login_username">Username</label><br />
+		<%= form.text_field :username %>
+	</div>
+	<div>
+		<label for="login_password">Password</label><br />
+		<%= form.password_field :password %>
+	</div>
+	
+	<p><%= submit_tag 'Authenticate' %></p>
+<% end %>
