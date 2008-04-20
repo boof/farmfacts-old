@@ -1,14 +1,6 @@
 <h2>Plugins</h2>
 
-<% @plugins.each do |plugin| %>
-<hr />
-<h3 class="pluginName"><%= link_to plugin.name, plugin_by_name_path(plugin) -%>:</h3>
-
-<div class="pluginFeed">
-	<ul>
-		<% plugin.feed.entries.last(2).each do |entry| %>
-		<li>&middot; <%= link_to entry.title, entry.link, :title => entry.time -%></li>
-		<% end %>
-	</ul>
-</div>
+<% @plugins.each do |plugin| last_entry = plugin.feed.entries.last %>
+<h3 class="pluginName"><%= link_to plugin.name, plugin_path(plugin) -%></h3>
+<p>Last Update: <%= link_to last_entry.time, last_entry.link %></p>
 <% end %>
