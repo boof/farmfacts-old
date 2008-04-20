@@ -1,5 +1,18 @@
 class CreatePages < ActiveRecord::Migration
   
+  CWD = File.dirname __FILE__
+  
+  def self.create_page(name, title)
+    page = Page.new do |page|
+      page.name = name
+      page.title = title
+      
+      page.body_markdown = File.read File.join(CWD, "#{name}.markdown")
+    end
+    
+    page.save || raise("Page #{ name } could not be created!")
+  end
+  
   def self.up
     create_table :pages do |t|
       t.string :name, :null => false
@@ -11,39 +24,12 @@ class CreatePages < ActiveRecord::Migration
     end
     add_index :pages, :name, :unique => true
     
-    page = Page.new do |page|
-      page.name   = 'home'
-      page.title  = 'Ruby Sequel - The Database Toolkit for Ruby'
-      page.body_markdown = <<-MARKDOWN
-## Overview
-
-Sequel is a lightweight database access toolkit for Ruby. Sequel provides thread safety, connection pooling and a concise DSL for constructing database queries and table schemas. Sequel also includes a lightweight but comprehensive ORM layer for mapping records to Ruby objects using the ActiveRecord pattern.
-
-Sequel makes it easy to deal with multiple records without having to break your teeth on SQL.
-
-Sequel currently has adapters for ADO, DB2, DBI, Informix, JDBC, MySQL, ODBC, OpenBase, Oracle, PostgreSQL and SQLite3.
-
-## Installing Sequel
-
-Installing Sequel is easy:
-
-    gem install sequel
-
-Be aware, though, that Sequel depends on database adapters for its work. For example, in order to work with sqlite3 database, you need to install the sqlite3 gem.
-MARKDOWN
-    end
-    
-    page.save || raise
-    
-    page = Page.new do |page|
-      page.name   = 'not_found'
-      page.title  = '404 - Page not found'
-      page.body_markdown = <<-MARKDOWN
-Sorry, but this page could not be found.
-MARKDOWN
-    end
-    
-    page.save || raise
+    create_page 'home', 'Ruby Sequel - The Database Toolkit for Ruby'
+    create_page 'not_found', '404 - Page not found!'
+    create_page 'documentation', 'Ruby Sequel Documentation'
+    create_page 'getting_started', 'Getting Started with Ruby Sequel'
+    create_page 'models', 'Ruby Sequel Documentation on Models'
+    create_page 'community', 'Ruby Sequel Community'
   end
   
   def self.down
