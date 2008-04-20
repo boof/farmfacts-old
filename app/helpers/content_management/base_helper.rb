@@ -1,0 +1,2 @@
+module ContentManagement::BaseHelper
+end

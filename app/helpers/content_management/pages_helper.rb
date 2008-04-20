@@ -1,0 +1,2 @@
+module ContentManagement::PagesHelper
+end
