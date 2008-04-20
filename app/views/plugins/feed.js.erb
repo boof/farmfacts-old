@@ -1,0 +1,8 @@
+<ul>
+	<% @feed.entries.each do |entry| %>
+	<li>
+		<%= entry.title -%> (<%= entry.time -%>)
+		<%= entry.summary %>
+	</li>
+	<% end %>
+</ul>

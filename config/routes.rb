@@ -3,8 +3,10 @@ ActionController::Routing::Routes.draw do |map|
   map.root :controller => 'home'
   
   map.plugins '/plugins', :controller => 'plugins'
-  map.plugin_by_name '/plugins/:id',
+  map.plugin '/plugin/:id',
     :controller => 'plugins', :action => 'show'
+  map.plugin_feed '/plugin/:id/feed',
+    :controller => 'plugins', :action => 'feed'
   
   map.page_by_name '/:name',
     :controller => 'pages', :action => 'show'

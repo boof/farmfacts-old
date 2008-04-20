@@ -9,4 +9,13 @@ class PluginsController < ApplicationController
     end
   end
   
+  def feed
+    @feed = Plugin.feed_for params[:id]
+    
+    respond_to do |wants|
+      wants.html
+      wants.js
+    end
+  end
+  
 end
