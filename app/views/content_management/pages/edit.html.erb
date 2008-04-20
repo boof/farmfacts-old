@@ -2,7 +2,7 @@
 
 <h2>Edit Page</h2>
 
-<% form_for [:content_management, @page] do |form| %>
+<% remote_form_for [:content_management, @page] do |form| %>
 	<%= render :partial => 'form', :object => form %>
 	<p>
 		<%= button_to_function 'Back', 'window.location = "/content_management/pages"' %>
