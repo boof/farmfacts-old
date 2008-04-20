@@ -6,14 +6,14 @@ class ContentManagement::PluginsController < ContentManagement::Base
   end
   
   def new
-    @plugin = Plugin.new
+    @plugin ||= Plugin.new
     @page_title = 'Content Management - New Plugin'
     
     render :action => :new
   end
   
   def edit
-    @plugin = Plugin.find params[:id]
+    @plugin ||= Plugin.find params[:id]
     @page_title = "Content Management - Edit Plugin '#{ @plugin.name }'"
     
     render :action => :edit
