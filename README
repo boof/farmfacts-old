@@ -1,13 +1,14 @@
-Ruby Sequel - The Database Toolkit for Ruby
+Website for: Ruby Sequel - The Database Toolkit for Ruby
 
 Required Gems:
-- BlueCloth
+- Maruku
 - feedtools
 
 TODO:
-- a Wiki
-- a News System
-- a Logo
-- a Layout
-- pages
-- ...
+- build a wiki
+- build a news system
+- create a logo
+- fix layout to fit logo
+- add possibility to create comments for Pages and News
+- migrate existing pages from Google Code
+- refactor docs
