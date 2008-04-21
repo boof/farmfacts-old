@@ -14,6 +14,10 @@ class User < ActiveRecord::Base
   validates_associated :login
   validates_presence_of :name, :email
   
+  def to_s
+    self[:name]
+  end
+  
   protected
   def publication_for(type, id)
     attributes = {:publishable_type => type, :publishable_id => id}

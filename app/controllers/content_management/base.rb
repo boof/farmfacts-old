@@ -7,7 +7,11 @@ class ContentManagement::Base < ApplicationController
     session[:user]
   end
   def authorize
-    redirect_to login_path unless logged_in?
+    if user
+      logger.info "Authorized #{ user }"
+    else
+      redirect_to login_path
+    end
   end
   def user
     User.find session[:user] if logged_in?
