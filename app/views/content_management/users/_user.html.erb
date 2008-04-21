@@ -1,0 +1,5 @@
+<% content_tag_for :tr, user do %>
+<td class="cmUserName"><%= link_to h(user.name), edit_content_management_user_path(user) -%></td>
+<td class="cmUserEMail"><%= mail_to user.email -%></td>
+<td class="cmAction"><%= link_to image_tag('icons/page_delete.gif'), content_management_user_path(user), :method => :delete, :confirm => "Delete '#{ user.name }'?" -%></td>
+<% end %>

@@ -31,7 +31,7 @@ class Login < ActiveRecord::Base
     end
   end
   
-  validates_presence_of :username, :user_id
+  validates_presence_of :username
   
   attr_accessor :password
   validates_presence_of :password, :on => :create

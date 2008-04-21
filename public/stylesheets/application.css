@@ -121,3 +121,14 @@ tbody tr.cmAction {
 #cmPlugins tbody tr td { padding: 2px; }
 #cmPlugins tbody tr td.cmPluginFeed ul { list-style-type: none; }
 #cmPlugins tbody tr td.cmPluginFeed ul li pre { white-space: normal; }
+
+#cmUsers {
+	border-collapse: collapse;
+	width: 100%;
+}
+#cmUsers thead tr th { text-align: left; }
+#cmUsers thead tr th.cmUserame,
+#cmUsers tbody tr td.cmUserame { min-width: 160px; }
+#cmUsers thead tr th.cmUsereed,
+#cmUsers tbody tr td.cmUsereed { width: 75%; }
+#cmUsers tbody tr td { padding: 2px; }

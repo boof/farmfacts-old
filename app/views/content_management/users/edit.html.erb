@@ -1,0 +1,11 @@
+<br style="clear: both;" />
+
+<h2>Edit User</h2>
+
+<% form_for [:content_management, @user] do |form| %>
+	<%= render :partial => 'form', :object => form %>
+	<p>
+		<%= button_to_function 'Back', 'window.location = "/content_management/users"' %>
+		<%= submit_tag 'Update' %>
+	</p>
+<% end %>
