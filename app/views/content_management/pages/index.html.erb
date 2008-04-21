@@ -15,12 +15,12 @@
 	<tbody>
 		<tr class="cmAction">
 			<td colspan="4"></td>
-			<td class="cmAction"><%= link_to image_tag('icons/page_new.gif'), new_content_management_page_path %></td>
+			<td class="cmAction"><%= link_to image_tag('icons/page_new.gif'), new_content_management_page_path, :title => 'Click here to create a page.' %></td>
 		</tr>
 		<%= render :partial => 'page', :collection => @pages %>
 		<tr class="cmAction">
 			<td colspan="4"></td>
-			<td class="cmAction"><%= link_to image_tag('icons/page_new.gif'), new_content_management_page_path %></td>
+			<td class="cmAction"><%= link_to image_tag('icons/page_new.gif'), new_content_management_page_path, :title => 'Click here to create a page.' %></td>
 		</tr>
 	</tbody>
 </table>

@@ -109,6 +109,19 @@ tbody tr.cmAction {
 #cmPages tbody tr td.cmPagePath {}
 #cmPages tbody tr td { padding: 2px; }
 
+#cmArticles {
+	border-collapse: collapse;
+	width: 100%;
+}
+#cmArticles thead tr th { text-align: left; }
+#cmArticles thead tr th.cmArticleTitle,
+#cmArticles tbody tr td.cmArticleTitle { width: 45%; }
+#cmArticles thead tr th.cmArticleLastModified,
+#cmArticles tbody tr td.cmArticleLastModified { width: 185px; }
+#cmArticles thead tr th.cmArticlePath,
+#cmArticles tbody tr td.cmArticlePath {}
+#cmArticles tbody tr td { padding: 2px; }
+
 #cmPlugins {
 	border-collapse: collapse;
 	width: 100%;
@@ -127,8 +140,8 @@ tbody tr.cmAction {
 	width: 100%;
 }
 #cmUsers thead tr th { text-align: left; }
-#cmUsers thead tr th.cmUserame,
-#cmUsers tbody tr td.cmUserame { min-width: 160px; }
-#cmUsers thead tr th.cmUsereed,
-#cmUsers tbody tr td.cmUsereed { width: 75%; }
+#cmUsers thead tr th.cmUserName,
+#cmUsers tbody tr td.cmUserName { min-width: 160px; }
+#cmUsers thead tr th.cmUserEMail,
+#cmUsers tbody tr td.cmUserEMail { width: 75%; }
 #cmUsers tbody tr td { padding: 2px; }
