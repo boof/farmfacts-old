@@ -10,4 +10,8 @@ class Publication < ActiveRecord::Base
     update_attributes :revoked => false, :user_id => editor.id
   end
   
+  def to_s
+    "for #{ self[:publishable_type] } #{ self[:publishable_id] }"
+  end
+  
 end

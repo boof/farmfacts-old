@@ -5,10 +5,10 @@ class User < ActiveRecord::Base
   has_one :login, :dependent => :destroy
   
   def publish(type, id)
-    publication_for(type, id).provoke self
+    will :provoke, publication_for(type, id), self
   end
   def revoke(type, id)
-    publication_for(type, id).revoke self
+    will :revoke, publication_for(type, id), self
   end
   
   validates_associated :login
@@ -16,6 +16,16 @@ class User < ActiveRecord::Base
   
   def to_s
     self[:name]
+  end
+  
+  def will(action, object, *args)
+    logger.info "#{ name } #{ action }s #{ object.class.name } '#{ object }'"
+    
+    if block_given?
+      yield object.send(action, *args)
+    else
+      object.send(action, *args)
+    end
   end
   
   protected

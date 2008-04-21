@@ -27,10 +27,12 @@ class ContentManagement::PagesController < ContentManagement::Base
   def create
     @page = Page.new params[:page]
     
-    if @page.save
-      redirect_to :action => :edit, :id => @page.id
-    else
-      send :new
+    user.will :save, @page do |saved|
+      if saved
+        redirect_to :action => :edit, :id => @page.id
+      else
+        send :new
+      end
     end
   end
   
@@ -39,11 +41,13 @@ class ContentManagement::PagesController < ContentManagement::Base
     @page.attributes = params[:page]
     
     respond_to do |wants|
-      if @page.save
-        wants.html  { redirect_to :action => :edit, :id => @page.id }
-        wants.js    { render :nothing => true }
-      else
-        send :edit
+      user.will :save, @page do |saved|
+        if saved
+          wants.html  { redirect_to :action => :edit, :id => @page.id }
+          wants.js    { render :nothing => true }
+        else
+          send :edit
+        end
       end
     end
   end
@@ -59,7 +63,7 @@ class ContentManagement::PagesController < ContentManagement::Base
   end
   
   def destroy
-    Page.destroy params[:id]
+    user.will :destroy, Page.find( params[:id] )
     redirect_to :action => :index
   end
   

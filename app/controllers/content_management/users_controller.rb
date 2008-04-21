@@ -18,10 +18,12 @@ class ContentManagement::UsersController < ContentManagement::Base
   def create
     @user = User.new params[:user]
     
-    if @user.save
-      redirect_to :action => :index
-    else
-      send :new
+    user.will :save, @user do |saved|
+      if saved
+        redirect_to :action => :index
+      else
+        send :new
+      end
     end
   end
   
@@ -29,15 +31,17 @@ class ContentManagement::UsersController < ContentManagement::Base
     @user = User.find params[:id]
     @user.attributes = params[:user]
     
-    if @user.save
-      redirect_to :action => :index
-    else
-      send :edit
+    user.will :save, @user do |saved|
+      if saved
+        redirect_to :action => :index
+      else
+        send :edit
+      end
     end
   end
   
   def destroy
-    User.destroy params[:id]
+    user.will :destroy, User.find( params[:id] )
     redirect_to :action => :index
   end
   

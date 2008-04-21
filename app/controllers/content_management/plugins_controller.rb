@@ -22,10 +22,12 @@ class ContentManagement::PluginsController < ContentManagement::Base
   def create
     @plugin = Plugin.new params[:plugin]
     
-    if @plugin.save
-      redirect_to :action => :index
-    else
-      send :new
+    user.will :save, @plugin do |saved|
+      if saved
+        redirect_to :action => :index
+      else
+        send :new
+      end
     end
   end
   
@@ -33,15 +35,17 @@ class ContentManagement::PluginsController < ContentManagement::Base
     @plugin = Plugin.find params[:id]
     @plugin.attributes = params[:plugin]
     
-    if @plugin.save
-      redirect_to :action => :index
-    else
-      send :edit
+    user.will :save, @plugin do |saved|
+      if saved
+        redirect_to :action => :index
+      else
+        send :edit
+      end
     end
   end
   
   def destroy
-    Plugin.destroy params[:id]
+    user.will :destroy, Plugin.find( params[:id] )
     redirect_to :action => :index
   end
   

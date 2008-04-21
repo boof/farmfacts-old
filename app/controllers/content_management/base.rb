@@ -1,20 +1,20 @@
 class ContentManagement::Base < ApplicationController
   
   before_filter :authorize
+  helper_method :user
   
   protected
   def logged_in?
-    session[:user]
+    User.exists? session[:user]
   end
   def authorize
-    if user
-      logger.info "Authorized #{ user }"
-    else
+    unless logged_in?
+      session[:return_uri] = request.request_uri
       redirect_to login_path
     end
   end
   def user
-    User.find session[:user] if logged_in?
+    User.find session[:user]
   end
   
 end

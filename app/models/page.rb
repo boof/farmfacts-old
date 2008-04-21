@@ -20,6 +20,10 @@ class Page < ActiveRecord::Base
   validates_uniqueness_of :name
   validates_presence_of :title, :body_markdown
   
+  def to_s
+    self[:title]
+  end
+  
   def markdown_body
     self[:body] = markdown self[:body_markdown]
   end
