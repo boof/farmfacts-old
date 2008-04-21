@@ -4,7 +4,7 @@ class UsersController < ApplicationController
     @login = Login.new
   end
   
-  def authenticate
+  def auth
     reset_session
     
     @login = Login.new params[:login]

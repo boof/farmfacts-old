@@ -1,17 +1,20 @@
 class Page < ActiveRecord::Base
   include ActionView::Helpers::TextHelper
   
-  has_one :publication, :as => :publishable
-#  has_many :comments, :as => :commented
+  has_one :publication, :as => :publishable, :dependent => :destroy
+#  has_many :comments, :as => :commented, :dependent => :destroy
   
   def self.find_public_by_name(name)
     find :first, :include => :publication,
       :conditions => {'publications.revoked' => false, :name => name}
   end
   
-  def self.find_by_name(name)
-    find_public_by_name(name) or
+  def self.not_found
     find :first, :conditions => {:name => 'not_found'}
+  end
+  
+  def self.find_by_name(name)
+    find_public_by_name(name) or not_found
   end
   
   validates_uniqueness_of :name
