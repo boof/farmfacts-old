@@ -12,11 +12,11 @@ class UsersController < ApplicationController
     
     if @login.exists?
       session[:user] = @login.user_id
-      redirect_to return_uri || content_management_pages_path
+      redirect_to return_uri || content_management_news_index_path
     else
+      session[:return_uri] = return_uri
       render :action => :login
     end
-    session[:return_uri] = return_uri
   end
   
   def logout

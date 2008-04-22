@@ -19,8 +19,9 @@ ActionController::Routing::Routes.draw do |map|
     
     news.find_news_by_date '/news/:date', :action => 'find_by_date',
       :date => /(?:today|(?:\d{2}|\d{4})(?:-\d{1,2}(?:-\d{1,2})?)?)/
-    news.find_news_by_id_title '/news/:id_title', :action => 'show',
-      :id_title => /\d+-.+/
+    
+    news.find_news_by_ident '/news/:ident', :action => 'show',
+      :ident => /\d+-.+/
   end
   
   map.page_by_name '/:name',
