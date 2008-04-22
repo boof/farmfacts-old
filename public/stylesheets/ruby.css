@@ -3,8 +3,9 @@ pre code {
 	color: White;
 	display: block;
 	font-size: 120%;
+	margin-left: 1em;
 	overflow: auto;
-	padding: 1em 1em 1em 3em;
+	padding: 1em 1.5em 1em 1.5em;
 }
 
 

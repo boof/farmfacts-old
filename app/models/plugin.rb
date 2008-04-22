@@ -3,7 +3,8 @@ class Plugin < ActiveRecord::Base
   
   FEED_PATH_SQL = 'SELECT feed_path FROM plugins WHERE id = %i'
   def self.feed_for(id)
-    FeedTools::Feed.open connection.select_value(FEED_PATH_SQL % id)
+    feed_path = connection.select_value FEED_PATH_SQL % id
+    FeedTools::Feed.open feed_path if feed_path
   end
   
   def feed

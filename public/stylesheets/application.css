@@ -89,12 +89,15 @@ table thead tr th.cmAction, table tbody tr td.cmAction {
 }
 table tbody tr td img { vertical-align: bottom; }
 
-tbody tr.cmAction {
+table tbody tr.cmAction {
 	background-color: #FAFAFA;
 	border-top: 1px dotted Brown;
 	border-bottom: 1px dotted Brown;
 	color: Black;
 }
+
+table thead tr th.cmTimestamp,
+table tbody tr td.cmTimestamp { width: 185px; }
 
 #cmPages {
 	border-collapse: collapse;
@@ -103,8 +106,6 @@ tbody tr.cmAction {
 #cmPages thead tr th { text-align: left; }
 #cmPages thead tr th.cmPageTitle,
 #cmPages tbody tr td.cmPageTitle { width: 45%; }
-#cmPages thead tr th.cmPageLastModified,
-#cmPages tbody tr td.cmPageLastModified { width: 185px; }
 #cmPages thead tr th.cmPagePath,
 #cmPages tbody tr td.cmPagePath {}
 #cmPages tbody tr td { padding: 2px; }
@@ -114,12 +115,6 @@ tbody tr.cmAction {
 	width: 100%;
 }
 #cmArticles thead tr th { text-align: left; }
-#cmArticles thead tr th.cmArticleTitle,
-#cmArticles tbody tr td.cmArticleTitle { width: 45%; }
-#cmArticles thead tr th.cmArticleLastModified,
-#cmArticles tbody tr td.cmArticleLastModified { width: 185px; }
-#cmArticles thead tr th.cmArticlePath,
-#cmArticles tbody tr td.cmArticlePath {}
 #cmArticles tbody tr td { padding: 2px; }
 
 #cmPlugins {
