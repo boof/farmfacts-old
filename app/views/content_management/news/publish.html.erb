@@ -1,0 +1,16 @@
+<br style="clear: both;" />
+
+<h2>Announce</h2>
+
+<% form_tag announce_content_management_news_path(params[:id]) do %>
+	<div>
+		<label for="prefix">Title Prefix</label><br />
+		<%= text_field_tag 'prefix', '[ANN] ' %>
+	</div>
+	<div>
+		<label for="recipients">Recipients</label> (comma seperated)<br />
+		<%= text_area_tag 'recipients' %>
+	</div>
+	
+	<p><%= submit_tag 'Send' %></p>
+<% end %>

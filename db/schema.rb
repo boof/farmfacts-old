@@ -9,7 +9,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 5) do
+ActiveRecord::Schema.define(:version => 6) do
+
+  create_table "articles", :force => true do |t|
+    t.string   "title",            :null => false
+    t.text     "content_markdown", :null => false
+    t.text     "head"
+    t.text     "body"
+    t.integer  "author_id",        :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "cached_feeds", :force => true do |t|
     t.string   "url"
@@ -55,13 +65,15 @@ ActiveRecord::Schema.define(:version => 5) do
   end
 
   create_table "publications", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "publishable_id"
+    t.integer  "user_id",                            :null => false
+    t.integer  "publishable_id",                     :null => false
     t.string   "publishable_type"
-    t.boolean  "revoked"
+    t.boolean  "revoked",          :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "publications", ["publishable_type", "publishable_id"], :name => "index_publications_on_publishable_type_and_publishable_id", :unique => true
 
   create_table "users", :force => true do |t|
     t.string "name",  :null => false

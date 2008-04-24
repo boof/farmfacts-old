@@ -1,0 +1,9 @@
+<% div_for article, :class => 'newsArticle' do %>
+	<hr />
+	<h3><%= link_to article.title, find_news_by_ident_path(article.ident) -%></h3>
+	<p class="timestamp"><%= article.created_at -%> by <%= mail_to article.author.email, article.author, :encode => :hex %></p>
+	<div>
+		<%= article.head %>
+		<%= link_to 'Continue reading...', find_news_by_ident_path(article.ident) -%>
+	</div>
+<% end %>

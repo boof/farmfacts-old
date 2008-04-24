@@ -17,6 +17,8 @@ ActionController::Routing::Routes.draw do |map|
   map.with_options :controller => 'news' do |news|
     news.news '/news'
     
+    news.commits '/news/commits', :action => 'commits'
+    
     news.find_news_by_date '/news/:date', :action => 'find_by_date',
       :date => /(?:today|(?:\d{2}|\d{4})(?:-\d{1,2}(?:-\d{1,2})?)?)/
     
@@ -24,16 +26,16 @@ ActionController::Routing::Routes.draw do |map|
       :ident => /\d+-.+/
   end
   
-  map.page_by_name '/:name',
-    :controller => 'pages', :action => 'show'
-  
   map.namespace :content_management do |cms|
     cms.resources :pages,
       :member => {:publish => :post, :revoke => :post}
     cms.resources :news,
-      :member => {:publish => :post, :revoke => :post}
+      :member => {:publish => :post, :announce => :post, :revoke => :post}
     cms.resources :plugins
     cms.resources :users
   end
-
+  
+  map.page_by_name '/*names',
+    :controller => 'pages', :action => 'show'
+  
 end

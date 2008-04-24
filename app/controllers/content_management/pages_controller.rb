@@ -1,5 +1,7 @@
 class ContentManagement::PagesController < ContentManagement::Base
   
+  cache_sweeper :page_sweeper, :except => [:index, :show, :new, :edit]
+  
   def index
     @pages = Page.find :all, :order => :name, :include => :publication
     @page_title = 'Content Management - Pages'
@@ -44,9 +46,20 @@ class ContentManagement::PagesController < ContentManagement::Base
       user.will :save, @page do |saved|
         if saved
           wants.html  { redirect_to :action => :edit, :id => @page.id }
-          wants.js    { render :nothing => true }
+          wants.js    do
+            render :update do |page|
+              page[:commit].enable
+              page[:flash].update ''
+            end
+          end
         else
-          send :edit
+          wants.html  { send :edit }
+          wants.js    do
+            render :update do |page|
+              page[:commit].enable
+              page[:flash].update 'Page failed to save'
+            end
+          end
         end
       end
     end

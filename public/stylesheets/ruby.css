@@ -1,14 +1,18 @@
+code { font-family: 'Verdana'; font-style: italic; }
+
 pre code {
 	background-color: Black;
 	color: White;
 	display: block;
+	font-family: monospace;
 	font-size: 120%;
+	font-style: normal;
 	margin-left: 1em;
 	overflow: auto;
 	padding: 1em 1.5em 1em 1.5em;
 }
 
-
+h1
 .ruby .keyword {
 	background-color: Black;
 	color: #cda869;

@@ -2,7 +2,7 @@ class Page < ActiveRecord::Base
   include ActionView::Helpers::TextHelper
   
   has_one :publication, :as => :publishable, :dependent => :destroy
-#  has_many :comments, :as => :commented, :dependent => :destroy
+  has_many :comments, :as => :commented, :dependent => :destroy
   
   def self.find_public_by_name(name)
     find :first, :include => :publication,
@@ -19,6 +19,13 @@ class Page < ActiveRecord::Base
   
   validates_uniqueness_of :name
   validates_presence_of :title, :body_markdown
+  
+  def is_not_found?
+    name == 'not_found'
+  end
+  def is_homepage?
+    name == 'home'
+  end
   
   def to_s
     self[:title]

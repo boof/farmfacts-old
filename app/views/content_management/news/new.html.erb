@@ -1,0 +1,11 @@
+<br style="clear: both;" />
+
+<h2>New Article</h2>
+
+<% form_for [:content_management, @article], :url => content_management_news_index_path do |form| %>
+	<%= render :partial => 'form', :object => form %>
+	<p>
+		<%= button_to_function 'Back', 'window.location = "/content_management/news"' %>
+		<%= submit_tag 'Create' %>
+	</p>
+<% end %>

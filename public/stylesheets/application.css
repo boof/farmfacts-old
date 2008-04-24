@@ -43,29 +43,30 @@ textarea { width: 100%; }
 	color: DarkRed;
 }
 
-#listOfPlugins {
+#injectedBox {
 	background-color: #FAFAFA;
 	border: 1px dotted Brown;
 	float: right;
 	font-size: 75%;
+	height: 480px;
 	margin: 3em 0 3em 3em;
 	padding: 1.5em;
 	width: 220px;
 }
-#listOfPlugins h2 {
+#injectedBox h2 {
 	text-decoration: underline;
 	margin-top: 0;
 }
-#listOfPlugins h3.pluginName {
+#injectedBox h3.name {
 	font-weight: normal;
 	margin: 1em 0 0 0;
 }
-#listOfPlugins p {
+#injectedBox p {
 	margin: 0;
 }
 
 #content {
-	margin: 3em;
+	margin: 2em 0;
 	height: 100%;
 }
 
@@ -80,7 +81,21 @@ textarea { width: 100%; }
 	margin: 0;
 }
 
-p.lastModified { font-size: 80%; }
+p.timestamp { font-size: 80%; }
+
+
+div.newsArticle hr {
+	color: Brown;
+	border: 0px solid Brown;
+	background-color: Brown;
+}
+div.newsArticle h3 {
+	margin-bottom: 0;
+	padding-top: 3px;
+}
+div.newsArticle p.timestamp {
+	margin-top: 0;
+}
 
 td { vertical-align: top; }
 table thead tr th.cmAction, table tbody tr td.cmAction {
@@ -97,7 +112,7 @@ table tbody tr.cmAction {
 }
 
 table thead tr th.cmTimestamp,
-table tbody tr td.cmTimestamp { width: 185px; }
+table tbody tr td.cmTimestamp { width: 200px; }
 
 #cmPages {
 	border-collapse: collapse;
@@ -105,7 +120,7 @@ table tbody tr td.cmTimestamp { width: 185px; }
 }
 #cmPages thead tr th { text-align: left; }
 #cmPages thead tr th.cmPageTitle,
-#cmPages tbody tr td.cmPageTitle { width: 45%; }
+#cmPages tbody tr td.cmPageTitle { width: 40%; }
 #cmPages thead tr th.cmPagePath,
 #cmPages tbody tr td.cmPagePath {}
 #cmPages tbody tr td { padding: 2px; }

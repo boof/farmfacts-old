@@ -11,7 +11,7 @@ class Publication < ActiveRecord::Base
   end
   
   def to_s
-    "for #{ self[:publishable_type] } #{ self[:publishable_id] }"
+    "of #{ self[:publishable_type] } #{ self[:publishable_id] }"
   end
   
 end
