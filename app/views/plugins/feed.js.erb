@@ -1,8 +1,6 @@
-<ul>
-	<% @feed.entries.each do |entry| %>
-	<li>
-		<%= entry.title -%> (<%= entry.time -%>)
-		<%= entry.summary.gsub("\n", '<br />') %>
-	</li>
-	<% end %>
-</ul>
+<h2>Latest Commits</h2>
+
+<% @feed.entries.each do |entry| %>
+	<h3 class="name"><%= link_to entry.title, entry.link -%></h3>
+	<p><%= entry.time %></p>
+<% end %>

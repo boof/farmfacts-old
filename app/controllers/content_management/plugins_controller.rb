@@ -1,5 +1,7 @@
 class ContentManagement::PluginsController < ContentManagement::Base
   
+  cache_sweeper :plugin_sweeper, :only => [:create, :update, :destroy]
+  
   def index
     @plugins = Plugin.find :all, :order => :name
     @page_title = 'Content Management - Plugins'

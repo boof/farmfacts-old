@@ -16,20 +16,40 @@ ActionController::Routing::Routes.draw do |map|
   
   map.with_options :controller => 'news' do |news|
     news.news '/news'
-    
     news.commits '/news/commits', :action => 'commits'
-    
     news.find_news_by_date '/news/:date', :action => 'find_by_date',
       :date => /(?:today|(?:\d{2}|\d{4})(?:-\d{1,2}(?:-\d{1,2})?)?)/
-    
     news.find_news_by_ident '/news/:ident', :action => 'show',
       :ident => /\d+-.+/
   end
   
+  map.with_options :controller => 'comments' do |comments|
+    comments.comment_news '/comment/news/:commented_id',
+      :conditions => { :method => :post },
+      :action => 'create', :commented_type => 'Article'
+    comments.connect '/comment/news/:commented_id',
+      :conditions => { :method => :get },
+      :action => 'new', :commented_type => 'Article'
+    comments.news_comments '/news/:id/comments/:offset',
+      :action => 'list', :type => 'Article',
+      :defaults => {:offset => 0}
+    comments.comment_page '/comment/page/:commented_id',
+      :conditions => { :method => :post },
+      :action => 'create', :commented_type => 'Page'
+    comments.connect '/comment/page/:commented_id',
+      :conditions => { :method => :get },
+      :action => 'new', :commented_type => 'Page'
+    comments.page_comments '/page/:id/comments/:offset',
+      :action => 'list', :type => 'Page',
+      :defaults => {:offset => 0}
+  end
+  
   map.namespace :content_management do |cms|
     cms.resources :pages,
+      :collection => {:preview => :post},
       :member => {:publish => :post, :revoke => :post}
     cms.resources :news,
+      :collection => {:preview => :post},
       :member => {:publish => :post, :announce => :post, :revoke => :post}
     cms.resources :plugins
     cms.resources :users
@@ -37,5 +57,8 @@ ActionController::Routing::Routes.draw do |map|
   
   map.page_by_name '/*names',
     :controller => 'pages', :action => 'show'
+  
+  # only for fragment caching
+  # map.connect '/:controller/:action/:content'
   
 end

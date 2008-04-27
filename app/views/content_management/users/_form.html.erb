@@ -2,25 +2,25 @@
 <%= error_messages_for 'login', :object => form.object.login %>
 
 <div>
-	<label for="user_name">Name</label><br />
+	<label for="user_name">Name</label>
 	<%= form.text_field :name, :size => 60 %>
 </div>
 <div>
-	<label for="user_email">E-Mail</label><br />
+	<label for="user_email">E-Mail</label>
 	<%= form.text_field :email, :size => 60 %>
 </div>
 
 <% fields_for 'user[login_attributes]', form.object.login do |login_form| %>
 	<div>
-		<label for="login_attributes_username">Username</label><br />
+		<label for="login_attributes_username">Username</label>
 		<%= login_form.text_field :username %>
 	</div>
 	<div>
-		<label for="login_attributes_password">Password</label><br />
+		<label for="login_attributes_password">Password</label>
 		<%= login_form.password_field :password %>
 	</div>
 	<div>
-		<label for="login_attributes_password_confirmation">Password Confirmation</label><br />
+		<label for="login_attributes_password_confirmation">Password Confirmation</label>
 		<%= login_form.password_field :password_confirmation %>
 	</div>
 <% end %>

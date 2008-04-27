@@ -1,10 +1,13 @@
 class NewsController < ApplicationController
   
   caches_page :index, :find_by_date, :show
+  helper CommentsHelper
   
   def index
-    @articles ||= Article.find_all_public :order => 'articles.created_at DESC', :limit => 10
     @page_title = 'Ruby Sequel News'
+    
+    @articles ||= Article.find_all_public :limit => 10, :include => :author,
+      :order => 'articles.created_at DESC'
     
     render :action => :index
   end
@@ -15,20 +18,21 @@ class NewsController < ApplicationController
     end
     
     # stub
-    @articles = Article.find :all
+    @articles = Article.find :all, :include => :author
     send :index
   end
   
   def show
     @article = Article.find_by_ident params[:ident]
-    render :template => 'pages/show' if @article.is_not_found?
+    @page_title = @article.title
+    
+    not_found(@article) if @article.not_found?
   end
   
-  FEED_PATH = 'http://github.com/feeds/jeremyevans/commits/sequel/master'
   def commits
     respond_to do |wants|
-      wants.html  { render :nothing => true, :status => 404 }
-      wants.js    { @feed = FeedTools::Feed.open FEED_PATH }
+      wants.html  { render :nothing => true, :status => 400 }
+      wants.js    { @feed = MemcachedFeed.open FEED_PATH }
     end
   end
   

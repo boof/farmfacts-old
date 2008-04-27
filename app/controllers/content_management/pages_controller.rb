@@ -9,7 +9,11 @@ class ContentManagement::PagesController < ContentManagement::Base
   
   def show
     @page = Page.find params[:id]
-    @page_title = "Content Management - Preview Page '#{ @page.title }'"
+    @page_title = "Content Management - Page '#{ @page.title }'"
+  end
+  
+  def preview
+    render :text => Maruku.new(params[:page][:body_markdown]).to_html
   end
   
   def new
@@ -42,25 +46,11 @@ class ContentManagement::PagesController < ContentManagement::Base
     @page = Page.find params[:id]
     @page.attributes = params[:page]
     
-    respond_to do |wants|
-      user.will :save, @page do |saved|
-        if saved
-          wants.html  { redirect_to :action => :edit, :id => @page.id }
-          wants.js    do
-            render :update do |page|
-              page[:commit].enable
-              page[:flash].update ''
-            end
-          end
-        else
-          wants.html  { send :edit }
-          wants.js    do
-            render :update do |page|
-              page[:commit].enable
-              page[:flash].update 'Page failed to save'
-            end
-          end
-        end
+    user.will :save, @page do |saved|
+      if saved
+        redirect_to :action => :index
+      else
+        send :edit
       end
     end
   end

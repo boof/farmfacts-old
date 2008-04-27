@@ -10,7 +10,7 @@ class CreatePublications < ActiveRecord::Migration
       t.timestamps
     end
     
-    add_index :publications, [:publishable_type, :publishable_id],
+    add_index :publications, [:publishable_id, :publishable_type],
       :unique => true
   end
   

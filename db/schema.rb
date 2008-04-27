@@ -21,18 +21,19 @@ ActiveRecord::Schema.define(:version => 6) do
     t.datetime "updated_at"
   end
 
-  create_table "cached_feeds", :force => true do |t|
-    t.string   "url"
-    t.string   "href"
-    t.string   "title"
-    t.string   "link"
-    t.text     "feed_data"
-    t.string   "feed_data_type"
-    t.text     "http_headers"
-    t.datetime "last_retrieved"
+  create_table "comments", :force => true do |t|
+    t.string   "commented_type",                   :null => false
+    t.integer  "commented_id",                     :null => false
+    t.string   "author_name",                      :null => false
+    t.string   "homepage"
+    t.string   "email"
+    t.boolean  "visible",        :default => true
+    t.text     "body",                             :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "cached_feeds", ["href"], :name => "index_cached_feeds_on_href", :unique => true
+  add_index "comments", ["commented_id", "commented_type"], :name => "index_comments_on_commented_id_and_commented_type", :unique => true
 
   create_table "logins", :force => true do |t|
     t.string  "username",                    :null => false
@@ -73,7 +74,7 @@ ActiveRecord::Schema.define(:version => 6) do
     t.datetime "updated_at"
   end
 
-  add_index "publications", ["publishable_type", "publishable_id"], :name => "index_publications_on_publishable_type_and_publishable_id", :unique => true
+  add_index "publications", ["publishable_id", "publishable_type"], :name => "index_publications_on_publishable_id_and_publishable_type", :unique => true
 
   create_table "users", :force => true do |t|
     t.string "name",  :null => false

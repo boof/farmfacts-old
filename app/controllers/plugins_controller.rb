@@ -1,15 +1,19 @@
 class PluginsController < ApplicationController
   
+  caches_page :index, :show
+  
   def index
     @plugins = Plugin.find :all, :order => :name
   end
   
+  def show
+    @plugin = Plugin.find params[:id]
+  end
+  
   def feed
-    @feed = Plugin.feed_for params[:id]
-    
     respond_to do |wants|
-      wants.html
-      wants.js
+      wants.html  { render :nothing => true, :status => 400 }
+      wants.js    { @feed = Plugin.feed_for params[:id] }
     end
   end
   

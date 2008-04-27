@@ -7,23 +7,33 @@ class CreatePlugins < ActiveRecord::Migration
       t.string :contributor_name
       t.string :contributor_email
       
-      t.text :description_markdown, :null => false
-      t.text :description
+      t.text :description, :null => false
+      
+      t.text :microdoc_markdown
+      t.text :microdoc
       
       t.string :feed_path
       t.string :documentation_path
     end
     
     plugin = Plugin.new do |plugin|
-      plugin.name = 'NotNaughty'
+      plugin.name = 'NotNaughty 0.5.1 Adapter'
       
       plugin.contributor_name = 'Florian Aßmann'
       plugin.contributor_email = 'florian.assmann@email.de'
       
-      plugin.description_markdown = 'Adapter for the Validation Framework NotNaughty.'
+      plugin.description =
+        'Adapter for the Validation Framework NotNaughty.'
+      plugin.feed_path =
+        'http://github.com/feeds/boof/commits/notnaughty/master'
+      plugin.documentation_path =
+        'http://not-naughty.rubyforge.org/'
       
-      plugin.feed_path = 'http://github.com/feeds/boof/commits/notnaughty/master'
-      plugin.documentation_path = 'http://not-naughty.rubyforge.org/'
+      plugin.microdoc_markdown = <<MARKDOWN
+Install the Adapter vie RubyGems:
+
+    $ gem install not_naughty
+MARKDOWN
     end
     
     plugin.save || raise('Could not create plugin!')

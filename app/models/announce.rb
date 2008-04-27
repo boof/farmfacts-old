@@ -1,10 +1,11 @@
 class Announce < ActionMailer::Base
   
-  def article(editor, recipient, article, prefix = '[ANN] ')
-    recipients recipient
-    from       editor.email
-    subject    prefix + article.title
-    body       :article => article
+  def article(editor, recipients, subject, body)
+    self.recipients recipients.split(',')
+    self.from       editor.email
+    self.subject    subject
+    
+    self.body       :body => body
   end
   
 end

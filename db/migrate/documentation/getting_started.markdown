@@ -1,57 +1,15 @@
-## Getting Started
-
-TODO: Put up a little Example from Migrations to Joins and explain it.
-
-### Installing Sequel
-
-Installing Sequel is easy:
-
-{: lang=sh html_use_syntax}
-    $ gem install sequel
-
-Be aware, though, that Sequel depends on database adapters for its work. For example, in order to work with sqlite3 database, you need to install the sqlite3 gem.
-
-### A Short Example
-
-{: lang=ruby html_use_syntax}
-    require 'rubygems'
-    require 'sequel'
-
-    DB = Sequel.sqlite # memory database
-
-    DB.create_table :items do # Create a new table
-      column :name, :text
-      column :price, :float
-    end
-
-    items = DB[:items] # Create a dataset
-
-    # Populate the table
-    items << {:name => 'abc', :price => rand * 100}
-    items << {:name => 'def', :price => rand * 100}
-    items << {:name => 'ghi', :price => rand * 100}
-
-    # Print out the number of records
-    puts "Item count: #{items.count}"
-
-    # Print out the records in descending order by price
-    items.reverse_order(:price).print
-
-    # Print out the average price
-    puts "The average price is: #{items.avg(:price)}"
-
 ### Connecting to a database
 
 To connect to a database you simply provide Sequel with a URL:
 
 {: lang=ruby html_use_syntax}
     require 'sequel'
-    DB = Sequel.open 'sqlite:///blog.db'
+    DB = Sequel.connect('sqlite:///blog.db')
 
 The connection URL can also include such stuff as the user name and password:
 
 {: lang=ruby html_use_syntax}
-    DB = Sequel.open 'postgres://cico:12345@localhost:5432/mydb'
+    DB = Sequel.connect('postgres://cico:12345@localhost:5432/mydb')
 
 You can also specify optional parameters, such as the connection pool size, or a logger for logging SQL queries:
 

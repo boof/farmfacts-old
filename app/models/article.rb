@@ -3,42 +3,37 @@ class Article < ActiveRecord::Base
   
   belongs_to :author, :class_name => 'User'
   
-  has_one :publication, :as => :publishable, :dependent => :destroy
-  has_many :comments, :as => :commented, :dependent => :destroy
-  
-  
+  has_one :publication, :as => :publishable, :dependent => :delete
+  has_many :comments, :as => :commented, :dependent => :delete_all
   
   def self.find_all_public(options)
-    options = options.merge :include => :publication,
+    options = options.merge :joins => :publication,
       :conditions => {'publications.revoked' => false}
     
     find :all, options
   end
   
   def self.find_public(id, options)
-    options = options.merge :include => :publication,
-      :conditions => {'publications.revoked' => false}
+    options = options.merge :joins => :publication, :conditions => {
+      'articles.id' => id,
+      'publications.revoked' => false
+    }
     
-    find id, options
+    find :first, options
   end
   
   def self.find_by_ident(ident, options = {})
     find_public ident.to_i, options or Page.not_found
   end
   def ident
-    "#{ id }-#{ title.downcase.gsub ' ', '-' }"
+    "#{ id }-#{ title.downcase.gsub /[ \.]/, '-' }"
   end
-  def is_not_found?
+  
+  def not_found?
     false
   end
   def to_s
     self[:title]
-  end
-  
-  def announce(editor, recipients, prefix = '')
-    recipients.split(',').each do |recipient|
-      Announce.deliver_article editor, recipient, self, prefix
-    end
   end
   
   SPLITTER = '</p>'

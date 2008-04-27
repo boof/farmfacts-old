@@ -6,18 +6,32 @@ a:hover { text-decoration: underline; }
 a:visited { color: Brown; }
 
 body {
-	border-right: 120px solid Black;
-	border-bottom: 20px solid transparent;
-	border-left: 120px solid Black;
-	font-size: 70%;
+	background-color: Mistyrose;
+	background-repeat: repeat-y;
+	color: Black;
+	font-size: 12px;
+	line-height: 16px;
 	font-family: Verdana, sans-serif;
-	margin: 0;
+	margin: 0 10%;
 	overflow: scroll;
-	padding: 1em 2em;
+	padding: 0;
+}
+
+#header, #footer, #content {
+	border-right: 1px solid Gray;
+	border-left: 1px solid Gray;
+	padding: 0 2em;
+	background-color: White; background-repeat: repeat-y;
+}
+#header { padding-top: 1em; }
+#footer {
+	border-bottom: 1px solid Gray;
+	margin-bottom: 1em;
+	padding-bottom: 1em;
 }
 
 h1 {
-	margin: 0;
+	margin: 0.5em 0 0 0;
 	text-decoration: underline;
 }
 
@@ -25,19 +39,20 @@ img { border: none; }
 
 textarea { width: 100%; }
 
-#logo,
-#navigation {
+#logo {
 	float: left;
-	margin-right: 2em;
+	margin-right: 1em;
 }
 
 #navigation ul {
 	list-style-type: none;
+	margin-top: 8px;
 	padding-left: 0;
 }
 #navigation ul li {
 	float: left;
-	margin-right: 2em;
+	font-size: 12px;
+	margin-right: 1.5em;
 }
 #navigation ul li a:visited {
 	color: DarkRed;
@@ -48,7 +63,7 @@ textarea { width: 100%; }
 	border: 1px dotted Brown;
 	float: right;
 	font-size: 75%;
-	height: 480px;
+	min-height: 480px;
 	margin: 3em 0 3em 3em;
 	padding: 1.5em;
 	width: 220px;
@@ -65,15 +80,12 @@ textarea { width: 100%; }
 	margin: 0;
 }
 
-#content {
-	margin: 2em 0;
-	height: 100%;
-}
+#content { height: 100%; }
 
 
 #footer {
 	clear: both;
-	text-align: right;
+	text-align: center;
 }
 
 #footer p {
@@ -81,23 +93,61 @@ textarea { width: 100%; }
 	margin: 0;
 }
 
-p.timestamp { font-size: 80%; }
+form p.controls { text-align: center; }
 
+p.timestamp { font-size: 90%; }
+
+label {
+	display: block;
+	margin-top: 0.5em;
+}
+div.fieldWithErrors {
+	border-left: 1em solid Mistyrose;
+	margin-left: -1em;
+}
+
+#comments {
+	font-size: 90%;
+	margin-top: 1em;
+}
+div.comment span {
+	font-weight: bold;
+}
+div.comment pre {
+	font-family: monospace;
+	font-style: italic;
+	margin-right: 0.5em;
+	margin-left: 0.5em;
+	overflow: auto;
+}
 
 div.newsArticle hr {
-	color: Brown;
-	border: 0px solid Brown;
-	background-color: Brown;
+	background-color: Mistyrose;
+	border: 0px none transparent;
+	color: Mistyrose;
+	height: 1px;
 }
 div.newsArticle h3 {
-	margin-bottom: 0;
+	margin-bottom: 2px;
 	padding-top: 3px;
 }
 div.newsArticle p.timestamp {
 	margin-top: 0;
 }
 
-td { vertical-align: top; }
+ul.plugins h3 {
+	font-weight: normal;
+	margin-bottom: 6px;
+}
+ul.plugins p {
+	font-style: italic;
+	margin-top: 6px;
+}
+
+td {
+	font-size: 11px;
+	vertical-align: top;
+}
 table thead tr th.cmAction, table tbody tr td.cmAction {
 	text-align: center;
 	width: 20px;
@@ -112,7 +162,10 @@ table tbody tr.cmAction {
 }
 
 table thead tr th.cmTimestamp,
-table tbody tr td.cmTimestamp { width: 200px; }
+table tbody tr td.cmTimestamp {
+	text-align: right;
+	width: 200px;
+}
 
 #cmPages {
 	border-collapse: collapse;

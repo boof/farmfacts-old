@@ -1,6 +1,0 @@
-<h2>Plugins</h2>
-
-<% @plugins.each do |plugin| last_entry = plugin.feed.entries.last %>
-<h3 class="name"><%= link_to plugin.name, plugin_path(plugin) -%></h3>
-<p>Last Update: <%= link_to last_entry.time, last_entry.link %></p>
-<% end %>

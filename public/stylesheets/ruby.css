@@ -1,11 +1,12 @@
 code { font-family: 'Verdana'; font-style: italic; }
 
 pre code {
-	background-color: Black;
-	color: White;
+	background-color: #fafafa;
+	border: 1px solid Silver;
+	color: #000000;
 	display: block;
 	font-family: monospace;
-	font-size: 120%;
+	font-size: 11px;
 	font-style: normal;
 	margin-left: 1em;
 	overflow: auto;
@@ -14,38 +15,43 @@ pre code {
 
 h1
 .ruby .keyword {
-	background-color: Black;
-	color: #cda869;
+	background-color: #fafafa;
+	color: #1f60a0;
 }
 .ruby .punct {
-	background-color: Black;
-	color: Silver;
+	background-color: #fafafa;
+	color: #000000;
 	font-weight: bold;
 }
 .ruby .class {
-	background-color: Black;
-	color: #cf694b;
+	background-color: #fafafa;
+	color: #a08000;
 	font-weight: bold;
 }
 .ruby .constant {
-	background-color: Black;
-	color: #cf694b;
+	background-color: #fafafa;
+	color: #008080;
 }
 .ruby .ident {}
 .ruby .comment {
-	background-color: Black;
-	color: Silver;
+	background-color: #fafafa;
+	color: #3f603f;
 	font-style: italic;
 }
 .ruby .symbol {
-	background-color: Black;
-	color: #f9ed97;
+	background-color: #fafafa;
+	color: #800000;
 }
 .ruby .string {
-	background-color: Black;
-	color: #8e9c69;
+	background-color: #fafafa;
+	color: #bf2f2f;
 }
+.ruby .regex {
+	background-color: #fafafa;
+	color: #bf8060;
+}
+
 .ruby .number {
-	background-color: Black;
-	color: #cf694b;
+	background-color: #fafafa;
+	color: #0080a0;
 }

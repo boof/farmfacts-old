@@ -17,19 +17,25 @@
 </head>
 <body>
 
-	<%= image_tag 'ruby-sequel.png', :alt => 'Ruby Sequel', :id => :logo %>
-	<h1>Ruby Sequel - The Database Toolkit for Ruby</h1>
-	<div id="navigation">
-		<ul>
-			<li><%= link_to 'News', content_management_news_index_path %></li>
-			<li><%= link_to 'Pages', content_management_pages_path %></li>
-			<li><%= link_to 'Plugins', content_management_plugins_path %></li>
-			<li><%= link_to 'Users', content_management_users_path %></li>
-			<li><%= link_to 'Logout', logout_path %></li>
-		</ul>
+	<div id="header">
+		<%= image_tag 'ruby-sequel.png', :alt => 'Ruby Sequel', :id => :logo %>
+		<h1>Ruby Sequel - The Database Toolkit for Ruby</h1>
+		<div id="navigation">
+			<ul>
+				<li><%= link_to 'News', content_management_news_index_path %></li>
+				<li><%= link_to 'Pages', content_management_pages_path %></li>
+				<li><%= link_to 'Plugins', content_management_plugins_path %></li>
+				<li><%= link_to 'Users', content_management_users_path %></li>
+				<li><%= link_to 'Logout', logout_path %></li>
+			</ul>
+		</div>
+		<br style="clear: both;" />
 	</div>
 
-	<div id="content"><%= yield %></div>
+	<div id="content">
+		<%= yield %>
+		<br style="clear: both;" />
+	</div>
 
 	<div id="footer">
 		<p>

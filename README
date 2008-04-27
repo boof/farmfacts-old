@@ -1,14 +1,11 @@
 Website for: Ruby Sequel - The Database Toolkit for Ruby
 
 Required Gems:
-- Maruku
-- feedtools
+* maruku
+* feedtools
+* memcached
 
 TODO:
-- build a wiki
-- build a news system
-- create a logo
-- fix layout to fit logo
-- add possibility to create comments for Pages and News
-- migrate existing pages from Google Code
-- refactor docs
+* (write a wiki)
+* migrate/write documentation
+* (get a logo)

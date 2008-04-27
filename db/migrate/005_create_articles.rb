@@ -7,7 +7,8 @@ class CreateArticles < ActiveRecord::Migration
       t.text :head
       t.text :body
       
-      t.references :author, :null => false
+      t.integer :comments_count, :default => 0
+      t.references :user, :null => false
       
       t.timestamps
     end

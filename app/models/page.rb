@@ -1,11 +1,11 @@
 class Page < ActiveRecord::Base
   include ActionView::Helpers::TextHelper
   
-  has_one :publication, :as => :publishable, :dependent => :destroy
-  has_many :comments, :as => :commented, :dependent => :destroy
+  has_one :publication, :as => :publishable, :dependent => :delete
+  has_many :comments, :as => :commented, :dependent => :delete_all
   
   def self.find_public_by_name(name)
-    find :first, :include => :publication,
+    find :first, :joins => :publication,
       :conditions => {'publications.revoked' => false, :name => name}
   end
   
@@ -20,10 +20,10 @@ class Page < ActiveRecord::Base
   validates_uniqueness_of :name
   validates_presence_of :title, :body_markdown
   
-  def is_not_found?
+  def not_found?
     name == 'not_found'
   end
-  def is_homepage?
+  def homepage?
     name == 'home'
   end
   

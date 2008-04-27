@@ -1,0 +1,23 @@
+<% remote_form_for @comment, :url => request.path, :update => 'new_comment' do |form| %>
+	<input value="<%= params[:referer] %>" id="referer" name="referer" type="hidden">
+	<div>
+		<label for="comment_author_name">Name</label>
+		<%= form.text_field :author_name, :size => 60 %>
+	</div>
+	<div>
+		<label for="comment_homepage">Homepage</label>
+		<%= form.text_field :homepage, :size => 60 %>
+	</div>
+	<div>
+		<label for="comment_email">E-Mail (not published)</label>
+		<%= form.text_field :email, :size => 60 %>
+	</div>
+	<div>
+		<label for="comment_body">Body</label>
+		<%= form.text_area :body, :rows => 8 %>
+	</div>
+	<p class="controls">
+		<input value="Cancel" onclick='$("new_comment").remove();$("new_comment_button").show();' type="button">
+		<input value="Submit" name="commit" type="submit">
+	</p>
+<% end %>

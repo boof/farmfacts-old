@@ -4,13 +4,19 @@
 
 <% form_tag announce_content_management_news_path(params[:id]) do %>
 	<div>
-		<label for="prefix">Title Prefix</label><br />
-		<%= text_field_tag 'prefix', '[ANN] ' %>
+		<label for="recipients">Recipients</label> (separated by comma)<br />
+		<%= text_area_tag 'recipients', 'sequel-talk@googlegroups.com, ruby-talk@ruby-lang.org', :rows => 1 %>
 	</div>
 	<div>
-		<label for="recipients">Recipients</label> (comma seperated)<br />
-		<%= text_area_tag 'recipients' %>
+		<label for="prefix">Subject</label>
+		<%= text_field_tag 'subject', "[ANN] #{ @article.title }", :size => 60 %>
 	</div>
-	
-	<p><%= submit_tag 'Send' %></p>
+	<div>
+		<label for="body">Body</label>
+		<%= text_area_tag 'body', @article.content_markdown, :rows => 15, :cols => 78, :style => 'width: auto;' %>
+	</div>
+	<p class="controls">
+		<%= index_button 'Back' %>
+		<%= submit_tag 'Send' %>
+	</p>
 <% end %>

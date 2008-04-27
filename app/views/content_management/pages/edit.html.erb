@@ -2,11 +2,12 @@
 
 <h2>Edit Page</h2>
 
-<% remote_form_for [:content_management, @page], :loading => '$("commit").disable();$("flash").update("Updating...")' do |form| %>
+<% form_for [:content_management, @page] do |form| %>
 	<%= render :partial => 'form', :object => form %>
-	<p>
-		<%= button_to_function 'Back', 'window.location = "/content_management/pages"' %>
-		<%= submit_tag 'Update', :id => 'commit' %>
-		<span id="flash"></span>
+	<p class="controls">
+		<%= index_button 'Back' %>
+		<%= preview_button 'Preview' %>
+		<%= submit_tag 'Update' %>
 	</p>
+	<div id="preview"></div>
 <% end %>

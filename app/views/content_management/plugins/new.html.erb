@@ -4,7 +4,7 @@
 
 <% form_for [:content_management, @plugin] do |form| %>
 	<%= render :partial => 'form', :object => form %>
-	<p>
+	<p class="controls">
 		<%= button_to_function 'Back', 'window.location = "/content_management/plugins"' %>
 		<%= submit_tag 'Create' %>
 	</p>

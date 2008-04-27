@@ -1,0 +1,11 @@
+<hr />
+<% div_for comment do %>
+	<% if comment.homepage? %>
+		<span><%= link_to h(comment.author_name), comment.homepage %></span>
+	<% else %>
+		<span><%= h comment.author_name %></span>
+	<% end %>
+	(<%= comment.created_at %>)
+	<br />
+	<pre><%= comment -%></pre>
+<% end %>

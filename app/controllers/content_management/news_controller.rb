@@ -1,12 +1,15 @@
 class ContentManagement::NewsController < ContentManagement::Base
   
   before_filter :assign_article_by_id,
-    :only => [:edit, :update, :destroy, :announce]
+    :except => [:index, :preview, :new, :create, :announce, :revoke]
   cache_sweeper :article_sweeper,
     :except => [:index, :show, :new, :edit]
   
   def index
-    @articles ||= Article.find :all, :order => 'created_at DESC', :limit => 32
+    @articles ||= Article.find :all,
+      :order => 'articles.created_at DESC',
+      :limit => 32, 
+      :include => :publication
     @page_title = 'Content Management - News Articles'
     
     render :action => :index
@@ -14,6 +17,10 @@ class ContentManagement::NewsController < ContentManagement::Base
   
   def show
     @page_title = "Content Management - Preview Article '#{ @article.title }'"
+  end
+  
+  def preview
+    render :text => Maruku.new(params[:article][:content_markdown]).to_html
   end
   
   def new
@@ -30,7 +37,7 @@ class ContentManagement::NewsController < ContentManagement::Base
   end
   
   def create
-    @article = Article.new params[:article].merge(:author => user)
+    @article = Article.new params[:article].merge(:user_id => user.id)
     
     user.will :save, @article do |saved|
       if saved
@@ -44,15 +51,11 @@ class ContentManagement::NewsController < ContentManagement::Base
   def update
     @article.attributes = params[:article]
     
-    respond_to do |wants|
-      user.will :save, @article do |saved|
-        if saved
-          wants.html  { redirect_to :action => :edit, :id => @article.id }
-          wants.js    {}
-        else
-          wants.html  { send :edit }
-          wants.js    { flash.now[:message] = 'Page failed to save' }
-        end
+    user.will :save, @article do |saved|
+      if saved
+        redirect_to :action => :index
+      else
+        send :edit
       end
     end
   end
@@ -62,7 +65,9 @@ class ContentManagement::NewsController < ContentManagement::Base
   end
   
   def announce
-    user.will :announce, @article, user, params[:recipients], params[:prefix]
+    user.will :deliver_article, Announce,
+      user, params[:recipients], params[:subject], params[:body]
+    
     redirect_to :action => :index
   end
   

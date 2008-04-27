@@ -1,14 +1,30 @@
 <%= error_messages_for 'plugin', :object => form.object %>
 
 <div>
-	<label for="plugin_name">Name</label><br />
+	<label for="plugin_name">Name</label>
 	<%= form.text_field :name, :size => 60 %>
 </div>
 <div>
-	<label for="plugin_feed_path">Feed</label><br />
-	<%= form.text_field :feed_path %>
+	<label for="plugin_contributor_name">Contributor Name</label>
+	<%= form.text_field :contributor_name, :size => 60 %>
 </div>
 <div>
-	<label for="plugin_description_markdown">Description (<%= link_to 'Markdown', 'http://daringfireball.net/projects/markdown/syntax' %>)</label><br />
-	<%= form.text_area :description_markdown %>
+	<label for="plugin_contributor_email">Contributor E-Mail</label>
+	<%= form.text_field :contributor_email, :size => 60 %>
+</div>
+<div>
+	<label for="plugin_feed_path">Feed Path</label>
+	<%= form.text_field :feed_path, :size => 60 %>
+</div>
+<div>
+	<label for="plugin_documentation_path">Documentation Path</label>
+	<%= form.text_field :documentation_path, :size => 60 %>
+</div>
+<div>
+	<label for="plugin_description">Description</label>
+	<%= form.text_field :description, :size => 60 %>
+</div>
+<div>
+	<label for="plugin_microdoc_markdown">Micro Documentation (<%= link_to 'Markdown', 'http://daringfireball.net/projects/markdown/syntax' %>)</label>
+	<%= form.text_area :microdoc_markdown %>
 </div>

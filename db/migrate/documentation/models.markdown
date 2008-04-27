@@ -48,6 +48,11 @@ You can also define the used dataset by passing it to the class factory:
     class Post < Sequel::Model(:posts_table)
     end
 
+_See also:
+ Sequel.Model,
+ [Sequel::Model#set\_dataset](http://sequel.rubyforge.org/classes/Sequel/Model.html#M000365),
+ [Sequel::Database#\[\]](http://sequel.rubyforge.org/classes/Sequel/Database.html#M000452),
+ [Sequel::Dataset::SQL#where](http://sequel.rubyforge.org/classes/Sequel/Dataset/SQL.html#M000576)_
 
 ### 4.2.2. Extend Datasets
 

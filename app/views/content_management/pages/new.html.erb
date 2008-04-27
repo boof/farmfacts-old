@@ -4,8 +4,10 @@
 
 <% form_for [:content_management, @page] do |form| %>
 	<%= render :partial => 'form', :object => form %>
-	<p>
-		<%= button_to_function 'Back', 'window.location = "/content_management/pages"' %>
+	<p class="controls">
+		<%= index_button 'Back' %>
+		<%= preview_button 'Preview' %>
 		<%= submit_tag 'Create' %>
 	</p>
+	<div id="preview"></div>
 <% end %>

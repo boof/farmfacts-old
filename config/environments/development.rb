@@ -14,5 +14,5 @@ config.action_view.debug_rjs                         = true
 config.action_controller.perform_caching             = true
 config.action_view.cache_template_extensions         = false
 
-# Don't care if the mailer can't send
+# Do care if the mailer can't send
 config.action_mailer.raise_delivery_errors = true
