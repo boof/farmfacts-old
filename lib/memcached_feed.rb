@@ -30,11 +30,12 @@ class MemcachedFeed < FeedTools::Feed
       
       class Entry
         attr_reader :title, :link, :summary, :time
-
+        
         def initialize(entry)
           @title    = entry.title
           @link     = entry.link
-          @summary  = entry.summary
+# currently not needed.
+#          @summary  = entry.summary
           @time     = entry.time
         end
       end
