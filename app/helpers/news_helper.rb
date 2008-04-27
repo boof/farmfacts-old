@@ -4,7 +4,7 @@ module NewsHelper
     remote_params = {:update => e_id, :url => commits_path, :method => :get}
     
     content_tag :div, :id => e_id do
-      content_tag(:p, 'You must enable javascript to see the latest plugin commits.', :class => 'noJS') <<
+      content_tag(:p, JS_REQUIRED_MSG, :class => 'noJS') <<
       javascript_tag { remote_function remote_params }
     end
   end
