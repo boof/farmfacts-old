@@ -3,7 +3,7 @@
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
-require 'digest/md5'
+require 'digest/sha1'
 session_secret_path = File.join RAILS_ROOT, 'session_secret'
 unless File.exists? session_secret_path
   File.open session_secret_path, 'w' do |file|
