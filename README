@@ -6,6 +6,9 @@ Required Gems:
 * memcached
 
 TODO:
-* (write a wiki)
+* make comments manageable
 * migrate/write documentation
-* (get a logo)
+* get a logo (soon)
+* (write a wiki)
+
+Tagged 1.0-rc1
