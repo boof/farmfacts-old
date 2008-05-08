@@ -1,14 +1,17 @@
-# Be sure to restart your server when you modify this file
-
-# Uncomment below to force Rails into production mode when
-# you don't control web/app server and can't set it the proper way
-# ENV['RAILS_ENV'] ||= 'production'
-
-# Specifies gem version of Rails to use when vendor/rails is not present
 # RAILS_GEM_VERSION = '2.0.2' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
+
+require 'digest/md5'
+session_secret_path = File.join RAILS_ROOT, 'session_secret'
+unless File.exists? session_secret_path
+  File.open session_secret_path, 'w' do |file|
+    file << Digest::SHA1.hexdigest(Time.now.to_s << rand.to_s)
+    file << Digest::SHA1.hexdigest(Time.now.to_s << rand.to_s)
+  end
+end
+session_secret = File.read session_secret_path
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
@@ -38,7 +41,7 @@ Rails::Initializer.run do |config|
   # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
     :session_key => '_www_session',
-    :secret      => '5f365e0082d35eed572234b8b5e902f1a369fb804786ccf0767fad03'
+    :secret      => session_secret
   }
 
   # Use the database for sessions instead of the cookie-based default,
