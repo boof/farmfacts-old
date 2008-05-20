@@ -1,14 +1,7 @@
-Website for: Ruby Sequel - The Database Toolkit for Ruby
+Ruby Sequel - The Ruby Database Toolkit - Is getting a website...
+=================================================================
 
-Required Gems:
-* maruku
-* feedtools
-* memcached
-
-TODO:
+Help Me!
 * make comments manageable
 * migrate/write documentation
-* get a logo (soon)
 * (write a wiki)
-
-Tagged 1.0-rc1

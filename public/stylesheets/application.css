@@ -1,38 +1,44 @@
 a {
-	color: DarkRed;
+	color: maroon;
 	text-decoration: none;
 }
 a:hover { text-decoration: underline; }
-a:visited { color: Brown; }
+a:visited { color: maroon; }
 
 body {
-	background-color: Mistyrose;
+	background-color: #333333;
 	background-repeat: repeat-y;
-	color: Black;
-	font-size: 12px;
+	color: #333333;
+	font-size: 13px;
 	line-height: 16px;
-	font-family: Verdana, sans-serif;
+	font-family: Arial, sans-serif;
 	margin: 0 10%;
 	overflow: scroll;
 	padding: 0;
 }
 
 #header, #footer, #content {
-	border-right: 1px solid Gray;
-	border-left: 1px solid Gray;
+	border-right: 4px solid dimgray;
+	border-left: 4px solid dimgray;
 	padding: 0 2em;
 	background-color: White; background-repeat: repeat-y;
 }
-#header { padding-top: 1em; }
+#header {
+	padding: 1em 2em;
+	background-color: ivory; background-repeat: repeat-x;
+}
 #footer {
-	border-bottom: 1px solid Gray;
+	border-bottom: 4px solid dimgray;
 	margin-bottom: 1em;
 	padding-bottom: 1em;
 }
 
 h1 {
-	margin: 0.5em 0 0 0;
-	text-decoration: underline;
+	font-size: 20px;
+	font-weight: normal;
+	margin: 25px 0 0 0;
+	text-transform: uppercase;
+	white-space: pre;
 }
 
 img { border: none; }
@@ -46,21 +52,22 @@ textarea { width: 100%; }
 
 #navigation ul {
 	list-style-type: none;
-	margin-top: 8px;
+	margin-top: 3px;
+	margin-bottom: 0;
 	padding-left: 0;
 }
 #navigation ul li {
 	float: left;
 	font-size: 12px;
-	margin-right: 1.5em;
+	margin-right: 1em;
 }
 #navigation ul li a:visited {
-	color: DarkRed;
+	color: maroon;
 }
 
 #injectedBox {
-	background-color: #FAFAFA;
-	border: 1px dotted Brown;
+	background-color: ivory;
+	border: 2px solid lightgray;
 	float: right;
 	font-size: 75%;
 	min-height: 480px;
@@ -69,7 +76,6 @@ textarea { width: 100%; }
 	width: 220px;
 }
 #injectedBox h2 {
-	text-decoration: underline;
 	margin-top: 0;
 }
 #injectedBox h3.name {
@@ -80,12 +86,23 @@ textarea { width: 100%; }
 	margin: 0;
 }
 
-#content { height: 100%; }
+hr {
+	background-color: dimgray;
+	border-width: 0;
+	color: dimgray;
+	margin: 0;
+	height: 2px;
+}
+
+#content {
+	height: 100%;
+}
 
 
 #footer {
 	clear: both;
 	text-align: center;
+	text-transform: uppercase;
 }
 
 #footer p {
@@ -102,7 +119,7 @@ label {
 	margin-top: 0.5em;
 }
 div.fieldWithErrors {
-	border-left: 1em solid Mistyrose;
+	border-left: 1em solid mistyrose;
 	margin-left: -1em;
 }
 
@@ -121,18 +138,22 @@ div.comment pre {
 	overflow: auto;
 }
 
-div.newsArticle hr {
-	background-color: Mistyrose;
-	border: 0px none transparent;
-	color: Mistyrose;
-	height: 1px;
+div.article {
+	margin-top: 0.5em;
 }
-div.newsArticle h3 {
-	margin-bottom: 2px;
-	padding-top: 3px;
+div.article h3 {
+	font-weight: normal;
+	margin-bottom: 0;
 }
-div.newsArticle p.timestamp {
-	margin-top: 0;
+div.article h3 b {
+	white-space: pre;
+}
+
+div.article div p {
+	margin: 0.5em;
+}
+div.article div a {
+	font-style: italic;
 }
 
 ul.plugins h3 {
@@ -156,9 +177,9 @@ table tbody tr td img { vertical-align: bottom; }
 
 table tbody tr.cmAction {
 	background-color: #FAFAFA;
-	border-top: 1px dotted Brown;
-	border-bottom: 1px dotted Brown;
-	color: Black;
+	border-top: 1px dotted brown;
+	border-bottom: 1px dotted brown;
+	color: black;
 }
 
 table thead tr th.cmTimestamp,
