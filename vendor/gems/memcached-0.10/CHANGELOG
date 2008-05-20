@@ -1,0 +1,18 @@
+
+v0.10. Move to libmemcached 0.20. Failover support. Close consistent hashing bugs.
+
+v0.9. Move to libmemcached 0.19. Add some failover tests, but we are still waiting on libmemcached's replication branch for them to actually be useful. Fix CAS bug (ktheory).
+
+v0.8.1. Disable NotFound backtraces for speed (Blaine Cook).
+
+v0.8. CAS support. Update to libmemcached 0.16.
+
+v0.7.2. Auto-repair unprintable characters and too-long keys; improve performance of namespacing operation.
+
+v0.7.1. Allow for explicit resetting of the struct on each request, at least until Brian fixes the synchronization problem.
+
+v0.7. Rails compatibility wrapper; real multiget; rescue UnknownReadFailures in order to reset the struct..
+
+v0.6. Better documentation; benchmark suite; improve buffered IO API; remove namespace accessor in favor of generic options hash; patch up extconf.rb to handle unusual library situations; increase test coverage.
+
+v0.5. First release.

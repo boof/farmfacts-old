@@ -1,0 +1,77 @@
+
+Here are some benchmarks for various architectures and operating systems. 
+
+You can easily run your own benchmarks, as long as you have memcached itself on your system:
+  $ ruby -e 'system("ruby #{File.dirname(`gem which memcached`.split("\n").
+    last)}/../test/profile/benchmark.rb")'
+
+== x86-32 OS X
+
+These benchmarks were run on 32-bit Intel OS X 10.4:
+
+                                       user     system      total        real
+  set:plain:noblock:memcached      0.120000   0.020000   0.140000 (  0.307926)
+  set:plain:memcached              0.260000   0.340000   0.600000 (  1.282603)
+  set:plain:memcache-client       46.690000   0.580000  47.270000 ( 48.749359)
+  set:ruby:noblock:memcached       0.190000   0.020000   0.210000 (  0.346802)
+  set:ruby:memcached               0.370000   0.340000   0.710000 (  1.396252)
+  set:ruby:caffeine                5.640000   0.890000   6.530000 (  7.364335)
+  set:ruby:memcache-client        46.900000   0.580000  47.480000 ( 48.988299)
+  get:plain:memcached              0.300000   0.340000   0.640000 (  1.273405)
+  get:plain:memcache-client       47.200000   0.570000  47.770000 ( 49.161767)
+  get:ruby:memcached               0.410000   0.350000   0.760000 (  1.447452)
+  get:ruby:caffeine                5.560000   0.910000   6.470000 (  7.207449)
+  get:ruby:memcache-client        47.230000   0.580000  47.810000 ( 51.481972)
+  multiget:ruby:memcached          0.160000   0.060000   0.220000 (  0.363161)
+  multiget:ruby:caffeine           4.800000   0.550000   5.350000 (  5.658651)
+  multiget:ruby:memcache-client   50.710000   0.410000  51.120000 ( 52.303405)
+  missing:ruby:memcached           0.430000   0.370000   0.800000 (  1.358393)
+  missing:ruby:memcached:inline    0.360000   0.370000   0.730000 (  1.353781)
+  missing:ruby:caffeine            4.740000   0.870000   5.610000 (  6.320854)
+  missing:ruby:memcache-client    46.840000   0.570000  47.410000 ( 48.789416)
+  mixed:ruby:noblock:memcached     0.750000   0.910000   1.660000 (  2.807438)
+  mixed:ruby:memcached             0.760000   0.690000   1.450000 (  4.057959)
+  mixed:ruby:caffeine              8.730000   1.780000  10.510000 ( 13.515564)
+  mixed:ruby:memcache-client      95.450000   1.160000  96.610000 (100.632132)
+  hash:crc:memcached               1.240000   1.360000   2.600000 (  5.149145)
+  hash:fnv1_32:memcached           1.260000   1.360000   2.620000 (  5.333619)
+  hash:hsieh:memcached             1.150000   1.370000   2.520000 (  6.256728)
+  hash:fnv1_64:memcached           1.220000   1.360000   2.580000 (  5.188369)
+  hash:ketama:memcached            1.150000   1.360000   2.510000 (  5.076080)
+  hash:md5:memcached               1.220000   1.360000   2.580000 (  6.622163)
+  hash:default:memcached           1.190000   1.350000   2.540000 (  5.185591)
+  hash:fnv1a_32:memcached          1.210000   1.360000   2.570000 (  5.759699)
+  hash:fnv1a_64:memcached          1.180000   1.360000   2.540000 (  5.097193)
+
+== x86-64 Linux
+  
+These benchmarks were run on AMD64 RHEL4:
+
+                                       user     system      total        real
+  set:plain:noblock:memcached      0.110000   0.010000   0.120000 (  1.350748)
+  set:plain:memcached              0.120000   0.350000   0.470000 (  0.772407)
+  set:plain:memcache-client       13.670000   0.190000  13.860000 ( 14.266996)
+  set:ruby:noblock:memcached       0.160000   0.020000   0.180000 (  2.259853)
+  set:ruby:memcached               0.210000   0.320000   0.530000 (  0.841844)
+  set:ruby:memcache-client        13.710000   0.190000  13.900000 ( 14.249961)
+  get:plain:memcached              0.170000   0.270000   0.440000 (  0.754607)
+  get:plain:memcache-client       14.200000   0.220000  14.420000 ( 14.761720)
+  get:ruby:memcached               0.230000   0.310000   0.540000 (  0.847958)
+  get:ruby:memcache-client        14.170000   0.230000  14.400000 ( 14.804035)
+  multiget:ruby:memcached          0.070000   0.010000   0.080000 (  0.177625)
+  multiget:ruby:memcache-client   14.860000   0.080000  14.940000 ( 15.092570)
+  missing:ruby:memcached           0.270000   0.310000   0.580000 (  0.856026)
+  missing:ruby:memcached:inline    0.280000   0.300000   0.580000 (  0.871487)
+  missing:ruby:memcache-client    14.110000   0.250000  14.360000 ( 14.765192)
+  mixed:ruby:noblock:memcached     0.480000   0.520000   1.000000 (  1.615341)
+  mixed:ruby:memcached             0.520000   0.590000   1.110000 (  1.668772)
+  mixed:ruby:memcache-client      27.710000   0.430000  28.140000 ( 28.788336)
+  hash:crc:memcached               0.790000   1.180000   1.970000 (  3.041880)
+  hash:fnv1a_64:memcached          0.760000   1.060000   1.820000 (  3.010219)
+  hash:fnv1_32:memcached           0.800000   1.050000   1.850000 (  3.006838)
+  hash:fnv1_64:memcached           0.710000   1.260000   1.970000 (  3.016661)
+  hash:default:memcached           0.660000   1.120000   1.780000 (  3.115817)
+  hash:hsieh:memcached             0.620000   1.070000   1.690000 (  3.106407)
+  hash:ketama:memcached            0.680000   1.180000   1.860000 (  3.046879)
+  hash:md5:memcached               0.700000   1.130000   1.830000 (  3.009488)
+  hash:fnv1a_32:memcached          0.620000   1.310000   1.930000 (  3.027653)  
