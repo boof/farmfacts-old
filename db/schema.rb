@@ -9,67 +9,70 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 6) do
+ActiveRecord::Schema.define(:version => 7) do
 
   create_table "articles", :force => true do |t|
-    t.string   "title",            :null => false
-    t.text     "content_markdown", :null => false
+    t.string   "title",                                         :null => false
+    t.text     "content_markdown",                              :null => false
     t.text     "head"
     t.text     "body"
-    t.integer  "author_id",        :null => false
+    t.integer  "author_id",        :limit => 11
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "comments_count",   :limit => 11, :default => 0
   end
 
   create_table "comments", :force => true do |t|
-    t.string   "commented_type",                   :null => false
-    t.integer  "commented_id",                     :null => false
-    t.string   "author_name",                      :null => false
+    t.string   "commented_type",                                 :null => false
+    t.integer  "commented_id",   :limit => 11,                   :null => false
+    t.string   "author_name",                                    :null => false
     t.string   "homepage"
     t.string   "email"
-    t.boolean  "visible",        :default => true
-    t.text     "body",                             :null => false
+    t.boolean  "visible",                      :default => true
+    t.text     "body",                                           :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "comments", ["commented_id", "commented_type"], :name => "index_comments_on_commented_id_and_commented_type", :unique => true
+  add_index "comments", ["commented_id", "commented_type"], :name => "index_comments_on_commented_id_and_commented_type"
 
   create_table "logins", :force => true do |t|
     t.string  "username",                    :null => false
     t.string  "password_salt", :limit => 10, :null => false
     t.string  "password_hash", :limit => 32, :null => false
-    t.integer "user_id",                     :null => false
+    t.integer "user_id",       :limit => 11, :null => false
   end
 
   add_index "logins", ["username"], :name => "index_logins_on_username", :unique => true
 
   create_table "pages", :force => true do |t|
-    t.string   "name",          :null => false
-    t.string   "title",         :null => false
-    t.text     "body_markdown", :null => false
+    t.string   "name",                                        :null => false
+    t.string   "title",                                       :null => false
+    t.text     "body_markdown",                               :null => false
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "comments_count", :limit => 11, :default => 0
   end
 
   add_index "pages", ["name"], :name => "index_pages_on_name", :unique => true
 
   create_table "plugins", :force => true do |t|
-    t.string "name",                 :null => false
+    t.string "name",               :null => false
     t.string "contributor_name"
     t.string "contributor_email"
-    t.text   "description_markdown", :null => false
-    t.text   "description"
+    t.text   "microdoc_markdown"
+    t.string "description",        :null => false
     t.string "feed_path"
     t.string "documentation_path"
+    t.text   "microdoc"
   end
 
   create_table "publications", :force => true do |t|
-    t.integer  "user_id",                            :null => false
-    t.integer  "publishable_id",                     :null => false
+    t.integer  "editor_id",        :limit => 11
+    t.integer  "publishable_id",   :limit => 11,                   :null => false
     t.string   "publishable_type"
-    t.boolean  "revoked",          :default => true
+    t.boolean  "revoked",                        :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end

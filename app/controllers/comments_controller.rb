@@ -11,11 +11,11 @@ class CommentsController < ApplicationController
       wants.html  { render :nothing => true, :status => 400 }
       wants.js    do
         @comments = Comment.find :all, :order => 'created_at DESC',
-          :offset => params[:offset], :limit => 10,
+          :offset => params[:offset].to_i * 10, :limit => 10,
           :conditions => {
-            :commented_id => params[:id],
+            :commented_id   => params[:id],
             :commented_type => params[:type],
-            :visible => true
+            :visible        => true
           }
       end
     end
@@ -26,8 +26,8 @@ class CommentsController < ApplicationController
       wants.html  { render :nothing => true, :status => 400 }
       wants.js    do
         @comment = Comment.new do |c|
-          c.commented_id = params[:commented_id]
-          c.commented_type = params[:commented_type]
+          c.commented_id    = params[:commented_id]
+          c.commented_type  = params[:commented_type]
         end
       end
     end
@@ -38,8 +38,8 @@ class CommentsController < ApplicationController
       wants.html  { render :nothing => true, :status => 400 }
       wants.js    do
         @comment = Comment.new do |c|
-          c.commented_id = params[:commented_id]
-          c.commented_type = params[:commented_type]
+          c.commented_id    = params[:commented_id]
+          c.commented_type  = params[:commented_type]
         end
         @comment.attributes = params[:comment]
         

@@ -1,5 +1,3 @@
-# RAILS_GEM_VERSION = '2.0.2' unless defined? RAILS_GEM_VERSION
-
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
@@ -19,9 +17,18 @@ Rails::Initializer.run do |config|
   # -- all .rb files in that directory are automatically loaded.
   # See Rails::Configuration for more options.
 
-  # Skip frameworks you're not going to use (only works if using vendor/rails).
-  # To use Rails without a database, you must remove the Active Record framework
-  config.frameworks -= [:active_resource] # move from :active_record to :sequel
+  # Skip frameworks you're not going to use. To use Rails without a database
+  # you must remove the Active Record framework.
+  config.frameworks -= [ :active_resource ]
+
+  # Specify gems that this application depends on. 
+  # They can then be installed with rake gem:install on new installations.
+  # config.gem "bj"
+  # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
+  # config.gem "aws-s3", :lib => "aws/s3"
+  config.gem 'maruku'
+  config.gem 'memcached'
+  config.gem 'feedtools', :lib => 'feed_tools'
 
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.
@@ -29,18 +36,23 @@ Rails::Initializer.run do |config|
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
   # Add additional load paths for your own custom dirs
-  config.load_paths += %W( #{ RAILS_ROOT }/app/sweepers )
+  config.load_paths << File.join(RAILS_ROOT, %w[app sweepers])
 
   # Force all environments to use the same logger level
   # (by default production uses :info, the others :debug)
   # config.log_level = :debug
+
+  # Make Time.zone default to the specified zone, and make ActiveRecord store time values
+  # in the database in UTC, and return them converted to the specified local zone.
+  # Run `rake -D time` for a list of tasks for finding time zone names. Uncomment to use default local time.
+  config.time_zone = 'UTC'
 
   # Your secret key for verifying cookie session data integrity.
   # If you change this key, all old sessions will become invalid!
   # Make sure the secret is at least 30 characters and all random, 
   # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
-    :session_key => '_www_session',
+    :session_key => '_www-prizedrawcentre-co-uk_session',
     :secret      => session_secret
   }
 
@@ -48,10 +60,7 @@ Rails::Initializer.run do |config|
   # which shouldn't be used to store highly confidential information
   # (create the session table with 'rake db:sessions:create')
   # config.action_controller.session_store = :active_record_store
-  
-  # FIXME: make this a memcached store
-  # config.action_controller.fragment_cache_store = :mem_cache_store
-  
+
   # Use SQL instead of Active Record's schema dumper when creating the test database.
   # This is necessary if your schema can't be completely dumped by the schema dumper,
   # like if you have constraints or database-specific column types
@@ -59,9 +68,4 @@ Rails::Initializer.run do |config|
 
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector
-
-  # Make Active Record use UTC-base instead of local time
-  # config.active_record.default_timezone = :utc
 end
-
-require 'rubygems'

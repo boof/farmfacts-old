@@ -37,7 +37,7 @@ class ContentManagement::NewsController < ContentManagement::Base
   end
   
   def create
-    @article = Article.new params[:article].merge(:user_id => user.id)
+    @article = Article.new params[:article].merge(:author_id => user.id)
     
     user.will :save, @article do |saved|
       if saved

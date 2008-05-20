@@ -34,8 +34,6 @@ class MemcachedFeed < FeedTools::Feed
         def initialize(entry)
           @title    = entry.title
           @link     = entry.link
-# currently not needed.
-#          @summary  = entry.summary
           @time     = entry.time
         end
       end
