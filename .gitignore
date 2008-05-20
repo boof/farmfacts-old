@@ -5,3 +5,5 @@ tmp/*
 config/database.yml
 config/session.key
 .DS_Store
+session_secret
+all.*
