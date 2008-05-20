@@ -7,9 +7,14 @@ class NewsController < ApplicationController
     @page_title = 'Ruby Sequel News'
     
     @articles ||= Article.find_all_public :limit => 10, :include => :author,
-      :order => 'articles.created_at DESC'
+      :order => 'articles.created_at DESC', :offset => params[:page].to_i * 10
     
     render :action => :index
+  end
+  
+  def summary
+    @articles = Article.find_all_public :limit => 4, :include => :author,
+      :order => 'articles.created_at DESC'
   end
   
   def find_by_date

@@ -3,9 +3,10 @@ ActionController::Routing::Routes.draw do |map|
   map.root :controller => 'home'
   
   map.with_options :controller => 'plugins' do |plugins|
-    plugins.plugins '/plugins'
     plugins.plugin '/plugin/:id', :action => 'show'
     plugins.plugin_feed '/plugin/:id/feed', :action => 'feed'
+    
+    plugins.plugins '/plugins'
   end
   
   map.with_options :controller => 'users' do |users|
@@ -15,12 +16,16 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.with_options :controller => 'news' do |news|
-    news.news '/news'
-    news.commits '/news/commits', :action => 'commits'
+    news.commits '/commits', :action => 'commits'
+    
+    news.summary '/news/summary',  :controller => 'news', :action => 'summary'
+    
     news.find_news_by_date '/news/:date', :action => 'find_by_date',
       :date => /(?:today|(?:\d{2}|\d{4})(?:-\d{1,2}(?:-\d{1,2})?)?)/
     news.find_news_by_ident '/news/:ident', :action => 'show',
       :ident => /\d+-.+/
+    
+    news.news '/news/:page', :defaults => {:page => '0'}
   end
   
   map.with_options :controller => 'comments' do |comments|
@@ -41,7 +46,7 @@ ActionController::Routing::Routes.draw do |map|
       :action => 'new', :commented_type => 'Page'
     comments.page_comments '/page/:id/comments/:offset',
       :action => 'list', :type => 'Page',
-      :defaults => {:offset => 0}
+      :defaults => {:offset => '0'}
   end
   
   map.namespace :content_management do |cms|

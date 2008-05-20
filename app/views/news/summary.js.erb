@@ -1,0 +1,4 @@
+<% @articles.each do |article| %>
+	<%= link_to article.title, find_news_by_ident_path(article.ident) %>
+	<p class="timestamp"><%= article.created_at -%> by <%= mail_to article.author.email, article.author, :encode => :hex %></p>
+<% end %>
