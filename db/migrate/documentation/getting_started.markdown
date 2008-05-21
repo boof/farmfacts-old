@@ -1,193 +1,102 @@
-### Connecting to a database
+## Getting Started with Ruby Sequel
+First you need to install the gem:
 
+    $ sudo gem install sequel-core
+
+Note: Sequel depends on database adapters for it to work. For example, in order to work with sqlite3 database, you need to install the sqlite3 gem. 
+
+
+### Interact with a database, through raw SQL
 To connect to a database you simply provide Sequel with a URL:
 
 {: lang=ruby html_use_syntax}
     require 'sequel'
-    DB = Sequel.connect('sqlite:///blog.db')
+    DB = Sequel.connect 'sqlite:///' # in-memory db
 
-The connection URL can also include such stuff as the user name and password:
-
-{: lang=ruby html_use_syntax}
-    DB = Sequel.connect('postgres://cico:12345@localhost:5432/mydb')
-
-You can also specify optional parameters, such as the connection pool size, or a logger for logging SQL queries:
+The connection URL can also include the user name and password and you can specify optional parameters, such as the connection pool size, encoding[^1] or a logger for logging SQL queries:
 
 {: lang=ruby html_use_syntax}
-    DB = Sequel.open("postgres://postgres:postgres@localhost/my_db",
-      :max_connections => 10, :logger => Logger.new('log/db.log'))
+    DB = Sequel.open 'postgres://me:**secret**@localhost/my_db',
+      :max_connections => 10,
+      :encoding => 'unicode',
+      :logger => Logger.new('log/db.log')
 
 
-### Arbitrary SQL queries
-
-{: lang=ruby html_use_syntax}
-    DB.execute("create table t (a text, b text)")
-    DB.execute("insert into t values ('a', 'b')")
-
-Or more succinctly:
+After you connected to your database you can execute arbitrary SQL queries:
 
 {: lang=ruby html_use_syntax}
-    DB << "create table t (a text, b text)"
-    DB << "insert into t values ('a', 'b')"
+    DB.execute "create table tbl (a text, b text)" # is like
+    DB << "create table tbl (a text, b text)"
+    # and
+    DB.execute "insert into tbl values ('a', 'b')" # is like
+    DB << "insert into tbl values ('a', 'b')"
 
-You can also fetch records with raw SQL:
+*See also [Sequel::Database](/documentation/databases).*
+
+
+### Manipulate schemas with migrations
+The migrator works in very similar fashion to ActiveRecord migrations. Each
+migration is defined as a descendant of Sequel::Migration with `#up` and `#down`
+methods:
 
 {: lang=ruby html_use_syntax}
-    DB['select * from items'].each do |row|
-      p row
+    class CreateManagers < Sequel::Migration
+      
+      def up
+        create_table :managers do
+          boolean :active
+          varchar :name
+          integer :salary
+        end
+      end
+      
+      def down() drop_table :managers end
+      
     end
 
-You can also create datasets based on raw SQL:
+Manually apply the migration as follows:
 
 {: lang=ruby html_use_syntax}
-    dataset = DB['select * from items']
-    dataset.count # will return the number of records in the result set
-    dataset.map(:id) # will return an array containing all values of the id column in the result set
+    CreateManagers.apply DB, :up
+    # => ["CREATE TABLE managers (active boolean, name varchar(255), salary integer)"]
+
+*See also [Sequel::Migration](/documentation/migrations).*
 
 
-### Creating Dataset Instances
+### Interact with a database - through Datasets
+Dataset is the primary means through which records are retrieved and manipulated.
 
-Dataset is the primary means through which records are retrieved and manipulated. You can create an blank dataset by using the dataset method:
-
-{: lang=ruby html_use_syntax}
-    dataset = DB.dataset
-
-Or by using the from methods:
+Create a dataset
 
 {: lang=ruby html_use_syntax}
-    posts = DB.from(:posts)
+    managers = DB[:managers] # => #<Sequel::SQLite::Dataset: "SELECT * FROM managers">
+    # and chain them
+    exp_managers = managers.where(:salary => 10_000..20_000).order(:name)
+    # => #<Sequel::SQLite::Dataset: "SELECT * FROM managers WHERE (salary >= 10000 AND salary <= 20000) ORDER BY name">
 
-You can also use the equivalent shorthand:
-
-{: lang=ruby html_use_syntax}
-    posts = DB[:posts]
-
-Note: the dataset will only fetch records when you explicitly ask for them, as will be shown below. Datasets can be manipulated to filter through records, change record order and even join tables, as will also be shown below.
-
-
-### Fetching Records
-
-You can fetch records by using the all method:
+Using datasets
 
 {: lang=ruby html_use_syntax}
-    posts.all
+    # to create a record
+    managers << {:name => 'Top Manager', :salary => 50_000} # => 1
+    # to update a record
+    managers.filter('salary < ?', 10_000).update(:active => true) # => 0
+    # to delete a record
+    managers.filter(:active => nil).delete # => 1
 
-The all method returns an array of hashes, where each hash corresponds to a record.
-
-You can also iterate through records one at a time:
-
-{: lang=ruby html_use_syntax}
-    posts.each {|row| p row}
-
-Or perform more advanced stuff:
-
-{: lang=ruby html_use_syntax}
-    posts.map(:id)
-    posts.inject({}) {|h, r| h[r[:id]] = r[:name]}
-
-You can also retrieve the first record in a dataset:
-
-{: lang=ruby html_use_syntax}
-    posts.first
-
-Or retrieve a single record with a specific value:
-
-{: lang=ruby html_use_syntax}
-    posts[:id => 1]
-
-If the dataset is ordered, you can also ask for the last record:
-
-{: lang=ruby html_use_syntax}
-    posts.order(:stamp).last
+*See also [Sequel::Dataset](/documentation/datasets).*
 
 
-### Filtering Records
+### From Datasets to Models
+Models in Ruby Sequel are based on the [Active Record pattern described by Martin Fowler](http://www.martinfowler.com/eaaCatalog/activeRecord.html). A model class corresponds to a table or a dataset, and an instance of that class wraps a single record in the model's underlying dataset.
 
-The simplest way to filter records is to provide a hash of values to match:
+To use models you need to install the sequel gem in addition to the sequel\_core gem:
 
-{: lang=ruby html_use_syntax}
-    my_posts = posts.filter(:category => 'ruby', :author => 'david')
+    $ sudo gem install sequel
 
-Sequel lets you filter using ranges, arrays of values or even using other datasets as sub-queries. Sequel also lets you specify advanced filters in Ruby and automagically translates your code into SQL:
+TODO: Short intro.
 
-{: lang=ruby html_use_syntax}
-    old_nonruby_posts = posts.filter {:stamp > 1.month.ago && :category != 'ruby'}
-
-You can read more about dataset filters here: FilteringRecords.
+*See also [Sequel::Model](/documentation/models).*
 
 
-### Summarizing Records
-
-Counting records is easy:
-
-{: lang=ruby html_use_syntax}
-    posts.filter(:category => /ruby/i).count
-
-And you can also query maximum/minimum values:
-
-{: lang=ruby html_use_syntax}
-    max_value = DB[:history].max(:value)
-
-
-Or calculate a sum:
-
-{: lang=ruby html_use_syntax}
-    total = DB[:items].sum(:price)
-
-
-### Ordering Records
-
-{: lang=ruby html_use_syntax}
-    posts.order(:stamp)
-
-You can also specify descending order
-
-{: lang=ruby html_use_syntax}
-    posts.order(:stamp.desc)
-
-
-### Deleting Records
-
-{: lang=ruby html_use_syntax}
-    posts.filter('stamp < ?', 3.days.ago).delete
-
-### Inserting Records
-
-{: lang=ruby html_use_syntax}
-    posts.insert(:category => 'ruby', :author => 'david')
-
-Or alternatively:
-
-{: lang=ruby html_use_syntax}
-    posts << {:category => 'ruby', :author => 'david'}
-
-### Updating Records
-
-{: lang=ruby html_use_syntax}
-    posts.filter('stamp < ?', 3.days.ago).update(:state => 'archived')
-
-### Joining Tables
-
-Joining is very useful in a variety of scenarios, for example many-to-many relationships. With Sequel it's really easy:
-
-{: lang=ruby html_use_syntax}
-    order_items = DB[:items].join(:order_items, :item_id => :id).filter(:order_items__order_id => 1234)
-
-This is equivalent to the SQL:
-
-{: lang=sql html_use_syntax}
-    SELECT * FROM items LEFT OUTER JOIN order_items
-      ON order_items.item_id = items.id 
-      WHERE order_items.order_id = 1234
-
-You can then do anything you like with the dataset:
-
-{: lang=ruby html_use_syntax}
-    order_total = order_items.sum(:price)
-
-Which is equivalent to the SQL:
-
-{: lang=sql html_use_syntax}
-    SELECT sum(price) FROM items LEFT OUTER JOIN order_items
-      ON order_items.item_id = items.id
-      WHERE order_items.order_id = 1234
+[^1]: Thanks Chu Yeow for pointing this out.

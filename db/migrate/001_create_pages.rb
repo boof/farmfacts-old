@@ -32,13 +32,14 @@ class CreatePages < ActiveRecord::Migration
     create_page 'documentation', 'Ruby Sequel Documentation'
     create_page 'documentation/getting_started',
                 'Getting Started with Ruby Sequel'
+    create_page 'documentation/datasets',
+                'Working with Datasets'
     create_page 'documentation/models',
-                'Ruby Sequel Documentation on Models'
+                'Get your hands on Models'
     
     create_page 'community', 'Ruby Sequel Community'
     
     create_page 'deprecation/1-5', 'Ruby Sequel 1.5 Deprecation'
-    create_page 'website-todo', 'Ruby Sequel - Website TODOs'
   end
   
   def self.down
