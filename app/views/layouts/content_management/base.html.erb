@@ -6,9 +6,9 @@
 	<title><%= page_title %></title>
 
 	<meta http-equiv="Content-Script-Type" content="text/javascript" />
-    <meta http-equiv="Content-Style-Type" content="text/css" />
-    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
-    <meta content="en" name="content-language" />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<meta content="text/html; charset=utf-8" http-equiv="content-type" />
+	<meta content="en" name="content-language" />
 
 	<%= stylesheet_link_tag 'application', 'ruby', :cache => true %>
 	<%= javascript_include_tag 'prototype', 'effects', 'dragdrop', 'controls', :cache => true %>
@@ -31,6 +31,8 @@
 		<br style="clear: both;" />
 	</div>
 
+	<hr />
+
 	<div id="content">
 		<br style="clear: both;" />
 		<%= yield %>
@@ -42,12 +44,6 @@
 			<a href="http://github.com/boof/www-ruby-sequel-org/tree/master">This page is still under development!</a>
 		</p>
 	</div>
-
-	<script type="text/javascript">
-		//<![CDATA[
-		$$(".noJS").each(function(e){e.hide();});
-		//]]>
-	</script>
 
 </body>
 </html>
