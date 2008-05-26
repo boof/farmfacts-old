@@ -15,7 +15,7 @@
 	<meta name="description" content="Ruby Sequel is a lightweight database toolkit for Ruby." />
 
 	<%= stylesheet_link_tag 'application', 'ruby', :cache => true %>
-	<%= javascript_include_tag 'prototype', 'controls', :cache => true %>
+	<%= javascript_include_tag 'prototype' %>
 	<%= javascript_include_tag 'application' %>
 </head>
 <body>
@@ -52,15 +52,17 @@
 
 	<script type="text/javascript">
 		//<![CDATA[
-		$$(".noJS").each(function(e){e.hide();});
-		
 		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-		</script>
-		<script type="text/javascript">
+		//]]>
+	</script>
+	<script type="text/javascript">
+		//<![CDATA[
 		var pageTracker = _gat._getTracker("UA-3451425-2");
 		pageTracker._initData();
 		pageTracker._trackPageview();
+
+		$$(".noJS").each(function(e){e.hide();});
 		//]]>
 	</script>
 
