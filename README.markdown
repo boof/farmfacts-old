@@ -2,6 +2,9 @@ Ruby Sequel - The Ruby Database Toolkit - Is getting a website...
 =================================================================
 
 Help Me!
+* TODO: add exception notifier as submodule
+* TODO: unpack required gems
+* BUG: missing js in frontend
 * BUG: old news article and page cache files won't be deleted when their ident/name
   changes
 * MISSING: comments management (hide/show)
@@ -9,6 +12,7 @@ Help Me!
 * FEATURE: endless pageless for comments
 * MISSING: migrate/write documentation
 * FEATURE: convert from ActiveRecord to RubySequel
+* FEATURE: votes/polls
 * ...
 * link this page
 * (write a wiki)
