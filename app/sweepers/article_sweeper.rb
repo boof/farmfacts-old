@@ -5,35 +5,30 @@ class ArticleSweeper < ActionController::Caching::Sweeper
     case obj
     when Article
       expire_index
-      expire_by_ident obj.ident
+      expire_by_id obj.id
     when Publication
       if obj.publishable_type.eql? 'Article'
         expire_index
-        expire_by_ident obj.publishable.ident
+        expire_by_id obj.publishable_id
       end
     when Comment
       expire_by_ident obj.commented.ident if obj.commented_type.eql? 'Article'
     end
   end
   
-  def expire_by_ident(ident)
-    expire_page :controller => '/news', :action => 'show', :ident => ident
+  def expire_by_id(id)
+    glob = File.join Rails.root, %W[ public news "#{ id }-*" ]
+    if path = Dir[glob].first
+      expire_page "/#{ path[/public(?:\\|\/)(.+)/, 1] }"
+    end
   end
   
   def expire_index
-    expire_page :controller => '/news', :action => 'index'
+    expire_page :controller => '/news', :action => :index
   end
   
   def after_destroy(article)
-    # sweep comments dir
-    if article.is_a? Article
-      public_path = news_comments_path(article.id)
-      path = File.join RAILS_ROOT, 'public', public_path.split('/')
-      
-      FileUtils.rm_rf File.dirname(path)
-      logger.info "Expired page: #{ File.dirname public_path }"
-    end
-    
+    expire_page news_comments_path(article.id) if article.is_a? Article
     expire_cache article
   end
   

@@ -1,13 +1,15 @@
-# Filters added to this controller apply to all controllers in the application.
-# Likewise, all the methods added will be available for all controllers.
 class ApplicationController < ActionController::Base
-  protect_from_forgery
-  filter_parameter_logging %w[password]
   include ExceptionNotifiable
-  
+
+  filter_parameter_logging %w[password]
+
   protected
   def not_found(page)
-    render :text => page.body, :layout => true, :status => 404
+    markdown = Maruku.new page.body
+    render :text => markdown.to_html, :layout => true, :status => 404
   end
-  
+  def title_page(title)
+    @page_title = title
+  end
+
 end

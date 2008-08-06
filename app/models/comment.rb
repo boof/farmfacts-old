@@ -1,9 +1,9 @@
 class Comment < ActiveRecord::Base
   include ActionView::Helpers::TagHelper
-  
-  belongs_to :commented, :polymorphic => true, :counter_cache => true
+
+  belongs_to :commented, :polymorphic => true
   validates_presence_of :author_name, :email, :body
-  
+
   def hide
     self.class.transaction do
       commented.decrement! :comments_count if visible?
@@ -16,11 +16,11 @@ class Comment < ActiveRecord::Base
       update_attribute :visible, true
     end
   end
-  
+
   def to_s
     self[:body]
   end
-  
+
   def format_body
     # Convert from CRLF or CR to LF
     self[:body].gsub! /(?:\r\n|\r)/, "\n"
@@ -29,5 +29,5 @@ class Comment < ActiveRecord::Base
   end
   protected :format_body
   before_save :format_body
-  
+
 end

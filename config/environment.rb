@@ -28,8 +28,10 @@ Rails::Initializer.run do |config|
 
   config.time_zone = 'UTC'
 
+  config.action_controller.allow_forgery_protection = false
   config.action_controller.session = {
     :session_key => '_www-ruby-sequel-org_',
     :secret      => session_secret
   }
+
 end

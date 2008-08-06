@@ -5,6 +5,6 @@
 	by <%= mail_to h(@plugin.contributor_email), @plugin.contributor_name, :encode => 'hex' %>
 </h3>
 
-<%= @plugin.microdoc %>
+<%=markdown @plugin.microdoc %>
 
 <% unless @plugin.documentation_path.blank? %><%= link_to 'Full Documentation', @plugin.documentation_path %><% end %>

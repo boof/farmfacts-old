@@ -1,10 +1,10 @@
 <br style="clear: both;" />
 
-<%= @page.body %>
+<%=markdown @page.body %>
 
 <p class="timestamp">Last Modified: <%= @page.updated_at %></p>
 
 <%= remote_new_comment_button_to 'Write comment', comment_page_path(@page, :referer => request.url) %>
-<% unless @page.comments_count.zero? %>
-<%= link_to_remote_comments "Read comments (#{ @page.comments_count })", page_comments_path(@page) %>
+<% unless @page.comments.count.zero? %>
+<%= link_to_remote_comments "Read comments (#{ @page.comments.count })", page_comments_path(@page) %>
 <% end %>

@@ -1,0 +1,19 @@
+<%= error_messages_for 'page', :object => form.object %>
+
+<div>
+	<label for="page_title">Title</label>
+	<%= form.text_field :title, :size => 60 %>
+</div>
+<% unless form.object.not_found? or form.object.homepage? %>
+<div>
+	<label for="page_name">Name</label>
+	<%= form.text_field :name %>
+</div>
+<% end %>
+<div>
+	<%= form.label :body, "Body (#{ link_to_markdown })" %>
+	<%= form.text_area :body, :rows => 25, :class => 'withPreview' %>
+	<%= markdown_button 'page_body', 'Preview' %>
+	<div id="page_body_preview" class="preview"></div>
+	<br style="clear: both;" />
+</div>

@@ -1,5 +1,5 @@
 # This file is auto-generated from the current state of the database. Instead of editing this file, 
-# please use the migrations feature of ActiveRecord to incrementally modify your database, and
+# please use the migrations feature of Active Record to incrementally modify your database, and
 # then regenerate this schema definition.
 #
 # Note that this schema.rb definition is the authoritative source for your database schema. If you need
@@ -9,17 +9,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 7) do
+ActiveRecord::Schema.define(:version => 6) do
 
   create_table "articles", :force => true do |t|
-    t.string   "title",                                         :null => false
-    t.text     "content_markdown",                              :null => false
+    t.string   "title",                    :null => false
     t.text     "head"
     t.text     "body"
-    t.integer  "author_id",        :limit => 11
+    t.integer  "author_id",  :limit => 11, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "comments_count",   :limit => 11, :default => 0
   end
 
   create_table "comments", :force => true do |t|
@@ -46,13 +44,11 @@ ActiveRecord::Schema.define(:version => 7) do
   add_index "logins", ["username"], :name => "index_logins_on_username", :unique => true
 
   create_table "pages", :force => true do |t|
-    t.string   "name",                                        :null => false
-    t.string   "title",                                       :null => false
-    t.text     "body_markdown",                               :null => false
+    t.string   "name",       :null => false
+    t.string   "title",      :null => false
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "comments_count", :limit => 11, :default => 0
   end
 
   add_index "pages", ["name"], :name => "index_pages_on_name", :unique => true
@@ -61,18 +57,16 @@ ActiveRecord::Schema.define(:version => 7) do
     t.string "name",               :null => false
     t.string "contributor_name"
     t.string "contributor_email"
-    t.text   "microdoc_markdown"
-    t.string "description",        :null => false
+    t.text   "description",        :null => false
+    t.text   "microdoc"
     t.string "feed_path"
     t.string "documentation_path"
-    t.text   "microdoc"
   end
 
   create_table "publications", :force => true do |t|
-    t.integer  "editor_id",        :limit => 11
-    t.integer  "publishable_id",   :limit => 11,                   :null => false
-    t.string   "publishable_type"
-    t.boolean  "revoked",                        :default => true
+    t.integer  "editor_id",        :limit => 11, :null => false
+    t.integer  "publishable_id",   :limit => 11, :null => false
+    t.string   "publishable_type",               :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

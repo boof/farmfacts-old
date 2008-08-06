@@ -2,9 +2,10 @@ class NewsController < ApplicationController
 
   caches_page :index, :find_by_date, :show
   helper CommentsHelper
+  session :off
 
   def index
-    @page_title = 'Ruby Sequel News'
+    title_page 'Ruby Sequel News'
 
     @articles ||= Article.find_all_public :limit => 10, :include => :author,
       :order => 'articles.created_at DESC', :offset => params[:page].to_i * 10
@@ -36,7 +37,7 @@ class NewsController < ApplicationController
 
   verify :xhr => true, :only => :commits
   def commits
-    @feed = CachedFeed.open FEED_PATH
+    @feed = CachedFeed.open SEQUEL_FEED_URL
   end
 
 end

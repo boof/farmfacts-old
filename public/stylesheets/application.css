@@ -44,6 +44,8 @@ h1 {
 img { border: none; }
 
 textarea { width: 100%; }
+textarea.withPreview { width: 37em; float: left; margin-right: 3em; }
+div.preview { margin-left: 40em; }
 
 #logo {
 	float: left;
@@ -110,7 +112,7 @@ hr {
 	margin: 0;
 }
 
-form p.controls { text-align: center; }
+p.controls { text-align: center; }
 
 p.timestamp { font-size: 90%; }
 

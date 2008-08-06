@@ -3,10 +3,6 @@ Ruby Sequel - The Ruby Database Toolkit - Is getting a website...
 
 Help Me!
 * TODO: add exception notifier as submodule
-* TODO: unpack required gems
-* BUG: missing js in frontend
-* BUG: old news article and page cache files won't be deleted when their ident/name
-  changes
 * MISSING: comments management (hide/show)
 * MISSING: articles behind the first 10 cannot be accessed
 * FEATURE: endless pageless for comments
