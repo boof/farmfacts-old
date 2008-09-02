@@ -2,7 +2,6 @@ Ruby Sequel - The Ruby Database Toolkit - Is getting a website...
 =================================================================
 
 Help Me!
-* TODO: add exception notifier as submodule
 * MISSING: comments management (hide/show)
 * MISSING: articles behind the first 10 cannot be accessed
 * FEATURE: endless pageless for comments
