@@ -7,3 +7,4 @@ config/session.key
 .DS_Store
 session_secret
 all.*
+*.sqlite3
