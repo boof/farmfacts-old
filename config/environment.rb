@@ -14,10 +14,11 @@ Rails::Initializer.run do |config|
 
   config.frameworks -= [ :active_resource ]
 
-#  config.gem 'sequel_core'
-#  config.gem 'sequel'
+  config.gem 'sequel'
   config.gem 'maruku'
   config.gem 'memcache-client', :lib => 'memcache'
+
+  config.gem 'uuidtools'
   config.gem 'feedtools', :lib => 'feed_tools'
 
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
