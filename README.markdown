@@ -21,3 +21,13 @@ Don't forget the submodules:
     cd www-ruby-sequel-org
     git submodule init
     git submodule update
+
+Setup your database:
+
+    cp vendor/railties/configs/databases/sqlite3.yml config/database.yml # for example
+    EDITOR config/database.yml
+    rake db:migrate
+
+You need a User/Login:
+
+    script/generate login
