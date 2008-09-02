@@ -25,7 +25,7 @@ Don't forget the submodules:
 Setup your database:
 
     cp vendor/railties/configs/databases/sqlite3.yml config/database.yml # for example
-    EDITOR config/database.yml
+    $EDITOR config/database.yml
     rake db:migrate
 
 You need a User/Login:
