@@ -7,3 +7,6 @@
 [submodule "vendor/gems/sequel"]
 	path = vendor/gems/sequel
 	url = git://github.com/jeremyevans/sequel.git
+[submodule "vendor/plugins/friendly_id"]
+	path = vendor/plugins/friendly_id
+	url = git://github.com/norman/friendly_id.git
