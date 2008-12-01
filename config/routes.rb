@@ -2,30 +2,25 @@ ActionController::Routing::Routes.draw do |map|
 
   map.root :controller => 'home'
 
-  map.with_options :controller => 'plugins' do |plugins|
-    plugins.plugin '/plugin/:id', :action => 'show'
-    plugins.plugin_feed '/plugin/:id/feed', :action => 'feed'
+  map.with_options :controller => 'projects' do |projects|
+    projects.project '/project/:id', :action => 'show'
+    projects.project_feed '/project/:id/feed', :action => 'feed'
 
-    plugins.plugins '/plugins'
+    projects.projects '/projects'
   end
 
   map.with_options :controller => 'users' do |users|
-    users.login '/login', :action => 'login'
     users.auth '/auth', :action => 'auth', :conditions => {:method => :post}
     users.logout '/logout', :action => 'logout'
   end
 
-  map.with_options :controller => 'news' do |news|
-    news.commits '/commits', :action => 'commits'
+  map.with_options :controller => 'blog' do |blog|
+    blog.articles '/blog'
+    blog.map '/blog/:page', :page => /\d+/
 
-    news.summary '/news/summary', :action => 'summary'
-
-    news.find_news_by_date '/news/:date', :action => 'find_by_date',
+    blog.article_by_ident '/blog/:id', :action => 'show'
+    blog.find_article_by_date '/blog/:date', :action => 'find_by_date',
       :date => /(?:today|(?:\d{2}|\d{4})(?:-\d{1,2}(?:-\d{1,2})?)?)/
-    news.find_news_by_ident '/news/:ident', :action => 'show',
-      :ident => /\d+-.+/
-
-    news.news '/news/:page', :defaults => {:page => '0'}
   end
 
   map.with_options :controller => 'comments' do |comments|
@@ -51,13 +46,20 @@ ActionController::Routing::Routes.draw do |map|
 
   map.namespace :admin do |admin|
     admin.resources :pages,
-      :collection => {:preview => :post},
-      :member => {:publish => :post, :revoke => :post}
-    admin.resources :articles,
-      :collection => {:preview => :post},
-      :member => {:publish => :post, :announce => :post, :revoke => :post}
-    admin.resources :plugins
-    admin.resources :users
+      :collection => { :bulk => :post }
+    admin.resources :articles, :has_many => :comments,
+      :collection => { :bulk => :post }, :member => { :announce => :any }
+    admin.resources :users,
+      :collection => { :bulk => :post }
+
+    admin.resources :projects, :has_many => :roles
+
+    admin.edit_navigations 'navigations',
+      :controller => 'navigations', :action => 'edit',
+      :conditions => { :method => :get }
+    admin.update_navigations 'navigations',
+      :controller => 'navigations', :action => 'update',
+      :conditions => { :method => :put }
 
     admin.preview_markdown 'preview/markdown',
       :controller => 'previews', :action => 'render_markdown'

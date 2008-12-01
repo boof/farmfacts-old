@@ -3,68 +3,31 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title><%= page_title %></title>
+	<title><%= APPLICATION_NAME %> - <%= page_title %></title>
 
 	<meta http-equiv="Content-Script-Type" content="text/javascript" />
 	<meta http-equiv="Content-Style-Type" content="text/css" />
 	<meta content="text/html; charset=utf-8" http-equiv="content-type" />
 	<meta content="en" name="content-language" />
-	<meta name="verify-v1" content="05ZpXfJLPXMoFdiO2b6AJoWnkhdZ2D9S2su+pBvk1Qw=" />
 
-	<meta name="keywords" content="ruby, sequel, example, sql, toolkit, orm, plugin, activerecord, documentation, howto, news" />
-	<meta name="description" content="Ruby Sequel is a lightweight database toolkit for Ruby." />
+	<meta name="keywords" content="<%= page_keywords %>" />
+	<meta name="description" content="<%= page_description  %>" />
 
 	<%= stylesheet_link_tag 'application', 'ruby', :cache => true %>
-	<%= javascript_include_tag 'prototype' %>
-	<%= javascript_include_tag 'application' %>
+	<%= javascript_include_tag 'prototype', 'application', :cache => :frontend %>
 </head>
 <body>
-	<div id="header">
-		<a href="/" id="logo"><%= image_tag 'ruby-sequel.png', :alt => 'Ruby Sequel' -%></a>
-		<h1>The Ruby Database Toolkit</h1>
-		<div id="navigation">
-			<ul>
-				<li><a href="/news">News</a></li>
-				<li><a href="/plugins">Plugins</a></li>
-				<li><a href="/documentation">Documentation</a></li>
-				<li><a href="/community">Community</a></li>
-				<li><a href="http://code.google.com/p/ruby-sequel/issues/list">Development</a></li>
-				<li><a href="http://code.google.com/p/ruby-sequel/w/list">Wiki</a></li>
-				<li><a href="/login">Login</a></li>
-			</ul>
-		</div>
-		<br style="clear: both;" />
+	<div id="top">
+		<div id="navigation"><ul><%= navigation -%></ul></div>
 	</div>
 
-	<hr />
-
-	<div id="content">
-		<br style="clear: both;" />
+	<div id="middle">
 		<%= yield %>
 		<br style="clear: both;" />
 	</div>
-	
-	<div id="footer">
-		<p>
-			<a href="<%= PROJECT_URL %>">This page is still under development!</a>
-		</p>
+
+	<div id="bottom">
+		<p>FarmFacts is <a href="http://github.com/boof/www-ruby-sequel-org">boof's www.ruby-sequel.org</a> forked by <a href="http://www.fork.de/">Fork Unstable Media</a>.</p>
 	</div>
-
-	<script type="text/javascript">
-		//<![CDATA[
-		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-		//]]>
-	</script>
-	<script type="text/javascript">
-		//<![CDATA[
-		var pageTracker = _gat._getTracker("UA-3451425-2");
-		pageTracker._initData();
-		pageTracker._trackPageview();
-
-		$$(".noJS").each(function(e){e.hide();});
-		//]]>
-	</script>
-
 </body>
 </html>

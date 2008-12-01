@@ -1,16 +1,34 @@
 module ApplicationHelper
 
   def page_title
-    @page_title || 'Ruby Sequel - The Database Toolkit for Ruby'
+    @page_title || DEFAULT_TITLE
   end
 
-  def inject_box(path, e_id = 'injectedBox')
-    function = remote_function :update => e_id, :url => path, :method => :get
+  def page_keywords
+    @page_keywords || DEFAULT_KEYWORDS
+  end
 
-    content_tag :div, :id => e_id do
-      content_tag(:p, JS_REQUIRED_MSG, :class => 'noJS') <<
-      javascript_tag(function)
-    end
+  def page_description
+    @page_keywords || DEFAULT_DESCRIPTION
+  end
+
+  def navigation
+    File.read "#{ Rails.root }/app/views/shared/navigation.html"
+  end
+
+  def odd(index, offset = 0, *classes)
+    classes = %w[ even odd ] if classes.empty?
+    modulo  = classes.length
+
+    classes.at index % modulo + offset % modulo
+  end
+
+  def link_to_textile(caption = 'Textile')
+    function = 'window.open("http://en.wikipedia.org/wiki/Textile_(markup_language)")'
+
+    link_to_function h(caption), function,
+      :href   => 'http://en.wikipedia.org/wiki/Textile_(markup_language)',
+      :title  => 'The single biggest source of inspiration for Markdown’s syntax is the format of plain text email.'
   end
 
 end

@@ -1,24 +1,22 @@
-<h2>Pages</h2>
-
+<% form_tag bulk_admin_pages_path do %>
 <table id="cmPages">
 	<thead>
 		<tr>
 			<th class="cmPageTitle">Title</th>
-			<th class="cmPagePath">URL</th>
+			<th class="cmPagePath">Path</th>
 			<th class="cmTimestamp">Last Modified</th>
-			<th class="cmAction"></th>
+			<th class="cmTimestamp">Published</th>
 			<th class="cmAction"></th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr class="cmAction">
-			<td colspan="4"></td>
-			<td class="cmAction"><%= link_to image_tag('icons/page_new.gif'), new_admin_page_path, :title => 'Click here to create a page.' %></td>
-		</tr>
 		<%= render :partial => 'page', :collection => @pages %>
-		<tr class="cmAction">
-			<td colspan="4"></td>
-			<td class="cmAction"><%= link_to image_tag('icons/page_new.gif'), new_admin_page_path, :title => 'Click here to create a page.' %></td>
-		</tr>
 	</tbody>
 </table>
+<p class="controls">
+	<%= location_to 'New page', new_admin_page_path %>
+	&nbsp;or&nbsp;
+	<%= select_bulk_action 'publish', 'revoke', 'destroy' %>
+	<%= submit_tag 'selection ...' %>
+</p>
+<% end %>

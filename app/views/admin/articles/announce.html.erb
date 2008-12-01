@@ -1,0 +1,18 @@
+<% form_tag announce_admin_article_path(@article.id) do %>
+	<div>
+		<label for="recipients">Recipients (separated by comma)</label>
+		<%= text_area_tag 'recipients', MAILING_LISTS, :style => 'height: 1em; padding: 3px;' %>
+	</div>
+	<div>
+		<label for="prefix">Subject</label>
+		<%= text_field_tag 'subject', "[ANN] #{ @article.title }", :size => 60 %>
+	</div>
+	<div>
+		<label for="body">Body</label>
+		<%= text_area_tag 'body', @article.body, :rows => 25 %>
+	</div>
+	<p class="controls">
+		<%= back_to admin_articles_path %>
+		<%= submit_tag 'Send' %>
+	</p>
+<% end %>

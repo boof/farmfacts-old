@@ -6,14 +6,18 @@ class Admin::UsersController < Admin::Base
     :edit   => 'Edit "%s"'
   }
 
-  before_filter :assign_new_user,
-    :only => [:new, :create]
-  before_filter :assign_user_by_id,
-    :only => [:edit, :update, :destroy]
+  before_filter :assign_user, :except => [:index, :bulk]
 
   def index
     title_page :index
-    @users = User.find :all
+    @users = User.all :order => :name
+  end
+
+  def bulk
+    User.bulk_methods.include? params[:bulk_action] and
+    current_user.will params[:bulk_action], User, params[:user_ids]
+
+    redirect_to :action => :index
   end
 
   def new
@@ -27,40 +31,16 @@ class Admin::UsersController < Admin::Base
   end
 
   def create
-    @user.attributes = params[:user]
-
-    current_user.will :save, @user do |saved|
-      if saved
-        redirect_to :action => :index
-      else
-        send :new
-      end
-    end
+    save_or_send :new, :user
   end
 
   def update
-    @user.attributes = params[:user]
-
-    current_user.will :save, @user do |saved|
-      if saved
-        redirect_to :action => :index
-      else
-        send :edit
-      end
-    end
-  end
-
-  def destroy
-    current_user.will :destroy, @user
-    redirect_to :action => :index
+    save_or_send :edit, :user
   end
 
   protected
-  def assign_new_user
-    @user = User.new
-  end
-  def assign_user_by_id
-    @user = User.find params[:id]
+  def assign_user
+    @user = ( User.find params[:id] rescue User.new )
   end
 
 end

@@ -8,3 +8,4 @@ config/session.key
 session_secret
 all.*
 *.sqlite3
+*.bundle

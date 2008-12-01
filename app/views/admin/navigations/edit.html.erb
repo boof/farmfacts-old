@@ -1,0 +1,8 @@
+<h2>Navigation Snippet</h2>
+
+<% form_tag admin_update_navigations_path, :method => :put do -%>
+	<%= text_area_tag 'navigations', @navigations, :rows => 10 %>
+	<p class="controls">
+		<%= submit_tag 'Update' %>
+	</p>
+<% end -%>

@@ -1,9 +1,0 @@
-<h2>New Plugin</h2>
-
-<% form_for [:admin, @plugin] do |form| %>
-	<%= render :partial => 'form', :object => form %>
-	<p class="controls">
-		<%= back_to admin_plugins_path %>
-		<%= submit_tag 'Create' %>
-	</p>
-<% end %>

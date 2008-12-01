@@ -1,6 +1,4 @@
 <%= error_messages_for 'user', :object => form.object %>
-<%= error_messages_for 'login', :object => form.object.login %>
-
 <div>
 	<label for="user_name">Name</label>
 	<%= form.text_field :name, :size => 60 %>
@@ -10,6 +8,7 @@
 	<%= form.text_field :email, :size => 60 %>
 </div>
 
+<%= error_messages_for 'login', :object => form.object.login %>
 <% fields_for 'user[login_attributes]', form.object.login do |login_form| %>
 	<div>
 		<label for="login_attributes_username">Username</label>

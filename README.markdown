@@ -2,6 +2,12 @@ Ruby Sequel - The Ruby Database Toolkit - Is getting a website...
 =================================================================
 
 Help Me!
+* Add Attachments
+create_table :attachments do |t|
+  t.references :container, :polymorph => true
+  # ...
+end
+
 * MISSING: comments management (hide/show)
 * MISSING: articles behind the first 10 cannot be accessed
 * FEATURE: endless pageless for comments
@@ -24,7 +30,9 @@ Don't forget the submodules:
 
 Setup your database:
 
-    cp vendor/railties/configs/databases/sqlite3.yml config/database.yml # for example
+    # replace sqlite3 with the database of your choice
+    cp vendor/rails/railties/configs/databases/sqlite3.yml config/database.yml
+
     $EDITOR config/database.yml
     rake db:migrate
 

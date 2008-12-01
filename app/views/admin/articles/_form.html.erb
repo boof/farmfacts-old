@@ -5,14 +5,14 @@
 	<%= form.text_field :title, :size => 60 %>
 </div>
 <div>
-	<%= form.label :head, "Head (#{ link_to_markdown })" %>
-	<%= form.text_area :head, :rows => 5, :class => 'withPreview' %>
-	<%= markdown_button 'article_head', 'Preview' %>
-	<div id="article_head_preview" class="preview"></div>
+	<%= form.label :introduction, "Introduction (#{ link_to_textile })" %>
+	<%= form.text_area :introduction, :rows => 3, :class => 'withPreview' %>
+	<%= markdown_button 'article_intro', 'Preview' %>
+	<div id="article_intro_preview" class="preview"></div>
 	<br style="clear: both;" />
 </div>
 <div>
-	<%= form.label :body, "Body (#{ link_to_markdown })" %>
+	<%= form.label :body, "Body (#{ link_to_textile })" %>
 	<%= form.text_area :body, :rows => 20, :class => 'withPreview' %>
 	<%= markdown_button 'article_body', 'Preview' %>
 	<div id="article_body_preview" class="preview"></div>

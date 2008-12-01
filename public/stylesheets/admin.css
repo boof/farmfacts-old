@@ -1,0 +1,104 @@
+/* Preview */
+textarea.withPreview
+{ width: 37em; float: left; margin-right: 3em; }
+div.preview
+{ margin-left: 40em; }
+
+/* Tables */
+table
+{ margin-top: 2px; }
+table thead tr th
+{
+	background-color: #32434d;
+	border-right: 1px solid white;
+	color: ivory;
+	font-size: 13px;
+	padding: 2px 7px;
+	text-align: left;
+}
+table tbody tr td
+{
+	border-right: 1px solid lightgray;
+	font-size: 13px;
+	padding: 2px 7px;
+	vertical-align: middle;
+}
+tr.odd
+{ background-color: white; }
+tr.even
+{ background-color: #fafafa; }
+table thead tr th.cmAction,
+table tbody tr td.cmAction
+{
+	text-align: center;
+	width: 20px;
+}
+table tbody tr td img
+{ vertical-align: bottom; }
+table tbody tr:hover
+{ background-color: tomato; }
+table tbody tr:hover a,
+table tbody tr:hover a:hover
+{ color: white; }
+table tbody tr td.cmAction,
+table thead tr th.cmAction
+{ border-right: none; }
+table thead tr th.cmTimestamp,
+table tbody tr td.cmTimestamp
+{ width: 160px; }
+
+/* Pages */
+#cmPages
+{
+	border-collapse: collapse;
+	width: 100%;
+}
+#cmPages thead tr th.cmPageTitle,
+#cmPages tbody tr td.cmPageTitle
+{ width: 30%; }
+#cmPages thead tr th.cmPagePath,
+#cmPages tbody tr td.cmPagePath
+{}
+
+/* Articles */
+#cmArticles
+{
+	border-collapse: collapse;
+	width: 100%;
+}
+#cmArticles thead tr th.cmArticleTitle,
+#cmArticles tbody tr td.cmArticleTitle
+{ width: 30%; }
+#cmArticles thead tr th.cmArticleIntroduction
+#cmArticles tbody tr td.cmArticleIntroduction
+{ font-size: 10px; }
+
+
+/* Projects */
+#cmProjects
+{
+	border-collapse: collapse;
+	width: 100%;
+}
+#cmProjects thead tr th.cmProjectName,
+#cmProjects tbody tr td.cmProjectName
+{ width: 30%; }
+#cmProjects thead tr th.cmProjectIntroduction
+#cmProjects tbody tr td.cmProjectIntroduction
+{ font-size: 10px; }
+
+/* Users */
+#cmUsers
+{
+	border-collapse: collapse;
+	width: 100%;
+}
+#cmUsers thead tr th.cmUserName,
+#cmUsers tbody tr td.cmUserName
+{
+	min-width: 160px;
+	width: 30%;
+}
+#cmUsers thead tr th.cmUserEMail,
+#cmUsers tbody tr td.cmUserEMail
+{}

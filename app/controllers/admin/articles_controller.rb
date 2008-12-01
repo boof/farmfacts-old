@@ -5,19 +5,25 @@ class Admin::ArticlesController < Admin::Base
     :show     => 'Preview "%s"',
     :new      => 'New Article',
     :edit     => 'Edit "%s"',
-    :publish  => 'Publish "%s"'
+    :announce => 'Announce "%s"'
   }
 
-  before_filter :assign_new_article,
-    :only => [:new, :create]
-  before_filter :assign_article_by_id,
-    :only => [:show, :edit, :update, :publish, :revoke, :destroy]
+  before_filter :assign_new_article, :only => [:new, :create]
+  before_filter :assign_article_by_id, :only => [:show, :edit, :update, :announce]
 
-  cache_sweeper :article_sweeper, :except => [:index, :show, :new, :edit]
+  cache_sweeper :article_sweeper, :only => [:create, :update, :bulk]
 
   def index
     title_page :index
-    @articles = Article.find :all, :order => 'created_at DESC', :include => :publication
+    @articles = Article.with_order.all :include => :publication
+  end
+
+  def bulk
+    Article.bulk_methods.include? params[:bulk_action] and
+    current_user.will params[:bulk_action], Article,
+      params[:article_ids], params
+
+    redirect_to :action => :index
   end
 
   def show
@@ -35,45 +41,25 @@ class Admin::ArticlesController < Admin::Base
   end
 
   def create
-    @article.attributes = params[:article]
-
-    if current_user.will(:save, @article)
-      redirect_to admin_article_path(@article)
-    else
-      send :new
-    end
+    save_or_send :new, :article, admin_article_path(@article)
   end
 
   def update
-    @article.attributes = params[:article]
-
-    if current_user.will(:save, @article)
-      redirect_to admin_article_path(@article)
-    else
-      send :edit
-    end
-  end
-
-  def publish
-    title_page :publish, @article
-    current_user.publish 'Article', @article.id
+    save_or_send :edit, :article, admin_article_path(@article)
   end
 
   def announce
-    current_user.will :deliver_article, Announce,
-      current_user, params[:recipients], params[:subject], params[:body]
+    subject, body = params[:subject], params[:body]
 
-    redirect_to admin_articles_path
-  end
+    if subject.blank? or body.blank? then title_page :announce, @article
+    else
+      recipients = "#{ params[:recipients] }".split ','
+      recipients.each do |r|
+        Announce.deliver_article current_user, r.strip, subject, body
+      end
 
-  def revoke
-    current_user.will :destroy, @article.publication
-    redirect_to admin_articles_path
-  end
-
-  def destroy
-    current_user.will :destroy, @article
-    redirect_to admin_articles_path
+      redirect_to :action => :index
+    end
   end
 
   protected

@@ -2,8 +2,33 @@ class Login < ActiveRecord::Base
 
   belongs_to :user
 
+  def self.extract_username_and_password(params)
+    return params[:username], params[:password] if params.is_a? Hash
+  end
+
+  def self.find_with_credentials(params)
+    username, password = extract_username_and_password params
+    return if username.blank? or password.blank?
+
+    login = find_or_initialize_by_username username, :include => :user
+    login if login.has_password? password
+  end
+
   def self.generate_hash(*credentials)
     Digest::MD5.hexdigest credentials * '+'
+  end
+
+  def has_password?(password)
+    password_hash == self.class.generate_hash(password, password_salt)
+  end
+
+  def self.possible?
+    '0' != connection.select_value('SELECT count(id) FROM logins')
+  end
+
+  def self.new!(*args, &block)
+    raise NotImplementedError unless possible?
+    new(*args, &block)
   end
 
   CHARS = (0..9).to_a + ('a'..'z').to_a + ('A'..'Z').to_a
@@ -15,30 +40,15 @@ class Login < ActiveRecord::Base
     Digest::MD5.hexdigest(rand.to_s)[0, 10]
   end
 
-  def exists?
-    login = self.class.find :first, :conditions => {:username => username}
-
-    if login
-      password_hash = self.class.generate_hash password, login.password_salt
-
-      if password_hash.eql? login.password_hash
-        clear_password
-
-        self[:user_id] = login.user_id
-
-        true
-      end
-    end
-  end
-
   validates_presence_of :username
 
   attr_accessor :password
+  attr_accessor :return_uri
   validates_presence_of :password, :on => :create
   validates_confirmation_of :password
 
   def inspect
-    self[:username]
+    username
   end
 
   def sync_passwords

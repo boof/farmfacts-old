@@ -1,23 +1,22 @@
-<h2>News</h2>
-
+<% form_tag bulk_admin_articles_path do %>
 <table id="cmArticles">
 	<thead>
 		<tr>
 			<th class="cmArticleTitle">Title</th>
+			<th class="cmArticleIntro">Introduction</th>
 			<th class="cmTimestamp">Last Modified</th>
-			<th class="cmAction"></th>
+			<th class="cmTimestamp">Published</th>
 			<th class="cmAction"></th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr class="cmAction">
-			<td colspan="3"></td>
-			<td class="cmAction"><%= link_to image_tag('icons/page_new.gif'), new_admin_article_path %></td>
-		</tr>
 		<%= render :partial => 'article', :collection => @articles %>
-		<tr class="cmAction">
-			<td colspan="3"></td>
-			<td class="cmAction"><%= link_to image_tag('icons/page_new.gif'), new_admin_article_path %></td>
-		</tr>
 	</tbody>
 </table>
+<p class="controls">
+	<%= location_to 'New article', new_admin_article_path %>
+	&nbsp;or&nbsp;
+	<%= select_bulk_action 'publish', 'revoke', 'destroy' %>
+	<%= submit_tag 'selection ...' %>
+</p>
+<% end %>

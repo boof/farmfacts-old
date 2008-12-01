@@ -1,7 +1,0 @@
-<% content_tag_for :tr, plugin do %>
-<td class="cmPluginName"><%= link_to h(plugin.name), edit_admin_plugin_path(plugin) -%></td>
-<td class="cmPluginFeed">
-	<%= remote_feed_for plugin %>
-</td>
-<td class="cmAction"><%= link_to image_tag('icons/page_delete.gif'), admin_plugin_path(plugin), :method => :delete, :confirm => "Delete '#{ plugin.name }'?" -%></td>
-<% end %>

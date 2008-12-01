@@ -1,37 +1,30 @@
 class Article < ActiveRecord::Base
 
+  extend Bulk::Destroy
+#  extend Bulk::Publication
+
   belongs_to :author, :class_name => 'User'
 
-  has_one :publication, :as => :publishable, :dependent => :delete
+  on_whitelist :updates => :updated_at
   has_many :comments, :as => :commented, :dependent => :delete_all
 
-  validates_presence_of :title, :head, :body
+  named_scope :with_order, proc { |*columns|
+    {:order => columns.blank?? 'articles.created_at DESC' : [*columns] * ', '}
+  }
 
-  def self.find_all_public(options)
-    options = options.merge :joins => :publication,
-      :conditions => ['publications.created_at < ?', Time.now]
-
-    find :all, options
-  end
-
-  def self.find_public(id, options)
-    options = options.merge :joins => :publication, :conditions => [
-      'publications.created_at < ? AND articles.id = ?',
-      Time.now, id
-    ]
-
-    find :first, options
-  end
-
-  def self.find_by_ident(ident, options = {})
-    find_public ident.to_i, options or Page.not_found
-  end
-  def ident
-    "#{ id }-#{ title.downcase.gsub /[ \.]/, '-' }"
-  end
+  validates_presence_of :title, :introduction, :body
+  has_friendly_id :title, :use_slug => true, :strip_diacritics => true
 
   def to_s
-    self[:title]
+    title
+  end
+
+  def published_at(timezone = nil)
+    if timezone
+      ActiveSupport::TimeWithZone.new publication.created_at, timezone
+    else
+      publication.created_at
+    end
   end
 
 end

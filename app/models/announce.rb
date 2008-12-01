@@ -1,8 +1,8 @@
 class Announce < ActionMailer::Base
 
-  def article(editor, recipients, subject, body)
-    self.recipients recipients.split(',')
-    self.from       editor.email
+  def article(announcer, recipient, subject, body)
+    self.recipients [recipient]
+    self.from       announcer.email
     self.subject    subject
 
     self.body       :body => body

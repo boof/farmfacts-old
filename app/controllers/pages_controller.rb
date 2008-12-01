@@ -1,14 +1,18 @@
 class PagesController < ApplicationController
 
   caches_page :show
-  helper CommentsHelper
   session :off
 
   def show
-    @page = Page.find_by_name request.path
+    @page = Page.open request.path
     title_page @page.title
-
-    not_found(@page) if @page.not_found?
   end
+
+  protected
+  def no_assets
+    ASSETS.include? request.path[-3, 3] and
+    render :nothing => true, :status => '404 Not Found'
+  end
+  before_filter :no_assets
 
 end

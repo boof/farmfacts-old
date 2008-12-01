@@ -1,0 +1,7 @@
+<% form_for [:admin, @project] do |form| %>
+	<%= render :partial => 'form', :object => form %>
+	<p class="controls">
+		<%= back_to admin_projects_path %>
+		<%= submit_tag 'Create' %>
+	</p>
+<% end %>

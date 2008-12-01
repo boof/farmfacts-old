@@ -1,5 +1,5 @@
 class PageSweeper < ActionController::Caching::Sweeper
-  observe Page, Publication, Comment
+  observe Page, Comment
 
   def expire_cache(obj)
     case obj

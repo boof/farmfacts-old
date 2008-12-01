@@ -1,5 +1,4 @@
-<h2>Users</h2>
-
+<% form_tag bulk_admin_users_path do %>
 <table id="cmUsers">
 	<thead>
 		<tr>
@@ -9,14 +8,13 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr class="cmAction">
-			<td colspan="2"></td>
-			<td class="cmAction"><%= link_to image_tag('icons/page_new.gif'), new_admin_user_path %></td>
-		</tr>
 		<%= render :partial => 'user', :collection => @users %>
-		<tr class="cmAction">
-			<td colspan="2"></td>
-			<td class="cmAction"><%= link_to image_tag('icons/page_new.gif'), new_admin_user_path %></td>
-		</tr>
 	</tbody>
 </table>
+<p class="controls">
+	<%= location_to 'New user', new_admin_user_path %>
+	&nbsp;or&nbsp;
+	<%= select_bulk_action 'destroy' %>
+	<%= submit_tag 'selected ...' %>
+</p>
+<% end %>

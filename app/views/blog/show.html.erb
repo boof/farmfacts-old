@@ -1,0 +1,8 @@
+<%=markdown @article.body %>
+
+<p class="timestamp">Last Modified: <%= @article.updated_at %></p>
+
+<%= remote_new_comment_button_to 'Write comment', comment_news_path(@article, :referer => request.url) %>
+<% unless @article.comments.count.zero? %>
+<%= link_to_remote_comments "Read comments (#{ @article.comments.count })", news_comments_path(@article) %>
+<% end %>

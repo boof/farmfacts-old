@@ -1,0 +1,8 @@
+<% content_tag_for :tr, project, :class => odd(project_counter) do %>
+<td class="cmProjectName">
+	<%= link_to h(project.name), edit_admin_project_path(project) -%>
+	(<%= link_to h(project.homepage), project.homepage -%>)
+</td>
+<td class="cmProjectIntroduction"><%=markdown project.introduction %></td>
+<td class="cmAction"><%= check_box_tag 'project_ids[]', project.id -%></td>
+<% end %>

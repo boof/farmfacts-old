@@ -4,18 +4,9 @@ class Comment < ActiveRecord::Base
   belongs_to :commented, :polymorphic => true
   validates_presence_of :author_name, :email, :body
 
-  def hide
-    self.class.transaction do
-      commented.decrement! :comments_count if visible?
-      update_attribute :visible, false
-    end
-  end
-  def show
-    self.class.transaction do
-      commented.decrement! :comments_count unless visible?
-      update_attribute :visible, true
-    end
-  end
+  on_blacklist
+  when_rejected {commented.decrement! :comments_count}
+  when_accepted {commented.increment! :comments_count}
 
   def to_s
     self[:body]

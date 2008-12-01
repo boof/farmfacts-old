@@ -4,9 +4,12 @@
 [submodule "vendor/plugins/exception_notification"]
 	path = vendor/plugins/exception_notification
 	url = git://github.com/rails/exception_notification.git
-[submodule "vendor/gems/sequel"]
-	path = vendor/gems/sequel
-	url = git://github.com/jeremyevans/sequel.git
 [submodule "vendor/plugins/friendly_id"]
 	path = vendor/plugins/friendly_id
-	url = git://github.com/boof/friendly_id.git
+	url = git://github.com/norman/friendly_id.git
+[submodule "vendor/plugins/onlist"]
+	path = vendor/plugins/onlist
+	url = git://github.com/fork/onlist.git
+[submodule "vendor/plugins/coarse"]
+	path = vendor/plugins/coarse
+	url = scm@fwhh.fork.de:ruby/coarse
