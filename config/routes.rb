@@ -3,10 +3,8 @@ ActionController::Routing::Routes.draw do |map|
   map.root :controller => 'home'
 
   map.with_options :controller => 'projects' do |projects|
-    projects.project '/project/:id', :action => 'show'
-    projects.project_feed '/project/:id/feed', :action => 'feed'
-
     projects.projects '/projects'
+    projects.project '/projects/:id', :action => 'show'
   end
 
   map.with_options :controller => 'users' do |users|
@@ -16,32 +14,21 @@ ActionController::Routing::Routes.draw do |map|
 
   map.with_options :controller => 'blog' do |blog|
     blog.articles '/blog'
-    blog.map '/blog/:page', :page => /\d+/
-
-    blog.article_by_ident '/blog/:id', :action => 'show'
-    blog.find_article_by_date '/blog/:date', :action => 'find_by_date',
-      :date => /(?:today|(?:\d{2}|\d{4})(?:-\d{1,2}(?:-\d{1,2})?)?)/
+    blog.article '/blog/:id', :action => 'show'
+    blog.articles_on '/blog/:year/:month/:day',
+        :year   => /\d{4}/,
+        :month  => /\d{1,2}/,
+        :day    => /\d{1,2}/,
+        :defaults => { :day => nil, :month => nil }
   end
 
   map.with_options :controller => 'comments' do |comments|
-    comments.comment_news '/comment/news/:commented_id',
-      :conditions => { :method => :post },
-      :action => 'create', :commented_type => 'Article'
-    comments.connect '/comment/news/:commented_id',
-      :conditions => { :method => :get },
-      :action => 'new', :commented_type => 'Article'
-    comments.news_comments '/news/:id/comments/:offset',
-      :action => 'list', :type => 'Article',
-      :defaults => {:offset => 0}
-    comments.comment_page '/comment/page/:commented_id',
-      :conditions => { :method => :post },
-      :action => 'create', :commented_type => 'Page'
-    comments.connect '/comment/page/:commented_id',
-      :conditions => { :method => :get },
-      :action => 'new', :commented_type => 'Page'
-    comments.page_comments '/page/:id/comments/:offset',
-      :action => 'list', :type => 'Page',
-      :defaults => {:offset => '0'}
+    comments.comment_news '/blog/:commented_id/comment',
+      :action => 'create', :commented_type => 'Article',
+      :conditions => { :method => :post }
+    comments.connect '/blog/:commented_id/comment',
+      :action => 'new', :commented_type => 'Article',
+      :conditions => { :method => :get }
   end
 
   map.namespace :admin do |admin|
@@ -63,6 +50,13 @@ ActionController::Routing::Routes.draw do |map|
 
     admin.preview_markdown 'preview/markdown',
       :controller => 'previews', :action => 'render_markdown'
+
+    admin.setup '/setup',
+      :controller => 'setup', :action => 'new',
+      :conditions => { :method => :get }
+    admin.connect '/setup',
+      :controller => 'setup', :action => 'create',
+      :conditions => { :method => :post }
   end
 
   map.page_by_name '*p',
