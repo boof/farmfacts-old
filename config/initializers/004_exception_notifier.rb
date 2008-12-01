@@ -23,7 +23,7 @@ module ExceptionNotifiable
           @login = Login.new! :return_uri => params[:return_uri] || request.request_uri
           render :template => 'login', :layout => 'application', :status => 401
         }
-        type.all  { render :nothing => true, :status => "503 Service Unavailable" }
+        type.all  { redirect_to :controller => 'setup' }
       end
     rescue NotImplementedError
       render :file => "#{RAILS_ROOT}/public/503.html", :status => "503 Service Unavailable"
