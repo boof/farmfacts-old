@@ -13,3 +13,6 @@
 [submodule "vendor/plugins/coarse"]
 	path = vendor/plugins/coarse
 	url = scm@fwhh.fork.de:ruby/coarse
+[submodule "vendor/plugins/paperclip"]
+	path = vendor/plugins/paperclip
+	url = git://github.com/thoughtbot/paperclip.git
