@@ -1,9 +1,0 @@
-<%=markdown @article.body %>
-
-<p class="timestamp">Last Modified: <%= @article.updated_at %></p>
-
-<p class="controls">
-	<%= back_to admin_articles_path %>
-	<%= location_to 'Edit', edit_admin_article_path(@article.id) %>
-	<%= location_to 'Announce', announce_admin_article_path(@article.id) %>
-</p>

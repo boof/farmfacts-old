@@ -1,0 +1,8 @@
+.box
+  - render_navigation :style => 'float: left;', :class => '' do
+    .column= link_to '&laquo; Categories', admin_categories_path
+  %br.clear
+
+- form_for :category, @category, :url => new_admin_category_path, :html => { :multipart => true } do |f|
+  = render :partial => 'form', :object => f
+  = submit_tag 'Create'

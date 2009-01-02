@@ -1,193 +1,31 @@
-a {
-	color: firebrick;
-	text-decoration: none;
+.fieldWithErrors input,
+.fieldWithErrors textarea
+{
+  background:#FBE3E4;color:#8a1f11;border-color:#FBC2C4;
 }
-a:hover {
-	color: #32434d;
+.preview
+{
+  border:1px dotted #ddd;
+  margin-left: -5px;
+  margin-right: -5px;
+  padding:5px;
 }
-
-body {
-	color: black;
-	font-size: 14px;
-	line-height: 16px;
-	font-family: Helvetica, Arial, sans-serif;
-	margin: 0 10%;
-	overflow: scroll;
-	padding: 0;
+p.attachment
+{
+  padding:.8em;margin-bottom:1em;border:2px solid #ddd;
+  background:#FFF6BF;color:#514721;border-color:#FFD324;
 }
-
-#top {
-	margin-top: 5em;
+.pagination
+{
+  margin-top:1.5em;
+  margin-bottom:1.5em;
+  text-align: center;
 }
-#top h1 {
-	border-top: 1px solid lightgray;
-	background-color: white;
-	border-bottom: 2px solid orangered;
-	clear: both;
-	font-size: 20px;
-	letter-spacing: 1px;
-	margin: 25px 0 0 0;
-	padding: 40px 0 20px 0;
-	white-space: pre;
-}
-
-#top, #middle {
-}
-#middle {
-	height: 100%;
-}
-#middle h2 {
-	background-color: #32434d;
-	color: ivory;
-	font-size: 13px;
-	margin: 2px 0;
-	padding: 2px 7px;
-}
-#bottom {
-	border-top: 1px solid orangered;
-	clear: both;
-	margin-bottom: 1em;
-	margin-top: 5em;
-	padding: 3px 7px;
-	text-align: left;
-}
-#bottom p {
-	color: dimgray;
-	font-size: 11px;
-	margin: 0;
-}
-
-img
-{ border: none; }
-
-textarea
-{ width: 100%; }
-#logo {
-	float: left;
-	margin-right: 1em;
-}
-
-#navigation ul {
-	list-style-type: none;
-	padding: 0;
-}
-#navigation ul li {
-	background-color: #32434d;
-	float: left;
-	font-size: 13px;
-	margin-right: 1px;
-}
-#navigation ul li a {
-	background-color: #32434d;
-	color: ivory;
-	display: block;
-	padding: 1px 13px;
-}
-#navigation ul li a:hover {
-	background-color: tomato;
-	color: ivory;
-}
-
-#injectedBox {
-	background-color: ivory;
-	border: 2px solid lightgray;
-	float: right;
-	font-size: 75%;
-	min-height: 480px;
-	margin: 3em 0 3em 3em;
-	padding: 1.5em;
-	width: 220px;
-}
-#injectedBox h2 {
-	margin-top: 0;
-}
-#injectedBox h3.name {
-	font-weight: normal;
-	margin: 1em 0 0 0;
-}
-#injectedBox p {
-	margin: 0;
-}
-
-hr {
-	background-color: dimgray;
-	border-width: 0;
-	color: dimgray;
-	margin: 0;
-	height: 2px;
-}
-
-p.controls { text-align: center; }
-
-p.timestamp { font-size: 90%; }
-
-label {
-	display: block;
-	margin-top: 0.5em;
-}
-
-div.errorExplanation {
-	font-size: 80%;
-}
-div.errorExplanation h2 {
-	margin: 20px 0 5px 0;
-}
-div.errorExplanation p {
-	display: none;
-}
-div.errorExplanation ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-}
-div.fieldWithErrors {
-	border-left: 1em solid mistyrose;
-	margin-left: -1em;
-}
-
-#comments {
-	font-size: 90%;
-	margin-top: 1em;
-}
-#middle div span {
-	font-weight: bold;
-}
-#middle div pre {
-	font-family: 'Monaco', 'Andale Mono', monospace;
-	font-size: 12px;
-	font-style: italic;
-	margin-right: 0.5em;
-	margin-left: 0.5em;
-	overflow: auto;
-}
-
-div.article {
-	margin-top: 2em;
-}
-div.article div.articleHeader {
-	font-size: 12px;
-}
-div.article div.articleHeader h3 {
-	font-size: 16px;
-	margin-bottom: 4px;
-}
-
-div.article div.articleIntroduction {
-	font-size: 14px;
-	padding: 0 7px;
-}
-div.article div.articleFooter {
-	border-top: 1px solid #fafafa;
-	clear: both;
-	font-size: 12px;
-	padding: 3px 7px;
-}
-
-ul.plugins h3 {
-	font-weight: normal;
-	margin-bottom: 6px;
-}
-ul.plugins p {
-	font-style: italic;
-	margin-top: 6px;
+.pagination a,
+.pagination strong
+{
+  text-decoration: none;
+  padding:.2em .5em;margin-bottom:1em;border:1px solid #ddd;
+  background:#E5ECF9;
+  border-color:#69C;
 }

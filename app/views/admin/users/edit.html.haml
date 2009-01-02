@@ -1,0 +1,10 @@
+- render_navigation :class => 'box' do
+  - if params[:return_to].blank?
+    .last= link_to '&laquo; Users', admin_users_path
+  - else
+    .last= link_to '&laquo; Back', params[:return_to]
+
+- form_for [:admin, @user] do |f|
+  = hidden_field_tag :return_to, params[:return_to]
+  = render :partial => 'form', :object => f
+  = submit_tag 'Update'

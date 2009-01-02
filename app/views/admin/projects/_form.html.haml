@@ -1,0 +1,31 @@
+= error_messages_for 'project', :object => form.object
+
+%div
+  = form.label :name, 'Name (required)'
+  %div= form.text_field :name, :class => 'span-14 title'
+%div
+  .column
+    = form.label :url, 'Website'
+    %div= form.text_field :url, :class => 'span-14 text'
+  .column
+    %br
+    %div= form.select :page_id, Page.all.map { |p| [p.title, p.id] }, :include_blank => true
+  %br.clear
+.append-bottom
+  .column
+    = form.label :category_names, 'Categories'
+    %div= form.text_field :category_names, :class => 'span-14 text'
+  .last
+    = form.label :github_repository, 'GitHub (format: user/repository)'
+    %div= form.text_field :github_repository, :class => 'span-10 text'
+  %br.clear
+.append-bottom
+  %div{ :style => 'float: right;' }
+    .first.column= link_to_textile
+    .last.column= preview_textile_link 'project_teaser'
+  = form.label :teaser
+  %br.clear
+  = textile_editor :project, :teaser, :class => 'span-24', :style => 'height: 80px; padding-right: 3px;'
+  = preview_field_for 'project_teaser'
+
+= textile_editor_initialize

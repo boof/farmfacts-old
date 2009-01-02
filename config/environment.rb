@@ -15,11 +15,21 @@ Rails::Initializer.run do |config|
   config.frameworks -= [ :active_resource ]
 
   config.gem 'RedCloth', :lib => 'redcloth'
+  config.gem 'coderay', :lib => 'CodeRay'
+  config.gem 'haml'
+
+  # used by lib/git_hub.rb
+  # TODO: used by lib/last_fm.rb
+  # TODO: used by lib/twitter.rb
+  config.gem 'httparty'
 
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
-  config.load_paths << File.join(Rails.root, %w[app sweepers])
+  config.load_paths += [
+    %w[app sweepers]
+  ].map! { |p| File.join Rails.root, *p }
 
+  # config.active_record.observers = :page_sweeper, :navigation_sweeper, :article_sweeper, :project_sweeper, :categorization_sweeper
   # config.log_level = :debug
 
   config.time_zone = 'UTC'
@@ -29,5 +39,6 @@ Rails::Initializer.run do |config|
     :session_key => '_www-ruby-sequel-org_',
     :secret      => session_secret
   }
+  config.action_view.sanitized_allowed_attributes = 'name', 'class'
 
 end

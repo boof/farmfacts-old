@@ -1,10 +1,10 @@
 class Admin::PreviewsController < Admin::Base
 
-  verify :xhr => true
+  def render_textile
+    string = params[:textile] || 'b. Please activate JavaScript.'
+    html = ApplicationController.helpers.textile string
 
-  def render_markdown
-    maruku = Maruku.new params[:markdown]
-    render :text => maruku.to_html
+    render :text => html
   end
 
 end

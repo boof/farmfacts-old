@@ -1,41 +1,39 @@
-Ruby Sequel - The Ruby Database Toolkit - Is getting a website...
-=================================================================
+FarmFacts - Ruby on Rails based CMS
+===================================
 
-Help Me!
-* Add Attachments
-create_table :attachments do |t|
-  t.references :container, :polymorph => true
-  # ...
-end
+TODO
+----
 
-* MISSING: comments management (hide/show)
-* MISSING: articles behind the first 10 cannot be accessed
-* FEATURE: endless pageless for comments
-* MISSING: migrate/write documentation
-* FEATURE: convert from ActiveRecord to RubySequel
-* FEATURE: votes/polls
-* ...
-* link this page
-* (write a wiki)
+Essential:
+* some Cache Sweeper are missing
+* Non-AJAX fallback for preview
+* Templating through Pages: Page => [Blog, Projects, Categories]
+
+Misc:
+* Localizations
+* Coarse should fallback to Rails.logger
+* GitHub requests should be cached
+* CAS
+* votes and polls
+* Trackbacks:
+  * Project
 
 You can get the source with:
 
-    git clone git://github.com/boof/www-ruby-sequel-org.git
+    git clone git://github.com/boof/farmfacts.git
 
 Don't forget the submodules:
 
-    cd www-ruby-sequel-org
+    cd farmfacts
     git submodule init
     git submodule update
 
-Setup your database:
+Setup:
 
-    # replace sqlite3 with the database of your choice
-    cp vendor/rails/railties/configs/databases/sqlite3.yml config/database.yml
+    $ # replace sqlite3 with the database of your choice
+    $ cp vendor/rails/railties/configs/databases/sqlite3.yml config/database.yml
 
-    $EDITOR config/database.yml
-    rake db:migrate
+    $ $EDITOR config/database.yml
+    $ rake db:migrate
 
-You need a User/Login:
-
-    script/generate login
+    ...

@@ -1,0 +1,6 @@
+- render_navigation :class => 'box' do
+  .last= link_to '&laquo; Navigations', admin_navigations_path
+
+- form_for :navigation, @navigation, :url => admin_navigations_path do |f|
+  = render :partial => 'form', :object => f
+  = submit_tag 'Create'

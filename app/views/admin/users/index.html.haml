@@ -1,0 +1,16 @@
+.box= link_to 'New User &raquo;', new_admin_user_path
+
+- form_tag bulk_admin_users_path do
+  %table#users
+    %thead
+      %tr
+        %th.span-7.name Name
+        %th.span-7.email E-Mail
+        %th.span-7.website Website
+        %th.last.span-1.action &nbsp;
+    %tbody
+      = render :partial => @users
+
+  .append-1.push-1
+    = select_bulk_action 'destroy'
+    = submit_tag 'Users'

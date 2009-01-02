@@ -1,0 +1,16 @@
+.box= link_to 'New Article &raquo;', new_admin_article_path
+
+- form_tag bulk_admin_articles_path do
+  %table#pages
+    %thead
+      %tr
+        %th.span-7.title Title
+        %th.span-12.teaser Teaser
+        %th.span-3.small Modified / Published
+        %th.last.span-1.action &nbsp;
+    %tbody
+      = render :partial => @articles
+
+  .append-1.push-1
+    = select_bulk_action 'publish', 'revoke', 'destroy'
+    = submit_tag 'Articles'

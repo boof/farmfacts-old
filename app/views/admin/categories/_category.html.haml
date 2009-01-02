@@ -1,0 +1,5 @@
+- content_tag_for :tr, category, :class => odd(category_counter) do
+  %td.span-7.name= link_to h(category), admin_category_path(category.id)
+  %td.span-14.icon= category.icon
+  %td.span-1.categorizations= category.categorizations.length
+  %td.last.span-1.action= check_box_tag 'category_ids[]', category.id

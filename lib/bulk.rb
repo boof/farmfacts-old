@@ -1,10 +1,10 @@
 module Bulk
 
   def extended(base)
-    base.instance_eval { attr_accessor :bulk_methods }
+    (class << base; self; end).module_eval { attr_accessor :bulk_methods }
 
     base.bulk_methods ||= []
-    base.bulk_methods += instance_methods
+    base.bulk_methods += instance_methods(false)
   end
 
 end

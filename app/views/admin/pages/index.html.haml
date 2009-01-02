@@ -1,0 +1,16 @@
+.box= link_to 'New Page &raquo;', new_admin_page_path
+
+- form_tag bulk_admin_pages_path do
+  %table#pages
+    %thead
+      %tr
+        %th.span-7.title Title
+        %th.span-12.path Path
+        %th.span-3.small Modified / Published
+        %th.last.span-1.action &nbsp;
+    %tbody
+      = render :partial => @pages
+
+  .append-1.push-1
+    = select_bulk_action 'publish', 'revoke', 'destroy'
+    = submit_tag 'Pages'

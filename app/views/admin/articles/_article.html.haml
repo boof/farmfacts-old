@@ -1,0 +1,7 @@
+- content_tag_for :tr, article, :class => odd(article_counter) do
+  %td.span-7.title= link_to h(article.title), admin_article_path(article.id)
+  %td.span-12.teaser= textile_without_blocks article.teaser
+  %td.span-3
+    = article.updated_at.to_formatted_s :short
+    = "/<br />#{ article.oli.created_at.to_formatted_s :short }" if article.oli
+  %td.last.span-1.action= check_box_tag 'article_ids[]', article.id

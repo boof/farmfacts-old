@@ -1,0 +1,14 @@
+= error_messages_for 'navigation', :object => form.object
+
+.append-bottom
+  = form.label :element_id, 'ID (required, valid characters are a-z, A-Z and 0-9)'
+  %div= form.text_field :element_id, :class => 'span-14 title'
+
+%table.attributes
+  - html_attributes = form.object.html_attributes
+  %tr
+    %td.span-2= label_tag :html_class, 'Class'
+    %td= text_field_tag 'navigation[html_attributes][class]', html_attributes['class'], :id => 'html_class', :class => 'span-11 text'
+  %tr
+    %td.span-2= label_tag :html_style, 'Style'
+    %td= text_field_tag 'navigation[html_attributes][style]', html_attributes['style'], :id => 'html_style', :class => 'span-11 text'

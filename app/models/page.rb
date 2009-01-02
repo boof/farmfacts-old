@@ -2,10 +2,14 @@ class Page < ActiveRecord::Base
 
   extend Page::Finder
   extend Bulk::Destroy
-#  extend Bulk::Publication
+  extend Bulk::Onlist
 
-  on_whitelist :updates => :updated_on
+  on_whitelist :updates => :updated_at
+  categorizable
+  registers_path { |page| page.path }
+
   has_many :comments, :as => :commented, :dependent => :delete_all
+  has_many :attachments, :as => :attaching, :dependent => :delete_all
 
   named_scope :with_path, proc { |path| {:conditions => {:path => path}} }
 
@@ -21,10 +25,6 @@ class Page < ActiveRecord::Base
 
   def to_s
     title
-  end
-
-  def to_html
-    RedCloth.new(body).to_html
   end
 
   protected

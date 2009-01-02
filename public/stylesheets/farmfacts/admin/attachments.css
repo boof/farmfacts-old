@@ -1,0 +1,9 @@
+#cmAttachments {}
+#cmAttachments thead tr th.cmFileName,
+#cmAttachments tbody tr td.cmFileName {}
+#cmAttachments thead tr th.cmContentType,
+#cmAttachments tbody tr td.cmContentType
+{
+	min-width: 160px;
+	width: 30%;
+}

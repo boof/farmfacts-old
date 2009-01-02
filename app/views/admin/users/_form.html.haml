@@ -1,0 +1,37 @@
+= error_messages_for 'user', :object => form.object
+
+%div
+  = form.label :name, 'Name (required)'
+  %div= form.text_field :name, :class => 'span-14 title'
+%div
+  .first.column
+    = form.label :email, 'E-Mail'
+    %div= form.text_field :email, :class => 'span-14 text'
+  .last.column
+    = form.label :github_user, 'GitHub User'
+    %div= form.text_field :github_user, :class => 'span-10 text'
+  %br.clear
+.append-bottom
+  .first.column
+    = form.label :url, 'Website'
+    %div= form.text_field :url, :class => 'span-14 text'
+  .last.column
+    %br
+    %div= form.select :page_id, Page.all.map { |p| [p.title, p.id] }, :include_blank => true
+  %br.clear
+
+
+= error_messages_for 'login', :object => form.object.login
+
+- fields_for 'user[login_attributes]', form.object.login do |login_form|
+  %div
+    = login_form.label :username, 'Username (required)'
+    %div= login_form.text_field :username, :class => 'span-12 text'
+  %div
+    .first.column
+      = login_form.label :password
+      %div= login_form.password_field :password, :class => 'span-12 text'
+    .last.column
+      = login_form.label :password_confirmation
+      %div= login_form.password_field :password_confirmation, :class => 'span-12 text'
+    %br.clear

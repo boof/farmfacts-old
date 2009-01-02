@@ -1,0 +1,8 @@
+- content_tag_for :tr, role, :class => odd(role_counter) do
+  %td.span-8.role
+    - if role.leading?
+      %strong= link_to role.name, edit_polymorphic_path([:admin, role.work, role], :return_to => polymorphic_path([:admin, role.work], :anchor => 'roles'))
+    - else
+      = link_to role.name, edit_polymorphic_path([:admin, role.work, role], :return_to => polymorphic_path([:admin, role.work], :anchor => 'roles'))
+  %td.span-14.user= link_to role.user, admin_user_path(role.user)
+  %td.last.span-1.action= check_box_tag 'role_ids[]', role.id

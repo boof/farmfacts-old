@@ -1,0 +1,7 @@
+#cmProjects {}
+#cmProjects thead tr th.cmProjectName,
+#cmProjects tbody tr td.cmProjectName
+{ width: 30%; }
+#cmProjects thead tr th.cmProjectTeaser {}
+#cmProjects tbody tr td.cmProjectTeaser
+{ font-size: 10px; }

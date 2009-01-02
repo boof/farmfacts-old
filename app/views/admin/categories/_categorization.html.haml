@@ -1,0 +1,4 @@
+- content_tag_for :tr, categorization, :class => "#{ odd categorization_counter }" do
+  %td.span-4.categorizable= link_to "#{ categorization.categorizable_type } #{ categorization.categorizable_id }", polymorphic_path([:admin, categorization.categorizable])
+  %td.span-14.categorizable_s= categorization.categorizable if categorization.categorizable.respond_to? :to_s
+  %td.span-3.categorized= categorization.created_at.to_formatted_s :short

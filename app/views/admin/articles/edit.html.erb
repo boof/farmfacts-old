@@ -1,7 +1,0 @@
-<% form_for [:admin, @article] do |form| %>
-	<%= render :partial => 'form', :object => form %>
-	<p class="controls">
-		<%= back_to admin_articles_path %>
-		<%= submit_tag 'Update' %>
-	</p>
-<% end %>

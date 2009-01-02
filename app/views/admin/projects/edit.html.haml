@@ -1,0 +1,9 @@
+- render_navigation :class => 'box' do
+  .column= link_to '&laquo; Projects', admin_projects_path
+  .last= link_to 'Show', admin_project_path(@project)
+
+= render_toolbar_for @project
+
+- form_for [:admin, @project] do |f|
+  = render :partial => 'form', :object => f
+  = submit_tag 'Update'

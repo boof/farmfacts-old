@@ -1,0 +1,15 @@
+= hidden_field_tag :return_to, params[:return_to]
+- unless form.object.errors.empty?
+  .error
+    = pluralize form.object.errors.size, 'error'
+    prohibited this role from being saved.
+
+%div
+  = form.label :name, 'Role (required)'
+  %div= form.text_field :name, :class => 'span-12 title'
+.append-bottom
+  = form.label :user_id, 'User (required)'
+  %div
+    = form.select :user_id, @selectable_users.map { |u| [u.name, u.id] }
+    = form.check_box :leading
+    = form.label :leading, 'Head'

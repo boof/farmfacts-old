@@ -1,0 +1,5 @@
+- content_tag_for :tr, project, :class => odd(project_counter) do
+  %td.span-7.title= link_to h(project.name), admin_project_path(project)
+  %td.span-14.teaser= link_to h(project.website), project.website
+  %td.span-1{ :style => 'text-align: right;' }= project.roles.length
+  %td.last.span-1.action= check_box_tag 'project_ids[]', project.id

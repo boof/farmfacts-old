@@ -1,0 +1,9 @@
+.box= link_to 'New Navigation &raquo;', new_admin_navigation_path
+
+%table#navigations
+  %thead
+    %tr
+      %th.span-4.element_id ID
+      %th.span-20.html_attributes Attributes
+  %tbody
+    = render :partial => 'navigation', :collection => @navigations

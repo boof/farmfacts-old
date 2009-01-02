@@ -1,5 +1,0 @@
-<% content_tag_for :tr, user, :class => odd(user_counter) do %>
-<td class="cmUserName"><%= link_to h(user.name), edit_admin_user_path(user) -%></td>
-<td class="cmUserEMail"><%= mail_to user.email, h(user.email) -%></td>
-<td class="cmAction"><%= check_box_tag 'user_ids[]', user.id -%></td>
-<% end %>

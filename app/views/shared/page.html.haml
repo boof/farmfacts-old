@@ -1,0 +1,33 @@
+!!! Strict
+
+%html
+  %head
+    %title&= @page.title
+
+    <meta content='text/javascript' http-equiv='content-script-type' />
+    <meta content='text/css' http-equiv='content-style-type' />
+    <meta content='text/html; charset=utf-8' http-equiv='content-type' />
+    %meta{ 'name'       => 'keywords',            'content' => h(@page.category_names) }
+    %meta{ 'name'       => 'description',         'content' => h(@page.summary) }
+
+    <link rel="stylesheet" href="/stylesheets/blueprint/screen.css" type="text/css" media="screen, projection" />
+    <link rel="stylesheet" href="/stylesheets/blueprint/print.css" type="text/css" media="print" />
+    <!--[if IE]><link rel="stylesheet" href="/blueprint/ie.css" type="text/css" media="screen, projection" /><![endif]-->
+    = stylesheet_link_tag 'application', :media => 'screen, projections'
+    = javascript_include_tag 'prototype', 'relative_date', 'application', :cache => true
+    = syntaxhighlighter
+    = auto_discovery_link_tag :atom, blog_index_path(:format => :atom)
+
+  %body
+    .container
+      .append-bottom= textile_with_navigation @page.body
+      %hr.bottom
+      .small= last_modified @page.updated_at
+
+    :javascript
+      $$('.relative_date').each(function(date) { new RelativeDate(date) });
+      if(window.isBloggerMode == true)
+      dp.SyntaxHighlighter.BloggerMode();
+
+      dp.SyntaxHighlighter.ClipboardSwf = 'Scripts/clipboard.swf';
+      dp.SyntaxHighlighter.HighlightAll('code');

@@ -1,21 +1,23 @@
 class Admin::ArticlesController < Admin::Base
 
+  SWEEPER_ACTIONS = [:create, :update, :bulk]
+  cache_sweeper :categorization_sweeper, :only => SWEEPER_ACTIONS
+  cache_sweeper :article_sweeper, :only => SWEEPER_ACTIONS
+  cache_sweeper :navigation_sweeper, :only => SWEEPER_ACTIONS
+
   PAGE_TITLES = {
     :index    => 'Articles',
-    :show     => 'Preview "%s"',
+    :show     => 'Article “%s”',
     :new      => 'New Article',
-    :edit     => 'Edit "%s"',
-    :announce => 'Announce "%s"'
+    :edit     => 'Edit Article “%s”',
+    :announce => 'Announce “%s”'
   }
-
-  before_filter :assign_new_article, :only => [:new, :create]
-  before_filter :assign_article_by_id, :only => [:show, :edit, :update, :announce]
-
-  cache_sweeper :article_sweeper, :only => [:create, :update, :bulk]
 
   def index
     title_page :index
-    @articles = Article.with_order.all :include => :publication
+    @articles = Article.
+        ordered('onlists.created_at DESC', 'articles.created_at DESC').
+        find :all, :include => :oli
   end
 
   def bulk
@@ -41,11 +43,13 @@ class Admin::ArticlesController < Admin::Base
   end
 
   def create
-    save_or_send :new, :article, admin_article_path(@article)
+    save_or_send :new, :article do |article|
+      redirect_to admin_article_path(article.id)
+    end
   end
 
   def update
-    save_or_send :edit, :article, admin_article_path(@article)
+    save_or_send :edit, :article, admin_article_path(@article.id)
   end
 
   def announce
@@ -64,10 +68,13 @@ class Admin::ArticlesController < Admin::Base
 
   protected
   def assign_new_article
-    @article = current_user.articles.build
+    @article = current_user.articles.build :author_id => current_user.id
   end
+  before_filter :assign_new_article, :only => [:new, :create]
+
   def assign_article_by_id
     @article = Article.find params[:id]
   end
+  before_filter :assign_article_by_id, :only => [:show, :edit, :update, :announce]
 
 end

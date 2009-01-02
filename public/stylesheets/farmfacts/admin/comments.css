@@ -1,0 +1,9 @@
+#cmComments {}
+#cmComments tbody tr.hidden * {
+	color: gray;
+}
+#cmComments thead tr th.cmCommenter,
+#cmComments tbody tr td.cmCommenter {}
+#cmComments thead tr th.cmComment {}
+#cmComments tbody tr td.cmComment
+{ font-size: 10px; }

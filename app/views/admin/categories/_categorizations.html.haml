@@ -1,0 +1,8 @@
+%table#categorizations
+  %thead
+    %tr
+      %th.span-4.categorizable Categorizable
+      %th.span-14.categorizable_s
+      %th.span-3.categorized Categorized
+  %tbody
+    = render :partial => 'categorization', :collection => categorizations

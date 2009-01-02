@@ -1,0 +1,7 @@
+.box
+  - render_navigation :style => 'float: left;', :class => '' do
+    .column= link_to '&laquo; Categories', admin_categories_path
+    .column= link_to 'Edit', edit_admin_category_path(@category.id)
+  %br.clear
+
+= render :partial => 'categorizations', :object => @categorizations

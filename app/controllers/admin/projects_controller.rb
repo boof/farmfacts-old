@@ -1,21 +1,22 @@
 class Admin::ProjectsController < Admin::Base
 
+  cache_sweeper :project_sweeper, :only => [:create, :update, :bulk]
+  cache_sweeper :categorization_sweeper, :only => [:create, :update, :bulk]
+
   PAGE_TITLES = {
     :index  => 'Projects',
+    :show   => 'Project “%s”',
     :new    => 'New Project',
-    :edit   => 'Edit "%s"'
+    :edit   => 'Edit Project “%s”'
   }
-
-  before_filter :assign_new_project,
-    :only => [:new, :create]
-  before_filter :assign_project_by_id,
-    :only => [:edit, :update, :destroy]
-
-  cache_sweeper :project_sweeper, :only => [:create, :update, :destroy]
 
   def index
     title_page :index
-    @projects = Project.find :all, :order => :name
+    @projects = Project.find :all, :order => :name, :include => :roles
+  end
+
+  def show
+    title_page :show, @project
   end
 
   def new
@@ -29,31 +30,17 @@ class Admin::ProjectsController < Admin::Base
   end
 
   def create
-    @project.attributes = params[:project]
-
-    current_user.will :save, @project do |saved|
-      if saved
-        redirect_to :action => :index
-      else
-        send :new
-      end
-    end
+    save_or_send(:new, :project) { |project| redirect_to admin_project_path(project) }
   end
 
   def update
-    @project.attributes = params[:project]
-
-    current_user.will :save, @project do |saved|
-      if saved
-        redirect_to :action => :index
-      else
-        send :edit
-      end
-    end
+    save_or_send :edit, :project, admin_project_path(@project)
   end
 
-  def destroy
-    current_user.will :destroy, @project
+  def bulk
+    Page.bulk_methods.include? params[:bulk_action] and
+    current_user.will params[:bulk_action], Page, params[:page_ids]
+
     redirect_to :action => :index
   end
 
@@ -61,8 +48,11 @@ class Admin::ProjectsController < Admin::Base
   def assign_new_project
     @project = Project.new
   end
+  before_filter :assign_new_project, :only => [:new, :create]
+
   def assign_project_by_id
     @project = Project.find params[:id]
   end
+  before_filter :assign_project_by_id, :only => [:show, :edit, :update]
 
 end

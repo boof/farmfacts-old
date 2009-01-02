@@ -1,0 +1,28 @@
+.first.column.span-8
+  .box
+    %h2.bottom Articles
+    - if @articles.empty?
+      None
+    - else
+      %ul.bottom
+        - for article in @articles
+          %li= link_to h(article), blog_path(article)
+.column.span-8
+  .box
+    %h2.bottom Pages
+    - if @page_paths_and_titles.empty?
+      None
+    - else
+      %ul.bottom
+        - for path_and_title in @page_paths_and_titles
+          %li= link_to h(path_and_title.last), path_and_title.first
+.last.column.span-8
+  .box
+    %h2.bottom Projects
+    - if @projects.empty?
+      None
+    - else
+      %ul.bottom
+        - for project in @projects
+          - next if project.website.blank?
+          %li= link_to h(project), project.website

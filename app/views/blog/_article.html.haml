@@ -1,0 +1,16 @@
+- div_for article, :class => 'box' do
+  %h3.bottom= link_to article.title, blog_path(article)
+
+  .quiet.append-bottom
+    By
+    = mail_to article.author.email, article.author, :encode => :hex, :class => 'loud'
+    %span.relative_date= article.oli.created_at.to_formatted_s
+    ,
+    = link_to "#{ comments_count = article.comments.accepted.count } comments &raquo;", blog_path(article, :anchor => 'comments'), :class => 'quiet'
+
+  - unless article.teaser.blank?
+    = textile article.teaser + %Q{ ... - "read more...":#{ blog_path article }}
+  - else
+    - cache("#{ request.host }/article/#{ @article.id }") do
+      = textile article.body
+    = link_to "#{ comments_count } comments &raquo;", blog_path(article, :anchor => 'comments'), :class => 'quiet'

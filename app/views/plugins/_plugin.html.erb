@@ -1,7 +1,0 @@
-<li>
-	<h3>
-		<b><%= link_to plugin.name, plugin_path(plugin) %></b>
-		by <%= mail_to h(plugin.contributor_email), plugin.contributor_name, :encode => 'hex' %>
-	</h3>
-	<p><%= plugin.description %></p>
-</li>

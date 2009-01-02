@@ -1,0 +1,18 @@
+- form_for @login, :url => auth_path, :html => { :class => 'span-12 prepend-6' } do |f|
+  = hidden_field_tag :return_uri, @login.return_uri
+
+  .box
+    %div
+      &nbsp;
+      = f.label :username
+      %div
+        &nbsp;
+        = f.text_field :username, :class => 'span-11 text'
+    %div
+      &nbsp;
+      = f.label :password
+      %div
+        &nbsp;
+        = f.password_field :password, :class => 'span-11 text'
+
+    .prepend-top.prepend-4= submit_tag 'Authenticate', :class => 'span-4'

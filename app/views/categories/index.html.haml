@@ -1,0 +1,4 @@
+.box{ :style => "line-height: 2em;" }
+  - for category in @categories
+    %span{ :style => "display: inline-block; font-size: #{ 1.2 + 1.0 * category.categorizations.length / @categorization_count }em; margin: 0 5px;" }= link_to h(category), category_path(category)
+  %br.clear

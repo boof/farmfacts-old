@@ -1,0 +1,24 @@
+- form_tag bulk_path do
+  = hidden_field_tag :return_to, return_to
+  %table#attachments
+    %thead
+      %tr
+        %th.span-14.file_name Attachment
+        %th.span-2.file_size Size
+        %th.span-4.content_type Content-Type
+        %th.span-3.uploaded Uploaded
+        %th.last.span-1.action &nbsp;
+    %tbody
+      = yield
+
+  .append-1.push-1
+    = select_bulk_action 'destroy'
+    = submit_tag 'Attachments', :class => 'span-3'
+
+.prepend-1.pull-1
+  - form_for create_path, :html => { :multipart => true } do |f|
+    = hidden_field_tag :return_to, return_to
+    = f.file_field :attachable
+    = submit_tag 'Attach File'
+
+.clear

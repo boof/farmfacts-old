@@ -1,0 +1,32 @@
+.box
+  - render_navigation :style => 'float: left;', :class => '' do
+    .column= link_to '&laquo; Articles', admin_articles_path
+    .column= link_to 'Edit', edit_admin_article_path(@article.id)
+    .column= link_to 'Annnounce', new_admin_article_announcement_path(@article.id, :return_to => admin_article_path(@article.id))
+    .column= link_to 'Attachments', :anchor => 'attachments'
+    .column= link_to 'Comments', :anchor => 'comments'
+  - render_navigation :style => 'float: right;', :class => 'span-6' do
+    - unless @article.categories.empty?
+      - for category in @article.categories
+        - if category.id == @article.category_id
+          %strong.column= link_to h(category), admin_category_path(category.id)
+        -else
+          .column= link_to h(category), admin_category_path(category.id)
+    - else
+      .column None
+  - render_navigation :style => 'float: right;', :class => '' do
+    .column.loud Categories:
+  %br.clear
+
+- unless @article.teaser.blank?
+  %h2.bottom Teaser
+  = textile @article.teaser
+  %br.clear
+
+%h2.bottom Body
+= textile @article.body
+
+%p.clear= "... by #{ @article.author }"
+
+.prepend-top= render_attachment_controls_for @article
+.prepend-top= render :partial => @article.comments.all(:include => :oli), :layout => 'comments'

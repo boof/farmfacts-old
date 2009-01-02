@@ -1,5 +1,5 @@
 module Bulk::Destroy
-#  extend Bulk
+  extend Bulk
 
   def bulk_destroy(ids, *args)
     transaction do

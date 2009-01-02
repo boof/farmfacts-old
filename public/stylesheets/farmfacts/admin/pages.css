@@ -1,0 +1,6 @@
+#cmPages {}
+#cmPages thead tr th.cmPageTitle,
+#cmPages tbody tr td.cmPageTitle
+{ width: 30%; }
+#cmPages thead tr th.cmPagePath,
+#cmPages tbody tr td.cmPagePath {}

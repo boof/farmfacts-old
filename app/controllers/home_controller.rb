@@ -1,13 +1,11 @@
 class HomeController < ApplicationController
 
-  session :off
-  caches_page :index
-
   def index
-    @homepage   = Page.open '/home'
-    @page_title = @homepage.title
+    @page = Page.open '/home'
+    render :file => 'shared/page'
   rescue ActiveRecord::RecordNotFound
     redirect_to admin_pages_path
   end
+  caches_page :index
 
 end

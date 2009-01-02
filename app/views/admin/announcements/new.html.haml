@@ -1,0 +1,20 @@
+- render_navigation :class => 'box' do
+  .last= link_to "&laquo; #{ @polymorphism.proxy_owner_class }", params[:return_to]
+
+- form_for :announcement, @announcement, :url => @polymorphism.path.index do |f|
+  = hidden_field_tag :return_to, params[:return_to]
+
+  %div
+    = f.label :subject, 'Subject (required)'
+    %div= f.text_field :subject, :class => 'span-16 title'
+  %div
+    = f.label :recipients, 'Recipients (required, comma-seperated)'
+    %div= f.text_field :recipients, :class => 'span-12 text'
+  %div
+    = f.label :plain, 'Plain (required)'
+    %div= f.text_area :plain, :class => 'span-18 text'
+  %div
+    = f.label :html, 'HTML'
+    %div= f.text_area :html, :class => 'span-18 text'
+
+  .prepend-top= submit_tag 'Create'

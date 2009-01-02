@@ -1,0 +1,11 @@
+- content_tag_for :tr, node, :class => odd(node_counter) do
+  %td.span-10.content= link_to "#{ node.position }. #{ h node.content }", edit_admin_navigation_node_path(@navigation, node, :return_to => admin_navigation_path(@navigation, :anchor => 'nodes'))
+  %td.span-8.url&= node.url
+  %td.span-4.class&= node.html_class
+  %td.last.span-1.action
+    = check_box_tag 'node_ids[]', node.id
+  %td.last.span-1.action.bottom{ :style => 'height: 48px;' }
+    - unless node_counter.zero?
+      = link_to image_tag('icons/arrow_up.gif'), move_up_admin_navigation_node_path(@navigation, node, :return_to => admin_navigation_path(@navigation, :anchor => 'nodes')), :method => :put
+    - if node_counter < @navigation.nodes.length - 1
+      = link_to image_tag('icons/arrow_down.gif'), move_down_admin_navigation_node_path(@navigation, node, :return_to => admin_navigation_path(@navigation, :anchor => 'nodes')), :method => :put

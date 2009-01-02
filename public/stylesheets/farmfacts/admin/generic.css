@@ -1,0 +1,57 @@
+div.c1      { margin-right: 202px; }
+div.c2      { float: right; width: 200px; }
+
+.noMargin   { margin: 0 !important; }
+.clearBoth  { clear: both; }
+
+div.preview
+{
+  border: 1px solid gray;
+  padding: 0 1em;
+}
+
+table.admin
+{
+  border-collapse: collapse;
+  margin-top: 2px;
+  width: 100%;
+}
+table.admin thead tr th
+{
+  background-color: #32434d;
+  border-right: 1px solid white;
+  color: ivory;
+  font-size: 13px;
+  padding: 2px 7px;
+  text-align: left;
+}
+table.admin tbody tr td
+{
+  border-right: 1px solid lightgray;
+  font-size: 13px;
+  padding: 2px 7px;
+  vertical-align: middle;
+}
+tr.odd
+{ background-color: white; }
+tr.even
+{ background-color: #fafafa; }
+
+table.admin tbody tr td img
+{ vertical-align: bottom; }
+
+table.admin tbody tr:hover
+{ background-color: #F96; }
+table.admin tbody tr a:hover
+{ color: firebrick; }
+
+table.admin thead tr th.cmAction,
+table.admin tbody tr td.cmAction
+{
+  border-right: none;
+  text-align: center;
+  width: 20px;
+}
+table.admin thead tr th.cmTimestamp,
+table.admin tbody tr td.cmTimestamp
+{ width: 160px; }

@@ -1,23 +1,17 @@
 class Admin::UsersController < Admin::Base
 
+  cache_sweeper :user_sweeper, :only => [:update, :bulk]
+
   PAGE_TITLES = {
     :index  => 'Users',
+    :show   => 'User “%s”',
     :new    => 'New User',
-    :edit   => 'Edit "%s"'
+    :edit   => 'Edit User “%s”'
   }
-
-  before_filter :assign_user, :except => [:index, :bulk]
 
   def index
     title_page :index
     @users = User.all :order => :name
-  end
-
-  def bulk
-    User.bulk_methods.include? params[:bulk_action] and
-    current_user.will params[:bulk_action], User, params[:user_ids]
-
-    redirect_to :action => :index
   end
 
   def new
@@ -31,16 +25,29 @@ class Admin::UsersController < Admin::Base
   end
 
   def create
-    save_or_send :new, :user
+    save_or_send :new, :user, admin_users_path
   end
 
   def update
-    save_or_send :edit, :user
+    save_or_send :edit, :user,
+        params[:return_to].blank?? admin_users_path : params[:return_to]
+  end
+
+  def bulk
+    User.bulk_methods.include? params[:bulk_action] and
+    current_user.will params[:bulk_action], User, params[:user_ids]
+
+    redirect_to :action => :index
   end
 
   protected
-  def assign_user
-    @user = ( User.find params[:id] rescue User.new )
+  def assign_new_user
+    @user = User.new
   end
+  before_filter :assign_new_user, :only => [:new, :create]
+  def assign_user_by_id
+    @user = User.find params[:id]
+  end
+  before_filter :assign_user_by_id, :only => [:show, :edit, :update]
 
 end

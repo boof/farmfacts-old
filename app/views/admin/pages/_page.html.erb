@@ -1,9 +1,0 @@
-<% content_tag_for :tr, page, :class => odd(page_counter) do %>
-<td class="cmPageTitle"><%= link_to h(page.title), edit_admin_page_path(page) -%></td>
-<td class="cmPagePath"><%= link_to page.path, admin_page_path(page.id), :title => 'Click here to preview this page.' -%></td>
-<td class="cmTimestamp"><%= page.updated_at %></td>
-<td class="cmTimestamp"><%= page.publication.created_at if page.publication %></td>
-
-<td class="cmAction"><%= check_box_tag 'page_ids[]', page.id -%></td>
-
-<% end %>

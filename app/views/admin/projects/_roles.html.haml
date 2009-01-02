@@ -1,0 +1,15 @@
+- form_tag bulk_admin_project_roles_path(@project) do
+  = hidden_field_tag :return_to, admin_project_path(@project, :anchor => 'roles')
+  %table#roles
+    %thead
+      %tr
+        %th.span-8.role Role
+        %th.span-14.user User
+        %th.last.span-1.action &nbsp;
+    %tbody
+      = yield
+
+  .append-1.push-1
+    = select_bulk_action 'destroy'
+    = submit_tag 'Roles', :class => 'span-3'
+  = location_to 'New Role', new_admin_project_role_path(@project, :return_to => admin_project_path(@project, :anchor => 'roles'))

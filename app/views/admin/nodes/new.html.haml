@@ -1,0 +1,6 @@
+- render_navigation :class => 'box' do
+  .last= link_to '&laquo; Navigation', params[:return_to]
+
+- form_for :node, @node, :url => admin_navigation_nodes_path(params[:navigation_id]) do |f|
+  = render :partial => 'form', :object => f
+  = submit_tag 'Create'

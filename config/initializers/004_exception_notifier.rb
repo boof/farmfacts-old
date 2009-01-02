@@ -16,17 +16,17 @@ end
 
 module ExceptionNotifiable
 
-  private
+  protected
     def render_401
       respond_to do |type|
         type.html {
           @login = Login.new! :return_uri => params[:return_uri] || request.request_uri
-          render :template => 'login', :layout => 'application', :status => 401
+          render :template => 'login', :layout => 'application', :status => '401 Unauthorized'
         }
-        type.all  { redirect_to :controller => 'setup' }
+        type.all  { render :nothing => true, :status => "503 Service Unavailable" }
       end
     rescue NotImplementedError
-      render :file => "#{RAILS_ROOT}/public/503.html", :status => "503 Service Unavailable"
+      redirect_to admin_setup_path
     end
 
     def render_404
@@ -41,7 +41,7 @@ module ExceptionNotifiable
       render :file => "#{RAILS_ROOT}/public/404.html", :status => "404 Not Found"
     end
 
-    def rescue_action(exception)
+    def rescue_action_in_public(exception)
       case exception
         when *self.class.exceptions_to_treat_as_401
           render_401

@@ -1,0 +1,11 @@
+- div_for comment do
+  .loud.large.span-1.pull-1{ :style => 'text-align: right;' }= "#{ comment_counter + 1 }."
+  %span.quiet.relative_date= comment.created_at.to_formatted_s
+  %author
+    - if comment.url?
+      = link_to h(comment.author), comment.url, :rel => 'external nofollow'
+    - else
+      = h comment.author
+  %span.quiet said:
+  .append-bottom
+    %div= sanitize comment.message, :tags => %w[ a b br cite i pre ]

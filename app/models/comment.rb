@@ -1,24 +1,22 @@
 class Comment < ActiveRecord::Base
   include ActionView::Helpers::TagHelper
 
-  belongs_to :commented, :polymorphic => true
-  validates_presence_of :author_name, :email, :body
+  extend Bulk::Destroy
+  extend Bulk::Onlist
 
-  on_blacklist
-  when_rejected {commented.decrement! :comments_count}
-  when_accepted {commented.increment! :comments_count}
+  belongs_to :commented, :polymorphic => true
+  validates_presence_of :author, :email, :message
+
+  on_blacklist :updates => :updated_at
 
   def to_s
-    self[:body]
+    message
   end
 
-  def format_body
-    # Convert from CRLF or CR to LF
-    self[:body].gsub! /(?:\r\n|\r)/, "\n"
-    # Escape entities
-    self[:body] = escape_once self[:body]
+  protected
+  def format_url
+    self.url = "http://#{ url }" unless url.blank? or url =~ /^https?:\/\//
   end
-  protected :format_body
-  before_save :format_body
+  before_save :format_url
 
 end

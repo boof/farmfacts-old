@@ -1,0 +1,10 @@
+#cmArticles {}
+
+#cmArticles thead tr th.cmArticleTitle,
+#cmArticles tbody tr td.cmArticleTitle
+{ width: 30%; }
+
+#cmArticles thead tr th.cmArticleTeaser {}
+#cmArticles tbody tr td.cmArticleTeaser {}
+#cmArticles tbody tr td.cmArticleTeaser p
+{ font-size: 10px; }

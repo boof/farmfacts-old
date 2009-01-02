@@ -1,0 +1,3 @@
+= render_pagination @article_scope
+= render :partial => 'article', :collection => @article_scope.all(:include => :author)
+= render_pagination @article_scope

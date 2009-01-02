@@ -1,2 +1,0 @@
-page['flash'].update flash[:message]
-page['commit'].enable

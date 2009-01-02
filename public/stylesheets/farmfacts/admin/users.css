@@ -1,0 +1,9 @@
+#cmUsers {}
+#cmUsers thead tr th.cmUserName,
+#cmUsers tbody tr td.cmUserName
+{
+	min-width: 160px;
+	width: 30%;
+}
+#cmUsers thead tr th.cmUserEMail,
+#cmUsers tbody tr td.cmUserEMail {}

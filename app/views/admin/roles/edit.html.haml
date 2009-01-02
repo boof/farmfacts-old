@@ -1,0 +1,6 @@
+- render_navigation :class => 'box' do
+  .last= link_to "&laquo; #{ @polymorphism.proxy_owner_class }", params[:return_to]
+
+- form_for [:admin, @polymorphism.proxy_owner, @role] do |f|
+  = render :partial => 'form', :object => f
+  = submit_tag 'Update'

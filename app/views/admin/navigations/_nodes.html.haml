@@ -1,0 +1,17 @@
+- form_tag bulk_admin_navigation_nodes_path(@navigation) do
+  = hidden_field_tag :return_to, admin_navigation_path(@navigation, :anchor => 'nodes')
+  %table#nodes
+    %thead
+      %tr
+        %th.span-10.content Content
+        %th.span-8.url URL
+        %th.span-4.class Class
+        %th.last.span-1.action &nbsp;
+        %th.last.span-1.action &nbsp;
+    %tbody
+      = yield
+
+  .append-1.push-1
+    = select_bulk_action 'destroy'
+    = submit_tag 'Nodes'
+  = location_to 'New Node', new_admin_navigation_node_path(@navigation, :return_to => admin_navigation_path(@navigation, :anchor => 'nodes'))

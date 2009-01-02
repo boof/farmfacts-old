@@ -1,4 +1,4 @@
 User-agent: *
-Disallow: /image
+Disallow: /images
 Disallow: /javascripts
 Disallow: /stylesheets

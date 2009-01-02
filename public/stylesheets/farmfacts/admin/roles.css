@@ -1,0 +1,10 @@
+#cmRoles {}
+#cmRoles tbody tr.lead * { font-weight: bold; }
+#cmRoles thead tr th.cmRoleName,
+#cmRoles tbody tr td.cmRoleName
+{
+	min-width: 160px;
+	width: 20%;
+}
+#cmRoles thead tr th.cmRoleUser,
+#cmRoles tbody tr td.cmRoleUser {}

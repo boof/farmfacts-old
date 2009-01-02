@@ -1,0 +1,16 @@
+.box= link_to 'New Category &raquo;', new_admin_category_path
+
+- form_tag bulk_admin_categories_path do
+  %table#categories
+    %thead
+      %tr
+        %th.span-7.name Name
+        %th.span-14.icon Icon
+        %th.span-1.categorizations= @categorizations_count
+        %th.last.span-1.action &nbsp;
+    %tbody
+      = render :partial => 'category', :collection => @categories
+
+  .append-1.push-1
+    = select_bulk_action 'destroy'
+    = submit_tag 'Categories'
