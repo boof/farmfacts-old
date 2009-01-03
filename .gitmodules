@@ -4,9 +4,6 @@
 [submodule "vendor/plugins/exception_notification"]
 	path = vendor/plugins/exception_notification
 	url = git://github.com/rails/exception_notification.git
-[submodule "vendor/plugins/friendly_id"]
-	path = vendor/plugins/friendly_id
-	url = git://github.com/norman/friendly_id.git
 [submodule "vendor/plugins/onlist"]
 	path = vendor/plugins/onlist
 	url = git://github.com/fork/onlist.git
@@ -37,3 +34,6 @@
 [submodule "vendor/plugins/column_scope"]
 	path = vendor/plugins/column_scope
 	url = git://github.com/boof/column_scope.git
+[submodule "vendor/plugins/friendly_id"]
+	path = vendor/plugins/friendly_id
+	url = git://github.com/boof/friendly_id.git
