@@ -15,7 +15,6 @@ Rails::Initializer.run do |config|
   config.frameworks -= [ :active_resource ]
 
   config.gem 'RedCloth', :lib => 'redcloth'
-  config.gem 'coderay', :lib => 'CodeRay'
   config.gem 'haml'
 
   # used by lib/git_hub.rb
