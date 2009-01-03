@@ -4,7 +4,7 @@ class NavigationSweeper < ActionController::Caching::Sweeper
   def remember_element_id(navigation)
     @element_id = navigation.element_id_was
   end
-  alias_method :before_save, :remember_element_id
+  alias_method :before_update, :remember_element_id
   alias_method :before_destroy, :remember_element_id
 
   def expire_cache(navigation)
@@ -13,7 +13,7 @@ class NavigationSweeper < ActionController::Caching::Sweeper
     expire_pages_querying
     expire_article_bodies_querying
   end
-  alias_method :after_save, :expire_cache
+  alias_method :after_update, :expire_cache
   alias_method :after_destroy, :expire_cache
 
   protected
