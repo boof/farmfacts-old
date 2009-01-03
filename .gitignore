@@ -8,6 +8,7 @@ config/session.key
 session_secret
 syntaxhighlighter.js
 *.o
+*.so
 all.*
 *.sqlite3
 *.bundle
