@@ -34,6 +34,8 @@ Setup:
     $ cp vendor/rails/railties/configs/databases/sqlite3.yml config/database.yml
 
     $ $EDITOR config/database.yml
+    $ rake db:create
     $ rake db:migrate
 
+    $ rake gems:build
     ...

@@ -6,6 +6,8 @@ config/database.yml
 config/session.key
 .DS_Store
 session_secret
+syntaxhighlighter.js
+*.o
 all.*
 *.sqlite3
 *.bundle
@@ -14,3 +16,4 @@ public/*.html
 !public/404.html
 !public/422.html
 !public/500.html
+Makefile
