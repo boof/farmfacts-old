@@ -111,11 +111,13 @@ h1. <!-- enter title here -->
 
     create_table :slugs do |t|
       t.references :sluggable, :polymorphic => true, :null => false
+      t.string :sequence, :integer, :null => false, :default => 1
+      t.string :scope, :string, :limit => 40
       t.string :name
       t.timestamps
     end
+    add_index :slugs, [:name, :sluggable_type, :scope, :sequence], :unique => true, :name => "index_slugs_on_n_s_s_and_s"
     add_index :slugs, [:sluggable_type, :sluggable_id]
-    add_index :slugs, [:name, :sluggable_type], :unique
 
     create_table :registered_paths do |t|
       t.references :provider, :polymorphic => true, :null => false
