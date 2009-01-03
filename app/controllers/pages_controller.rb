@@ -9,7 +9,7 @@ class PagesController < ApplicationController
 
   protected
   def no_assets
-    ASSETS.include? File.extname(request.path) and
+    ASSETS.include? File.extname(request.path)[ 1.. -1 ] and
     render :nothing => true, :status => '404 Not Found'
   end
   before_filter :no_assets
