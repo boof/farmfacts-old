@@ -19,9 +19,7 @@ class Role < ActiveRecord::Base
   end
 
   def colleague_ids
-    self.class.works_on(work_type, work_id).except(self).
-        all(:select => :user_id).
-        map! { |r| r[:user_id] }
+    self.class.works_on(work_type, work_id).except(self).select_all :user_id
   end
 
   protected
