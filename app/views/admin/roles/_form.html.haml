@@ -10,6 +10,6 @@
 .append-bottom
   = form.label :user_id, 'User (required)'
   %div
-    = form.select :user_id, @selectable_users.map { |u| [u.name, u.id] }
+    = form.select :user_id, User.except(*@role.colleague_ids).select_all(:id, :name)
     = form.check_box :leading
     = form.label :leading, 'Head'

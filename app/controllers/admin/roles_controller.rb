@@ -6,17 +6,11 @@ class Admin::RolesController < Admin::Base
   }
 
   def new
-    @selectable_users = User.except(*@role.colleague_ids).find :all,
-        :select => 'users.id, users.name'
-
     title_page :new
     render :action => :new
   end
 
   def edit
-    @selectable_users = User.except(*@role.colleague_ids).find :all,
-        :select => 'users.id, users.name'
-
     title_page :edit, @polymorphism.proxy_target
     render :action => :edit
   end
