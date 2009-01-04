@@ -2,9 +2,10 @@ require File.join(File.dirname(__FILE__), 'boot')
 
 def session_secret
   require 'digest/sha1'
-  session_secret_path = File.join Rails.root, 'config', 'session_secret'
+  session_secret_path = File.join Rails.root, 'config', 'session.key'
 
   unless File.exists? session_secret_path
+    STDERR.puts "Generating a session secret in #{ session_secret_path }, this file should not be world-readable!"
     File.open session_secret_path, 'w' do |file|
       file << Digest::SHA1.hexdigest(Time.now.to_s << rand.to_s)
       file << Digest::SHA1.hexdigest(Time.now.to_s << rand.to_s)
@@ -32,7 +33,7 @@ Rails::Initializer.run do |config|
     %w[app sweepers]
   ].map! { |p| File.join Rails.root, *p }
 
-  # config.active_record.observers = :page_sweeper, :navigation_sweeper, :article_sweeper, :project_sweeper, :categorization_sweeper
+  # config.active_record.observers = :garbage_collector
   # config.log_level = :debug
 
   config.time_zone = 'UTC'
