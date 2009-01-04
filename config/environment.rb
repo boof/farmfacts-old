@@ -1,14 +1,18 @@
 require File.join(File.dirname(__FILE__), 'boot')
 
-require 'digest/sha1'
-session_secret_path = File.join Rails.root, 'session_secret'
-unless File.exists? session_secret_path
-  File.open session_secret_path, 'w' do |file|
-    file << Digest::SHA1.hexdigest(Time.now.to_s << rand.to_s)
-    file << Digest::SHA1.hexdigest(Time.now.to_s << rand.to_s)
+def session_secret
+  require 'digest/sha1'
+  session_secret_path = File.join Rails.root, 'config', 'session_secret'
+
+  unless File.exists? session_secret_path
+    File.open session_secret_path, 'w' do |file|
+      file << Digest::SHA1.hexdigest(Time.now.to_s << rand.to_s)
+      file << Digest::SHA1.hexdigest(Time.now.to_s << rand.to_s)
+    end
   end
+
+  File.read session_secret_path
 end
-session_secret = File.read session_secret_path
 
 Rails::Initializer.run do |config|
 
@@ -35,7 +39,7 @@ Rails::Initializer.run do |config|
 
   config.action_controller.allow_forgery_protection = false
   config.action_controller.session = {
-    :session_key => '_www-ruby-sequel-org_',
+    :session_key => 'farmfacts',
     :secret      => session_secret
   }
   config.action_view.sanitized_allowed_attributes = 'name', 'class'
