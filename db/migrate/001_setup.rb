@@ -17,20 +17,10 @@ class Setup < ActiveRecord::Migration
     end
     add_index :logins, :username, :unique => true
 
-    default_pages_body = %q{
-<<'n:main'
-
-<div class="prepend-top">
-h1. <!-- enter title here -->
-</div>
-
-<hr class="top" />
-
-<!-- insert content here -->
-}.strip
     create_table :pages do |t|
       t.string :path, :null => false
-      t.text :body, :null => false, :default => default_pages_body
+      t.text :head, :default => {}
+      t.text :body, :null => false
       t.string :title, :null => false
       t.string :summary
       t.timestamps
