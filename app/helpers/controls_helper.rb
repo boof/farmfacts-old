@@ -48,17 +48,12 @@ module ControlsHelper
   end
 
   def render_attachment_controls_for(record)
-    bulk_path = polymorphic_path [:admin, record]
-    bulk_path << '/bulk'
-    create_path = polymorphic_path [:admin, record, record.attachments.new]
-    return_to = polymorphic_path [:admin, record], :anchor => 'attachments'
+    record_path = polymorphic_path [:admin, record]
+    attachment  = record.attachments.new
 
     render :partial => record.attachments,
         :layout => 'admin/attachments/controls',
-        :locals => {
-          :bulk_path => bulk_path, :create_path => create_path,
-          :return_to => return_to
-        }
+        :locals => { :attachment => attachment, :record_path => record_path }
   end
 
   def render_toolbar_for(record)
