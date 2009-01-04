@@ -8,7 +8,7 @@ module Categorizable
     belongs_to :categorizable, :polymorphic => true
     validates_presence_of :categorizable_type, :categorizable_id
 
-    def self.categorizable_ids_for_categories_and_categorizable_type(*args)
+    def self.categorizable_ids_for_names_and_categorizable_type(*args)
       quoted_categorizable_type = quote_categorizable_type args.pop
 
       select = 'SELECT DISTINCT categorizable_id, categorizable_type' +
