@@ -8,6 +8,7 @@ Essential:
 * some Cache Sweeper are missing
 * Non-AJAX fallback for preview
 * Templating through Pages: Page => [Blog, Projects, Categories]
+* Stylesheet uploads
 
 Misc:
 * Localizations
@@ -30,12 +31,15 @@ Don't forget the submodules:
 
 Setup:
 
-    $ # replace sqlite3 with the database of your choice
+    # replace sqlite3 with the database of your choice
     $ cp vendor/rails/railties/configs/databases/sqlite3.yml config/database.yml
 
     $ $EDITOR config/database.yml
     $ rake gems:build
     $ rake db:create
     $ rake db:migrate
+
+    # the generated session key should only be read by you and your webserver
+    $ chmod 600 config/session.key
 
     ...
