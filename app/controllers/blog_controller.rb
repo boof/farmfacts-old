@@ -27,7 +27,7 @@ class BlogController < ApplicationController
 
   def show
     @article  = Article.accepted.find params[:id], :include => :author
-    @icon     = @article.category.icon
+    @icon     = @article.category.icon if @article.category
     @comments = @article.comments.accepted
 
     respond_to do |format|
