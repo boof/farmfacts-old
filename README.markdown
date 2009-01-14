@@ -1,33 +1,43 @@
 FarmFacts - Ruby on Rails based CMS
 ===================================
 
-TODO
-----
+PLATFORMS:
+----------
 
-Essential:
-* some Cache Sweeper are missing
-* Non-AJAX fallback for preview
-* Templating through Pages: Page => [Blog, Projects, Categories]
-* Stylesheet uploads
+* Mac OS X 10.5, Apache2 (mod_passenger) and PostgreSQL/SQLite3
+* Debian 4.0, Apache2 (mod_passenger) and PostgreSQL
 
-Misc:
-* Localizations
-* Coarse should fallback to Rails.logger
-* GitHub requests should be cached
-* CAS
-* votes and polls
-* Trackbacks:
-  * Project
+AUDIENCE:
+---------
+
+* Developers
+* Other
+
+BACKGROUND:
+-----------
+
+* I don't want to have rmagick everywhere
+* I don't want to have JS everywhere in the admin ui
+* I don't want to have a Media Library
+* I want to use the latest Rails version
+* I want to use solid technologies
+* I want it to be fast
+* I want to give Ruby Sequel a CMS
+* I want to give Fork Unstable Media - TECH a CMS
+* actually I want to write something big / a CMS / kill time
+
+INSTALL:
+--------
 
 You can get the source with:
 
-    git clone git://github.com/boof/farmfacts.git
+    $ git clone git://github.com/boof/farmfacts.git
 
 Don't forget the submodules:
 
-    cd farmfacts
-    git submodule init
-    git submodule update
+    $ cd farmfacts
+    $ git submodule init
+    $ git submodule update
 
 Setup:
 
@@ -43,3 +53,33 @@ Setup:
     $ chmod 600 config/session.key
 
     ...
+
+ROADMAP:
+--------
+
+**1.0**
+
+* `FAFA-7:  Application/Engine Properties [Improvement]`
+* `FAFA-1:  Template Support [Improvement]`
+* `FAFA-5:  Support Apache's MultiViews language negotiation [New Feature]`
+* `FAFA-8:  Page Compilation [Improvement]`
+* `FAFA-6:  Non-AJAX preview mixin [Improvement]`
+* `FAFA-2:  Fix CacheSweeper [Bug]`
+* `FAFA-3:  Project Engine/Slice [Improvement]`
+* `FAFA-4:  Blog Engine/Slice [Improvement]`
+* `Plugins: Onlist inline option [Improvement]`
+* `Documentation: Missing! [Bug]`
+
+**1.x**
+
+* `Plugins: Coarse fallback to Rails.logger [Improvement]`
+* `Engines: Vote/Poll [New Feature]`
+* `Engines: Wiki [New Feature]`
+* `Engines: Forum [New Feature]`
+* `Core: GitHub integration [New Feature]`
+* `Suggestions...`
+
+**2.0**
+
+* `Core / Auth: Pluggable Authentication Module, support for LDAP, DB and PAM maybe [Improvement]`
+* `Suggestions...`
