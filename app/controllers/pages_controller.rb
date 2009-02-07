@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+  ASSETS = %w[ css flv gif jpeg jpg js png swf exe cgi pl ]
 
   def show
     @page = Page.open request.path
