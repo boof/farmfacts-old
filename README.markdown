@@ -1,6 +1,12 @@
 FarmFacts - Ruby on Rails based CMS
 ===================================
 
+Minimal CMS with potential based on Ruby on Rails 2.3. The CMS provides some
+base functionality like page creation with attachments, authentication and
+embedable navigations, and can be extended with FaFa engines (Blog,
+Forum, ...).
+The CMS supports themes while every page can be skinned individually.
+
 PLATFORMS:
 ----------
 
@@ -17,8 +23,8 @@ BACKGROUND:
 -----------
 
 * I don't want to have rmagick everywhere
-* I don't want to have JS everywhere in the admin ui
-* I don't want to have a Media Library
+* I don't want to have JS (frameworks) everywhere
+* I don't want to have a global Media Library
 * I want to use the latest Rails version
 * I want to use solid technologies
 * I want it to be fast
@@ -60,27 +66,30 @@ ROADMAP:
 **1.0**
 
 * `FAFA-7:  Application/Engine Properties [Improvement]`
-* `Core: Add metadata where a page inherits metadata from app [New Feature]`
+* `Core:    Add metadata where a page inherits metadata from app [New Feature]`
 * `FAFA-1:  Template Support [Improvement]`
 * `FAFA-2:  Fix CacheSweeper [Bug]`
-* `FAFA-4:  fafa_articles: Article/Blog Engine for FarmFacts [Improvement]`
+* `FAFA-4:  fafa_articles: Article/Blog Engine for FarmFacts [New Feature]`
 * `Plugins: Onlist inline option [Improvement]`
-* `UI: Use TinyMCE instead of textile...helper`
+* `UI:      Use TinyMCE instead of textile...helper`
 * `FAFA-6:  Non-AJAX preview mixin [Improvement]`
+* `Core:    Drop RedCloth dependency. [Improvement]`
 
 **1.x**
 
+* `FAFA-3:  fafa_projects: Project Engine for FarmFacts [New Feature]`
 * `FAFA-5:  Support Apache's MultiViews language negotiation [New Feature]`
-* `Documentation: Missing! [Bug]`
-* `FAFA-3:  fafa_projects: Project Engine for FarmFacts [Improvement]`
-* `Engines: Vote/Poll [New Feature]`
-* `Engines: Wiki [New Feature]`
-* `Engines: Forum [New Feature]`
-* `Suggestions...`
+* `Docs:    Missing! [Improvement]`
+* Suggestions...
 
 **2.0**
 
-* `Core / Auth: Pluggable Authentication Module, support for LDAP, DB and PAM maybe [Improvement]`
+* `Core:    Support for Template Repositories [New Feature]`
+* `Core:    Support for FaFa-Engine Repositories [New Feature]`
+* `Engines: Vote/Poll [New Feature]`
+* `Engines: Wiki [New Feature]`
+* `Engines: Forum [New Feature]`
+* `Core:    Pluggable Authentication Module, support for LDAP, DB and PAM maybe [Improvement]`
 * `FAFA-8:  Page Versioning [Improvement]`
-* `Core: GitHub integration [New Feature]`
-* `Suggestions...`
+* `Core:    GitHub integration [New Feature]`
+* Suggestions...
