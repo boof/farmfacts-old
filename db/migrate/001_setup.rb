@@ -19,7 +19,8 @@ class Setup < ActiveRecord::Migration
 
     create_table :pages do |t|
       t.string :path, :null => false
-      t.text :head, :default => {}
+      # TODO: Move this into model/controller.
+      t.text :head #, :default => {}
       t.text :body, :null => false
       t.string :title, :null => false
       t.string :summary
@@ -29,7 +30,8 @@ class Setup < ActiveRecord::Migration
 
     create_table :navigation_containers do |t|
       t.string :element_id, :null => false
-      t.text :html_attributes, :default => {'class' => 'navigation'}
+      # TODO: Move this into model/controller.
+      t.text :html_attributes #, :default => {'class' => 'navigation'}
       t.timestamps
     end
     add_index :navigation_containers, :element_id, :unique => true
@@ -45,24 +47,24 @@ class Setup < ActiveRecord::Migration
     end
     add_index :navigation_nodes, :registered_path_id
 
-    create_table :articles do |t|
-      t.references :category
-      t.references :author, :null => false
-      t.string :title, :null => false
-      t.text :teaser, :null => false
-      t.text :body, :null => false
-      t.timestamps
-    end
+#    create_table :articles do |t|
+#      t.references :category
+#      t.references :author, :null => false
+#      t.string :title, :null => false
+#      t.text :teaser, :null => false
+#      t.text :body, :null => false
+#      t.timestamps
+#    end
 
-    create_table :projects do |t|
-      t.references :attachment
-      t.references :page
-      t.string :name, :null => false
-      t.text :teaser
-      t.string :url
-      t.string :github_repository
-      t.timestamps
-    end
+#    create_table :projects do |t|
+#      t.references :attachment
+#      t.references :page
+#      t.string :name, :null => false
+#      t.text :teaser
+#      t.string :url
+#      t.string :github_repository
+#      t.timestamps
+#    end
 
     create_table :attachments do |t|
       t.references :attaching, :polymorphic => true, :null => false
@@ -73,15 +75,15 @@ class Setup < ActiveRecord::Migration
     end
     add_index :attachments, [:attaching_id, :attaching_type]
 
-    create_table :comments do |t|
-      t.references :commented, :polymorphic => true, :null => false
-      t.string :author, :null => false
-      t.string :url
-      t.string :email, :null => false
-      t.text :message, :null => false
-      t.timestamps
-    end
-    add_index :comments, [:commented_id, :commented_type]
+#    create_table :comments do |t|
+#      t.references :commented, :polymorphic => true, :null => false
+#      t.string :author, :null => false
+#      t.string :url
+#      t.string :email, :null => false
+#      t.text :message, :null => false
+#      t.timestamps
+#    end
+#    add_index :comments, [:commented_id, :commented_type]
 
     create_table :onlists do |t|
       t.references :onlisted, :null => false, :polymorphic => true
@@ -90,24 +92,24 @@ class Setup < ActiveRecord::Migration
     end
     add_index :onlists, [:onlisted_type, :onlisted_id], :unique => true
 
-    create_table :roles do |t|
-      t.references :work, :polymorphic => true, :null => false
-      t.references :user, :null => false
-      t.boolean :leading
-      t.string :name, :null => false
-    end
-    add_index :roles, [:work_type, :work_id]
-    add_index :roles, [:work_type, :work_id, :user_id], :unique => true
-
-    create_table :slugs do |t|
-      t.references :sluggable, :polymorphic => true, :null => false
-      t.string :sequence, :integer, :null => false, :default => 1
-      t.string :scope, :string, :limit => 40
-      t.string :name
-      t.timestamp :created_at
-    end
-    add_index :slugs, [:name, :sluggable_type, :scope, :sequence], :unique => true, :name => "index_slugs_on_n_s_s_and_s"
-    add_index :slugs, [:sluggable_type, :sluggable_id]
+#    create_table :roles do |t|
+#      t.references :work, :polymorphic => true, :null => false
+#      t.references :user, :null => false
+#      t.boolean :leading
+#      t.string :name, :null => false
+#    end
+#    add_index :roles, [:work_type, :work_id]
+#    add_index :roles, [:work_type, :work_id, :user_id], :unique => true
+#
+#    create_table :slugs do |t|
+#      t.references :sluggable, :polymorphic => true, :null => false
+#      t.string :sequence, :integer, :null => false, :default => 1
+#      t.string :scope, :string, :limit => 40
+#      t.string :name
+#      t.timestamp :created_at
+#    end
+#    add_index :slugs, [:name, :sluggable_type, :scope, :sequence], :unique => true, :name => "index_slugs_on_n_s_s_and_s"
+#    add_index :slugs, [:sluggable_type, :sluggable_id]
 
     create_table :registered_paths do |t|
       t.references :provider, :polymorphic => true, :null => false
@@ -144,13 +146,13 @@ class Setup < ActiveRecord::Migration
     drop_table :categorizable_categorizations
     drop_table :categorizable_categories
     drop_table :registered_paths
-    drop_table :slugs
-    drop_table :roles
+#    drop_table :slugs
+#    drop_table :roles
     drop_table :onlists
-    drop_table :comments
+#    drop_table :comments
     drop_table :attachments
-    drop_table :projects
-    drop_table :articles
+#    drop_table :projects
+#    drop_table :articles
     drop_table :navigation_nodes
     drop_table :navigation_containers
     drop_table :pages

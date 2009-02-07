@@ -8,7 +8,6 @@ class Page < ActiveRecord::Base
   categorizable
   registers_path { |page| page.path }
 
-  has_many :comments, :as => :commented, :dependent => :delete_all
   has_many :attachments, :as => :attaching, :dependent => :delete_all
 
   named_scope :with_path, proc { |path| {:conditions => {:path => path}} }

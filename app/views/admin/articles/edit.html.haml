@@ -1,9 +1,0 @@
-- render_navigation :class => 'box' do
-  .column= link_to '&laquo; Articles', admin_articles_path
-  .last= link_to 'Show', admin_article_path(@article.id)
-
-= render_toolbar_for @article
-
-- form_for [:admin, @article] do |f|
-  = render :partial => 'form', :object => f
-  = submit_tag 'Update'
