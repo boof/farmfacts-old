@@ -4,8 +4,8 @@ FarmFacts - Ruby on Rails based CMS
 PLATFORMS:
 ----------
 
-* Mac OS X 10.5, Apache2 (mod_passenger) and PostgreSQL/SQLite3
-* Debian 4.0, Apache2 (mod_passenger) and PostgreSQL
+* Mac OS X 10.5, Apache2 (mod\_passenger) and PostgreSQL
+* Debian 4.0, Apache2 (mod\_passenger) and PostgreSQL
 
 AUDIENCE:
 ---------

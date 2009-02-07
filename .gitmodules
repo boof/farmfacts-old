@@ -7,9 +7,6 @@
 [submodule "vendor/plugins/onlist"]
 	path = vendor/plugins/onlist
 	url = git://github.com/fork/onlist.git
-[submodule "vendor/plugins/coarse"]
-	path = vendor/plugins/coarse
-	url = scm@fwhh.fork.de:ruby/coarse
 [submodule "vendor/plugins/paperclip"]
 	path = vendor/plugins/paperclip
 	url = git://github.com/thoughtbot/paperclip.git
@@ -22,18 +19,12 @@
 [submodule "vendor/misc/blueprint-css"]
 	path = vendor/misc/blueprint-css
 	url = git://github.com/joshuaclayton/blueprint-css.git
-[submodule "vendor/plugins/textile_editor_helper"]
-	path = vendor/plugins/textile_editor_helper
-	url = git://github.com/boof/textile_editor_helper.git
 [submodule "vendor/plugins/acts_as_list"]
 	path = vendor/plugins/acts_as_list
 	url = git://github.com/boof/acts_as_list.git
-[submodule "vendor/misc/syntaxhighlighter"]
-	path = vendor/misc/syntaxhighlighter
-	url = git://github.com/boof/syntaxhighlighter.git
 [submodule "vendor/plugins/column_scope"]
 	path = vendor/plugins/column_scope
 	url = git://github.com/boof/column_scope.git
-[submodule "vendor/plugins/friendly_id"]
-	path = vendor/plugins/friendly_id
-	url = git://github.com/boof/friendly_id.git
+[submodule "vendor/plugins/engines"]
+	path = vendor/plugins/engines
+	url = git://github.com/lazyatom/engines.git

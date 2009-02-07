@@ -1,4 +1,5 @@
-require File.join(File.dirname(__FILE__), 'boot')
+require "#{ File.dirname __FILE__ }/boot"
+require "#{ File.dirname __FILE__ }/../vendor/plugins/engines/boot"
 
 def session_secret
   require 'digest/sha1'
