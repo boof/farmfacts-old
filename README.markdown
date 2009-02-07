@@ -60,26 +60,27 @@ ROADMAP:
 **1.0**
 
 * `FAFA-7:  Application/Engine Properties [Improvement]`
+* `Core: Add metadata where a page inherits metadata from app [New Feature]`
 * `FAFA-1:  Template Support [Improvement]`
-* `FAFA-5:  Support Apache's MultiViews language negotiation [New Feature]`
-* `FAFA-8:  Page Compilation [Improvement]`
-* `FAFA-6:  Non-AJAX preview mixin [Improvement]`
 * `FAFA-2:  Fix CacheSweeper [Bug]`
-* `FAFA-3:  Project Engine/Slice [Improvement]`
-* `FAFA-4:  Blog Engine/Slice [Improvement]`
+* `FAFA-4:  fafa_articles: Article/Blog Engine for FarmFacts [Improvement]`
 * `Plugins: Onlist inline option [Improvement]`
-* `Documentation: Missing! [Bug]`
+* `UI: Use TinyMCE instead of textile...helper`
+* `FAFA-6:  Non-AJAX preview mixin [Improvement]`
 
 **1.x**
 
-* `Plugins: Coarse fallback to Rails.logger [Improvement]`
+* `FAFA-5:  Support Apache's MultiViews language negotiation [New Feature]`
+* `Documentation: Missing! [Bug]`
+* `FAFA-3:  fafa_projects: Project Engine for FarmFacts [Improvement]`
 * `Engines: Vote/Poll [New Feature]`
 * `Engines: Wiki [New Feature]`
 * `Engines: Forum [New Feature]`
-* `Core: GitHub integration [New Feature]`
 * `Suggestions...`
 
 **2.0**
 
 * `Core / Auth: Pluggable Authentication Module, support for LDAP, DB and PAM maybe [Improvement]`
+* `FAFA-8:  Page Versioning [Improvement]`
+* `Core: GitHub integration [New Feature]`
 * `Suggestions...`
