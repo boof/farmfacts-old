@@ -86,8 +86,8 @@ class Core < ActiveRecord::Migration
         t.timestamps
       end
       add_index :categorizable_categorizations, :category_id
-      add_index :categorizable_categorizations, [:categorizable_id, :categorizable_type]
-      add_index :categorizable_categorizations, [:category_id, :categorizable_id, :categorizable_type], :unique => true
+      add_index :categorizable_categorizations, [:categorizable_id, :categorizable_type], :name => 'categoriable_polymorphmic'
+      add_index :categorizable_categorizations, [:category_id, :categorizable_id, :categorizable_type], :unique => true, :name => 'categoriable_polymorphmic_id'
     end
 
     def self.down
