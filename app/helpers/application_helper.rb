@@ -1,25 +1,75 @@
 module ApplicationHelper
 
-  def page_title
-    @page_title || DEFAULT_TITLE
+  class StyleSheet
+    def initialize(path, *media)
+      path.insert 0, /stylesheets/ if path[0, 1] != '/'
+      path << '.css' if path[-4, 4] != '.css'
+      media = %w[ screen projections ] if media.blank?
+
+      @path, @media = path, media * ', '
+    end
+    def to_s
+      %Q'<link rel="stylesheet" href="#{ @path }" type="text/css" media="#{ @media }">'
+    end
+    class IE < StyleSheet
+      def to_s
+        "<!--[if IE]>#{ super }<![endif]-->"
+      end
+    end
+  end
+  module Meta
+    class Name
+      def initialize(name, content)
+        @name, @content = name, content
+      end
+      def to_s
+        %Q'<meta name="#{ @name }" content="#{ @content }" />'
+      end
+    end
+    class Keywords < Name
+      def initialize(*words)
+        super 'keywords', words * ', '
+      end
+    end
+    class Description < Name
+      def initialize(description)
+        super 'description', description
+      end
+    end
+    class HttpEquiv
+      def initialize(equiv, content)
+        @equiv, @content = equiv, content
+      end
+      def to_s
+        %Q'<meta http-equiv="#{ @equiv }" content="#{ @content }" />'
+      end
+    end
+    class ContentType < HttpEquiv
+      def initialize(content, options = {})
+        options.each { |option, value| content << "; #{ option }=value" }
+        super 'content-type', content
+      end
+    end
   end
 
-  def page_keywords
-    @page_keywords || DEFAULT_KEYWORDS
-  end
-
-  def page_description
-    @page_description || DEFAULT_DESCRIPTION
-  end
-
-  LAST_MODIFIED = '<span class="quiet">Last modified:</span> %s'
-  def last_modified(timestamp = nil)
-    LAST_MODIFIED % relative_date(timestamp) if timestamp
-  end
-  RELATIVE_DATE = '<span class="relative_date">%s</span>'
-  def relative_date(timestamp = nil)
-    timestamp ||= @modified_at
-    RELATIVE_DATE % timestamp.to_formatted_s if timestamp
+  def page
+    @page ||= Page.new do |p|
+      p.title = @page_title || DEFAULT_TITLE
+      p.stylesheets = [
+        StyleSheet.new('blueprint/screen'),
+        StyleSheet.new('blueprint/print', 'print'),
+        StyleSheet::IE.new('blueprint/ie'),
+        StyleSheet.new('application')
+      ]
+      keywords = ( @page_keywords || DEFAULT_KEYWORDS ).
+        split(',').each { |keyword| keyword.strip! }
+      description = @page_description || DEFAULT_DESCRIPTION
+      p.metadata = [
+        Meta::ContentType.new('text/html', :charset => 'utf-8')
+        Meta::Keywords.new(*keywords),
+        Meta::Description.new(description)
+      ]
+    end
   end
 
   def humanized_size(size)

@@ -2,38 +2,20 @@
 
 %html
   %head
-    %title&= page_title
+    = page.metadata
 
-    <meta content='text/javascript' http-equiv='content-script-type' />
-    <meta content='text/css' http-equiv='content-style-type' />
-    <meta content='text/html; charset=utf-8' http-equiv='content-type' />
-    %meta{ 'name'       => 'keywords',            'content' => h(page_keywords) }
-    %meta{ 'name'       => 'description',         'content' => h(page_description) }
+    <title>
+      &= page.title
+    </title>
 
-    <link rel="stylesheet" href="/stylesheets/blueprint/screen.css" type="text/css" media="screen, projection">
-    <link rel="stylesheet" href="/stylesheets/blueprint/print.css" type="text/css" media="print">
-    <!--[if IE]><link rel="stylesheet" href="/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
-    = stylesheet_link_tag 'application', :media => 'screen, projections'
-    = javascript_include_tag 'prototype', 'relative_date', 'application', :cache => true
-    = syntaxhighlighter
-    = auto_discovery_link_tag :atom, @atom || blog_index_path(:format => :atom)
+    = page.stylesheets
+    = page.javascripts
 
   %body
     .container
       = Navigation::Container.render 'main'
-      %h1
-        - if @icon and @icon.file?
-          .pull-2= image_tag @icon.url, :style => 'position: fixed;'
-        &= page_title
+      %h1&= page.title
       %hr.top
       .append-bottom= yield
       %hr.bottom
       .small= last_modified
-
-    :javascript
-      $$('.relative_date').each(function(date) { new RelativeDate(date) });
-      if(window.isBloggerMode == true)
-      dp.SyntaxHighlighter.BloggerMode();
-
-      dp.SyntaxHighlighter.ClipboardSwf = 'Scripts/clipboard.swf';
-      dp.SyntaxHighlighter.HighlightAll('code');
