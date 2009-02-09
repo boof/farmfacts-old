@@ -48,14 +48,6 @@ class User < ActiveRecord::Base
   end
   alias_method_chain :save, :login
 
-  def github?
-    not github_user.blank?
-  end
-  def github
-    GitHub::User.new github_user if github?
-  end
-  memoize :github
-
   protected
   def set_name_from_login
     self.name = login.username if name.blank? and login

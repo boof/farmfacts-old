@@ -6,7 +6,6 @@ class Core < ActiveRecord::Migration
         t.string :name, :null => false
         t.string :email
         t.string :url
-        t.string :github_user
       end
 
       create_table :logins do |t|

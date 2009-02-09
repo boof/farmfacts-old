@@ -24,7 +24,7 @@ Rails::Initializer.run do |config|
   # used by lib/git_hub.rb
   # TODO: used by lib/last_fm.rb
   # TODO: used by lib/twitter.rb
-  config.gem 'httparty'
+  # config.gem 'httparty'
 
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
