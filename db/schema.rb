@@ -9,6 +9,115 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 0) do
+ActiveRecord::Schema.define(:version => 20090207153000) do
+
+  create_table "attachments", :force => true do |t|
+    t.integer  "attaching_id",            :null => false
+    t.string   "attaching_type",          :null => false
+    t.string   "attachable_file_name"
+    t.string   "attachable_content_type"
+    t.integer  "attachable_file_size"
+    t.datetime "attachable_updated_at"
+  end
+
+  add_index "attachments", ["attaching_id", "attaching_type"], :name => "index_attachments_on_attaching_id_and_attaching_type"
+
+  create_table "categorizable_categories", :force => true do |t|
+    t.string   "name",              :null => false
+    t.string   "slug",              :null => false
+    t.string   "icon_file_name"
+    t.string   "icon_content_type"
+    t.datetime "icon_updated_at"
+    t.integer  "icon_file_size"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "categorizable_categories", ["name"], :name => "index_categorizable_categories_on_name", :unique => true
+
+  create_table "categorizable_categorizations", :force => true do |t|
+    t.integer  "category_id",        :null => false
+    t.integer  "categorizable_id",   :null => false
+    t.string   "categorizable_type", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "categorizable_categorizations", ["categorizable_id", "categorizable_type"], :name => "index_categorizable_categorizations_on_categorizable_id_and_categorizable_type"
+  add_index "categorizable_categorizations", ["category_id", "categorizable_id", "categorizable_type"], :name => "index_categorizable_categorizations_on_category_id_and_categorizable_id_and_categorizable_type", :unique => true
+  add_index "categorizable_categorizations", ["category_id"], :name => "index_categorizable_categorizations_on_category_id"
+
+  create_table "logins", :force => true do |t|
+    t.integer "user_id",                     :null => false
+    t.string  "username",                    :null => false
+    t.string  "password_salt", :limit => 10, :null => false
+    t.string  "password_hash", :limit => 32, :null => false
+  end
+
+  add_index "logins", ["username"], :name => "index_logins_on_username", :unique => true
+
+  create_table "navigation_containers", :force => true do |t|
+    t.string   "element_id",      :null => false
+    t.text     "html_attributes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "navigation_containers", ["element_id"], :name => "index_navigation_containers_on_element_id", :unique => true
+
+  create_table "navigation_nodes", :force => true do |t|
+    t.integer  "container_id",                             :null => false
+    t.integer  "registered_path_id"
+    t.integer  "position",           :default => 0
+    t.string   "html_class",         :default => "column"
+    t.string   "content",                                  :null => false
+    t.string   "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "navigation_nodes", ["registered_path_id"], :name => "index_navigation_nodes_on_registered_path_id"
+
+  create_table "onlists", :force => true do |t|
+    t.integer  "onlisted_id",   :null => false
+    t.string   "onlisted_type", :null => false
+    t.boolean  "accepted"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "onlists", ["onlisted_type", "onlisted_id"], :name => "index_onlists_on_onlisted_type_and_onlisted_id", :unique => true
+
+  create_table "pages", :force => true do |t|
+    t.string   "path",       :null => false
+    t.text     "head"
+    t.text     "body",       :null => false
+    t.string   "title",      :null => false
+    t.string   "summary"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "pages", ["path"], :name => "index_pages_on_path", :unique => true
+
+  create_table "registered_paths", :force => true do |t|
+    t.integer "provider_id",   :null => false
+    t.string  "provider_type", :null => false
+    t.string  "scope"
+    t.string  "label"
+    t.string  "path"
+  end
+
+  add_index "registered_paths", ["path"], :name => "index_registered_paths_on_path", :unique => true
+  add_index "registered_paths", ["provider_type", "provider_id"], :name => "index_registered_paths_on_provider_type_and_provider_id", :unique => true
+  add_index "registered_paths", ["scope"], :name => "index_registered_paths_on_scope"
+
+  create_table "users", :force => true do |t|
+    t.integer "page_id"
+    t.string  "name",        :null => false
+    t.string  "email"
+    t.string  "url"
+    t.string  "github_user"
+  end
 
 end
