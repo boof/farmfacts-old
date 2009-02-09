@@ -20,13 +20,6 @@ module Admin
       super self.class.const_get(:PAGE_TITLES)[action] % params
     end
 
-    def clear_page_cache
-      html_file_pattern = File.join Rails.root, %w[public ** *.html]
-      html_files = Dir[html_file_pattern].select { |p| p !~ STATIC_HTML }
-
-      FileUtils.rm html_files
-    end
-
     def save_or_send(method, name, route = {:action => :index})
       obj = instance_variable_get :"@#{ name }"
       obj.attributes = params[name]
