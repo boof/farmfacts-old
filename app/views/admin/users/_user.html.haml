@@ -1,4 +1,4 @@
-- content_tag_for :tr, user, :class => odd(user_counter) do
+- content_tag_for :tr, user, :class => eo(user_counter) do
   %td.span-7.name= link_to h(user.name), edit_admin_user_path(user)
   %td.span-7.email= mail_to user.email, h(user.email)
   %td.span-7.website= link_to h(user.website), user.website if user.website

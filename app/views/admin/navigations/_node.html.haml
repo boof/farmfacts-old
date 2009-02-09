@@ -1,4 +1,4 @@
-- content_tag_for :tr, node, :class => odd(node_counter) do
+- content_tag_for :tr, node, :class => eo(node_counter) do
   %td.span-10.content= link_to "#{ node.position }. #{ h node.content }", edit_admin_navigation_node_path(@navigation, node, :return_to => admin_navigation_path(@navigation, :anchor => 'nodes'))
   %td.span-8.url&= node.url
   %td.span-4.class&= node.html_class

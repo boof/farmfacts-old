@@ -82,7 +82,7 @@ module ApplicationHelper
     end
   end
 
-  def odd(index, offset = 0, *classes)
+  def eo(index, offset = 0, *classes)
     classes = %w[ even odd ] if classes.empty?
     modulo  = classes.length
 
