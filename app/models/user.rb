@@ -32,10 +32,7 @@ class User < ActiveRecord::Base
 
   def self.authorized_by(params)
     login = Login.find_with_credentials params
-
-    if login
-      block_given?? yield(login.user) : login.user
-    end
+    block_given?? yield(login.user) : login.user if login
   end
 
   def save_with_login(argument = nil)
