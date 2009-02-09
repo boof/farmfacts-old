@@ -34,9 +34,6 @@ ActionController::Routing::Routes.draw do |map|
     admin.connect '/setup',
       :controller => 'setup', :action => 'create',
       :conditions => { :method => :post }
-
-#    admin.preview_textile 'preview/textile',
-#      :controller => 'previews', :action => 'render_textile'
   end
 
   map.page_by_name '*p', :conditions => { :method => :get },

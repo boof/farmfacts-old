@@ -20,9 +20,7 @@ Rails::Initializer.run do |config|
 
   config.frameworks -= [ :active_resource ]
 
-  config.gem 'RedCloth', :lib => 'redcloth'
   config.gem 'haml'
-
   # used by lib/git_hub.rb
   # TODO: used by lib/last_fm.rb
   # TODO: used by lib/twitter.rb
