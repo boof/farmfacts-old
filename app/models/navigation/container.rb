@@ -1,5 +1,6 @@
 class Navigation::Container < ActiveRecord::Base
 
+ # TODO: {'class' => 'navigation'}
   self.table_name = 'navigation_containers'
 
   has_many :nodes, :class_name => 'Navigation::Node', :order => :position do

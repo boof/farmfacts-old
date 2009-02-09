@@ -19,8 +19,6 @@ class Core < ActiveRecord::Migration
 
       create_table :pages do |t|
         t.string :path, :null => false
-        # TODO: Move this into model/controller.
-        t.text :head #, :default => {}
         t.text :body, :null => false
         t.string :title, :null => false
         t.string :summary
@@ -30,8 +28,7 @@ class Core < ActiveRecord::Migration
 
       create_table :navigation_containers do |t|
         t.string :element_id, :null => false
-        # TODO: Move this into model/controller.
-        t.text :html_attributes #, :default => {'class' => 'navigation'}
+        t.text :html_attributes
         t.timestamps
       end
       add_index :navigation_containers, :element_id, :unique => true
