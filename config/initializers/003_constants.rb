@@ -1,8 +1,3 @@
-# Appliction Properties
-APPLICATION_NAME    = 'FarmFacts'
-SERVER_RECIPIENT    = %w[ admin@host ]
-SERVER_SENDER       = %w[ system@host ]
-
 # Metadata
 DEFAULT_TITLE       = 'Welcome'
 DEFAULT_KEYWORDS    = 'ruby, farmfacts, rails, ror, cms'
