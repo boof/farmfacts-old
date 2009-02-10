@@ -3,16 +3,13 @@
 %html
   %head
     = page.metadata
-
-    <title>
-      &= page.title
-    </title>
+    %title&= page.title
 
     = page.stylesheets
     = page.javascripts
 
   %body
-    .container
+    #top.container
       = Navigation::Container.render 'main'
       %h1&= page.title
       %hr.top
