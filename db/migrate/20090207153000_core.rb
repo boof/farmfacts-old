@@ -1,6 +1,10 @@
 class Core < ActiveRecord::Migration
 
     def self.up
+      create_table :preferences do |t|
+        t.string :type
+        t.text :data
+      end
       create_table :users do |t|
         t.references :page
         t.string :name, :null => false
