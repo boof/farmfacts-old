@@ -1,9 +1,8 @@
 module Categorizable
   class Categorization < ActiveRecord::Base
-
     set_table_name 'categorizable_categorizations'
 
-    belongs_to :category, :class_name => 'Categorizable::Category'
+    belongs_to :category, :class_name => 'Categorizable::Category', :count_cache => true
     validates_presence_of :category_id
     belongs_to :categorizable, :polymorphic => true
     validates_presence_of :categorizable_type, :categorizable_id
@@ -38,6 +37,11 @@ module Categorizable
         category_ids | Categorizable::Category.ids_for_names(*names)
       end
     end
+
+    def update_category
+      category.update_attribute :update_at, updated_at
+    end
+    after_save :update_category
 
   end
 end

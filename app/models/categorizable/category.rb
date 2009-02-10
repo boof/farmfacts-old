@@ -25,5 +25,17 @@ module Categorizable
       connection.select_values "#{ select } WHERE name IN (#{ names * ',' })"
     end
 
+    has_one :pagification, :dependent => :destroy
+    def pagify
+      categorizations.all(:include => :categorizable).each do |categorization|
+        categorizable = categorization.categorizable
+        categorizable.pagify if categorizable.respond_to? :pagify
+      end
+    end
+    def after_save
+      pagify
+      pagify_index
+    end
+
   end
 end
