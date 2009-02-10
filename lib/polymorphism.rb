@@ -1,68 +1,46 @@
 class Polymorphism
 
   attr_reader :base, :ctrl, :path
-
-  def self.set_polymorph(polymorph)
-    @polymorph   = "#{ polymorph }"
-    @polymorphs  = "#{ polymorph }".pluralize
-  end
-  def self.polymorph
-    @polymorph
-  end
-  def polymorph
-    self.class.polymorph
-  end
-  def self.polymorphs
-    @polymorphs
-  end
-  def polymorphs
-    self.class.polymorphs
-  end
-
-  def self.set_namespace(namespace)
-    @namespace = namespace
-  end
-  def self.namespace
-    @namespace
-  end
-  def namespace
-    self.class.namespace
-  end
+  cattr_reader :polymorph, :polymorphs, :namespace
 
   def self.inherited(base)
-    if base.polymorph.blank?
-      basename = base.name.demodulize
+    basename = base.name
+    basename.slice! 0..-13 if basename[-12, 12] == 'Polymorphism'
+    basename = basename.underscore
 
-      # strip "Polymorphism"
-      basename = basename[0..-13] if basename[-12, 12] == 'Polymorphism'
-
-      base.set_polymorph basename.underscore
+    unless basename_index = basename.rindex('/')
+      namespace = []
+    else
+      namespace = basename.slice!(0, basename_index).split '/'
+      basename.slice! 0, 1
     end
+
+    base.class_variable_set :@@namespace, namespace
+    base.class_variable_set :@@polymorph, "#{ basename }"
+    base.class_variable_set :@@polymorphs, "#{ basename }".pluralize
   end
 
   def initialize(ctrl)
-    @ctrl = ctrl
-    @key  = ctrl.params.keys.find { |key| key =~ /(.+)_id$/ }
-    @base = $~[1]
-    @path = Path.new self
+    @ctrl, @key   = ctrl, ctrl.params.keys.find { |key| key =~ /(.+)_id$/ }
+    @base, @path  = $~[1], Path.new(self)
   end
 
   def proxy_target_id
     @ctrl.params[:id]
   end
   def proxy_target_class
-    @proxy_target_class ||= polymorph.classify.constantize
+    @proxy_target_class ||= @@polymorph.classify.constantize
   end
   def proxy_owner_id
     @ctrl.params[@key]
   end
   def proxy_owner_class
-    @proxy_owner_class ||= base.classify.constantize
+    @proxy_owner_class ||= @base.classify.constantize
   end
   def association_reflection
     @association_reflection ||=
-      proxy_owner_class.reflect_on_association(polymorph.to_sym) ||
-      proxy_owner_class.reflect_on_association(polymorphs.to_sym)
+      proxy_owner_class.reflect_on_association(@@polymorph.to_sym) ||
+      proxy_owner_class.reflect_on_association(@@polymorphs.to_sym)
   end
   def singular?
     association_reflection.macro == :has_one
@@ -110,7 +88,7 @@ class Polymorphism
     def collection(action, *args)
       prefix = ''
       prefix << "#{ action }_" if action
-      prefix << "#{ namespace }_" if namespace
+      prefix << "#{ namespace * '_' }_" if namespace
 
       ctrl.send :"#{ prefix }#{ base }_#{ polymorphs }_path",
         proxy_owner, *args
@@ -119,7 +97,7 @@ class Polymorphism
     def generate(action = nil, *args)
       action &&= "#{ action }_"
       ctrl.send :"#{ action }polymorphic_path",
-          [namespace, proxy_owner, *args].compact
+          [namespace, proxy_owner, args].flatten!
     end
 
     protected

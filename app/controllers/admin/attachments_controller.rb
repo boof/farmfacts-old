@@ -1,6 +1,5 @@
 class Admin::AttachmentsController < Admin::Base
-
-  class AttachmentPolymorphism < Polymorphism; set_namespace :admin end
+  class AttachmentPolymorphism < Polymorphism; end
 
   def create
     AttachmentPolymorphism.new(self).proxy.create params[:attachment]
