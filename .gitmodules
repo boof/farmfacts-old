@@ -28,3 +28,9 @@
 [submodule "vendor/plugins/engines"]
 	path = vendor/plugins/engines
 	url = git://github.com/lazyatom/engines.git
+[submodule "vendor/plugins/shadows"]
+	path = vendor/plugins/shadows
+	url = git://github.com/boof/shadows.git
+[submodule "vendor/plugins/action_sequence"]
+	path = vendor/plugins/action_sequence
+	url = git://github.com/boof/action_sequence.git
