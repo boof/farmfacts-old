@@ -20,12 +20,6 @@ class Admin::PagesController < Admin::Base
   end
 
   def new
-    # repair broken default text values in sqlite
-    if Page.connection.respond_to? :sqlite_version
-      default_body = Page.columns_hash['body'].default
-      @page['body'] = default_body.slice 1, default_body.length - 2
-    end
-
     title_page :new
     render :action => :new
   end
@@ -36,22 +30,20 @@ class Admin::PagesController < Admin::Base
   end
 
   def create
-    save_or_send :new, :page do |page|
-      redirect_to admin_page_path(page)
+    save_or_render :new, :page do |page|
+      return_or_redirect_to admin_page_path(page)
     end
   end
 
   def update
-    save_or_send :edit, :page do |page|
-      redirect_to admin_page_path(page)
-    end
+    save_or_render :edit, :page, admin_page_path(@page)
   end
 
   def bulk
     Page.bulk_methods.include? params[:bulk_action] and
-    current_user.will params[:bulk_action], Page, params[:page_ids]
+    Page.send params[:bulk_action], params[:page_ids]
 
-    redirect_to :action => :index
+    return_or_redirect_to admin_pages_path
   end
 
   protected

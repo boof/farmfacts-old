@@ -3,15 +3,14 @@ class Admin::AttachmentsController < Admin::Base
 
   def create
     AttachmentPolymorphism.new(self).proxy.create params[:attachment]
-    redirect_to params[:return_to]
+    return_or_redirect_to root_path
   end
 
   def bulk
     Attachment.bulk_methods.include? params[:bulk_action] and
-    current_user.will params[:bulk_action], Attachment,
-      params[:attachment_ids], params
+    Attachment.send params[:bulk_action], params[:attachment_ids], params
 
-    redirect_to params[:return_to]
+    return_or_redirect_to root_path
   end
 
 end

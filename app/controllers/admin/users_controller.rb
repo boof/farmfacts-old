@@ -25,17 +25,17 @@ class Admin::UsersController < Admin::Base
   end
 
   def create
-    save_or_send :new, :user, admin_users_path
+    save_or_render :new, :user, admin_users_path
   end
 
   def update
-    save_or_send :edit, :user,
+    save_or_render :edit, :user,
         params[:return_to].blank?? admin_users_path : params[:return_to]
   end
 
   def bulk
     User.bulk_methods.include? params[:bulk_action] and
-    current_user.will params[:bulk_action], User, params[:user_ids]
+    User.send params[:bulk_action], params[:user_ids]
 
     redirect_to :action => :index
   end

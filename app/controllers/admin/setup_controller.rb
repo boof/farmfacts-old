@@ -10,9 +10,9 @@ class Admin::SetupController < Admin::Base
   end
 
   def create
-    save_or_send :new, :user do |@user|
+    save_or_render :new, :user do |@user|
       session[:user_id] = @user.id
-      redirect_to edit_admin_user_path(@user)
+      return_or_redirect_to edit_admin_user_path(@user)
     end
   end
 

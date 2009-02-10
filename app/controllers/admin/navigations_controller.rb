@@ -24,7 +24,7 @@ class Admin::NavigationsController < Admin::Base
     title_page :new
   end
   def create
-    save_or_send(:new, :navigation) { |navigation|
+    save_or_render(:new, :navigation) { |navigation|
         redirect_to admin_navigation_path(navigation) }
   end
 
@@ -32,7 +32,7 @@ class Admin::NavigationsController < Admin::Base
     title_page :edit, @navigation
   end
   def update
-    save_or_send :edit, :navigation, admin_navigation_path(@navigation)
+    save_or_render :edit, :navigation, admin_navigation_path(@navigation)
   end
 
   protected

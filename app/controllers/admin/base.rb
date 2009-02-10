@@ -20,15 +20,25 @@ module Admin
       super self.class.const_get(:PAGE_TITLES)[action] % params
     end
 
-    def save_or_send(method, name, route = {:action => :index})
+    def return_or_redirect_to(*args)
+      if params[:return_to].blank? then redirect_to(*args)
+      else redirect_to params[:return_to]
+      end
+    end
+
+    def save_or_render(method, name, *args)
       obj = instance_variable_get :"@#{ name }"
       obj.attributes = params[name]
 
-      if current_user.will(:save, obj)
+      if obj.save
         yield obj if block_given?
-        redirect_to route unless performed?
+        unless performed?
+          args << {:action => :index} if args.empty?
+          return_or_redirect_to args
+        end
       else
         send method
+        render :action => method unless performed?
       end
     end
 

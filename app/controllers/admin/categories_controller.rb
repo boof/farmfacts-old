@@ -1,8 +1,5 @@
 class Admin::CategoriesController < Admin::Base
 
-  cache_sweeper :categorization_sweeper, :only => [:create, :update, :bulk]
-  cache_sweeper :navigation_sweeper, :only => [:update, :bulk]
-
   PAGE_TITLES = {
     :index  => 'Categories',
     :show   => 'Category “%s”',
@@ -20,8 +17,7 @@ class Admin::CategoriesController < Admin::Base
   end
 
   def show
-    @icon             = @category.icon
-    @categorizations  = @category.categorizations.find :all,
+    @categorizations = @category.categorizations.find :all,
         :include => :categorizable,
         :order => 'categorizable_type, categorizable_id'
 
@@ -36,20 +32,19 @@ class Admin::CategoriesController < Admin::Base
   end
 
   def create
-    save_or_send :new, :category do |category|
-      redirect_to admin_category_path(category.id)
+    save_or_render :new, :category do |category|
+      return_or_redirect_to admin_category_path(category.id)
     end
   end
   def update
-    save_or_send :edit, :category, admin_category_path(@category.id)
+    save_or_render :edit, :category, admin_category_path(@category.id)
   end
 
   def bulk
     Categorizable::Category.bulk_methods.include? params[:bulk_action] and
-    current_user.will params[:bulk_action], Categorizable::Category,
-      params[:category_ids], params
+    Categorizable::Category.send params[:bulk_action], params[:category_ids], params
 
-    redirect_to admin_categories_path
+    return_or_redirect_to admin_categories_path
   end
 
   protected

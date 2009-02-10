@@ -12,14 +12,14 @@ class Admin::NodesController < Admin::Base
     title_page :new
   end
   def create
-    save_or_send(:new, :node) { |node| redirect_to params[:return_to] }
+    save_or_render(:new, :node) { |node| redirect_to params[:return_to] }
   end
 
   def edit
     title_page :edit, @node.position
   end
   def update
-    save_or_send :edit, :node, admin_navigation_path(@node.container_id)
+    save_or_render :edit, :node, admin_navigation_path(@node.container_id)
   end
 
   def move_down
@@ -33,8 +33,7 @@ class Admin::NodesController < Admin::Base
 
   def bulk
     Navigation::Node.bulk_methods.include? params[:bulk_action] and
-    current_user.will params[:bulk_action], Navigation::Node,
-      params[:node_ids], params
+    Navigation::Node.send params[:bulk_action], params[:node_ids], params
 
     redirect_to params[:return_to]
   end
