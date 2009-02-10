@@ -1,6 +1,0 @@
-Description:
-    Generates a page. Title is titleized from web_path whereas dir defaults
-    to the current working directory.
-
-Example:
-    `./script/generate page [dir] web_path
