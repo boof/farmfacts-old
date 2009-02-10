@@ -3,8 +3,6 @@ class User < ActiveRecord::Base
   extend Bulk::Destroy
   include Gravatar
 
-  can_move_things
-
   has_many :articles, :order => :title, :foreign_key => :author_id
   has_many :roles
   has_many :works, :through => :roles
