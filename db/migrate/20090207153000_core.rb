@@ -77,11 +77,7 @@ class Core < ActiveRecord::Migration
 
       create_table :categorizable_categories do |t|
         t.string :name, :null => false
-        t.string :slug, :null => false
-        t.string :icon_file_name
-        t.string :icon_content_type
-        t.timestamp :icon_updated_at
-        t.integer :icon_file_size
+        t.integer :categorizations_count
         t.timestamps
       end
       add_index :categorizable_categories, :name, :unique => true
