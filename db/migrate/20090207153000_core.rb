@@ -17,10 +17,10 @@ class Core < ActiveRecord::Migration
       add_index :logins, :username, :unique => true
 
       create_table :pages do |t|
+        t.string :disposition, :default => ''
         t.string :path, :null => false
-        t.text :body, :null => false
         t.string :title, :null => false
-        t.string :summary
+        t.text :body, :null => false
         t.timestamps
       end
       add_index :pages, :path, :unique => true
