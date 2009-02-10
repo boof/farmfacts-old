@@ -1,8 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
 
-  map.root :controller => 'pages', :action => 'show', :p => ['home']
-
-  map.resources :categories, :only => [:index, :show]
+  map.root :controller => 'pages', :action => 'show'
 
   map.with_options :controller => 'users', :path_prefix => '/admin' do |users|
     users.auth '/auth', :action => 'auth', :conditions => {:method => :post}
