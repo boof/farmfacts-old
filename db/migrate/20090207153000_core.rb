@@ -24,6 +24,11 @@ class Core < ActiveRecord::Migration
         t.timestamps
       end
       add_index :pages, :path, :unique => true
+      create_table :pagifications do |t|
+        t.references :page
+        t.references :pagified, :polymorphic => true
+      end
+      add_index :pagifications, [:pagified_type, :pagified_id], :unique => true
 
       create_table :navigation_containers do |t|
         t.string :element_id, :null => false
