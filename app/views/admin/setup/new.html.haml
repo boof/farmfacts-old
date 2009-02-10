@@ -2,43 +2,13 @@
 
 %html
   %head
-    %title= "Administration: #{ h page_title } [#{ APPLICATION_NAME }]"
+    = page.metadata
+    %title&= page.title
 
-    <meta content='text/javascript' http-equiv='content-script-type' />
-    <meta content='text/css' http-equiv='content-style-type' />
-    <meta content='text/html; charset=utf-8' http-equiv='content-type' />
-    <meta content='en' name='content-language' />
-
-    <link rel="stylesheet" href="/stylesheets/blueprint/screen.css" type="text/css" media="screen, projection">
-    <!--[if IE]><link rel="stylesheet" href="/stylesheets/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
-    = stylesheet_link_tag 'application', 'syntax', :media => 'screen, projections', :cache => true
-
-    = javascript_include_tag :defaults, :cache => true
+    = page.stylesheets
 
   %body
     #top.container
       .prepend-top
-        %h1
-          - if @icon and @icon.file?
-            .pull-2= image_tag @icon.url, :style => 'position: fixed;'
-          &= page_title
+        %h1&= page.title
       %hr.top.bottom
-      - form_for :user, @user, :url => admin_setup_path do |form|
-        = error_messages_for 'login', :object => form.object.login
-
-        - fields_for 'user[login_attributes]', form.object.login do |login_form|
-          .prepend-top
-            = login_form.label :username, 'Username (required)'
-            %div= login_form.text_field :username, :class => 'span-12 text'
-          .append-bottom
-            .first.column
-              = login_form.label :password
-              %div= login_form.password_field :password, :class => 'span-12 text'
-            .last.column
-              = login_form.label :password_confirmation
-              %div= login_form.password_field :password_confirmation, :class => 'span-12 text'
-            %br.clear
-        
-        = submit_tag 'Create Initial User'
-      
-    #bottom

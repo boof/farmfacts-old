@@ -1,0 +1,17 @@
+- form_for :user, @user, :url => admin_setup_path do |form|
+  = error_messages_for 'login', :object => form.object.login
+
+  - fields_for 'user[login_attributes]', form.object.login do |login_form|
+    .prepend-top
+      = login_form.label :username, 'Username (required)'
+      %div= login_form.text_field :username, :class => 'span-12 text'
+    .append-bottom
+      .first.column
+        = login_form.label :password
+        %div= login_form.password_field :password, :class => 'span-12 text'
+      .last.column
+        = login_form.label :password_confirmation
+        %div= login_form.password_field :password_confirmation, :class => 'span-12 text'
+      %br.clear
+
+  = submit_tag 'Create Initial User'
