@@ -1,13 +1,5 @@
 ActionController::Base.const_set :Unauthorized, Class.new(SecurityError)
 
-ExceptionNotifier.instance_eval do
-
-  self.exception_recipients = SERVER_RECIPIENT
-  self.sender_address       = SERVER_SENDER
-  self.email_prefix         = "[#{ APPLICATION_NAME }] "
-
-end
-
 module ExceptionNotifiable::ClassMethods
   def exceptions_to_treat_as_401
     [ActionController::Base::Unauthorized]
