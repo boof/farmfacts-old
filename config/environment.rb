@@ -1,6 +1,9 @@
 require "#{ File.dirname __FILE__ }/boot"
 require "#{ File.dirname __FILE__ }/../vendor/plugins/engines/boot"
 
+require "#{ File.dirname __FILE__ }/../lib/preferences"
+require "#{ File.dirname __FILE__ }/../lib/preferences/farm_facts"
+
 def session_secret
   require 'digest/sha1'
   session_secret_path = File.join Rails.root, 'config', 'session.key'
