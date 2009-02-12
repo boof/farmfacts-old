@@ -1,0 +1,17 @@
+%div
+  %label{ :for => 'preferences_name' } Application Name
+  %br
+  = text_field_tag 'preferences[name]', @preferences.name, :class => 'title span-14'
+.small
+  %div
+    %label{ :for => 'preferences_frontpage_path' } Frontpage
+    %br
+    = text_field_tag 'preferences[frontpage_path]', @preferences.frontpage_path, :class => 'text'
+  %div
+    %label{ :for => 'preferences_server_recipients' } Server Recipients (seperated by semicolon)
+    %br
+    = text_field_tag 'preferences[server_recipients]', @preferences.server_recipients * '; ', :class => 'text'
+  %div
+    %label{ :for => 'preferences_server_sender' } Server Sender
+    %br
+    = text_field_tag 'preferences[server_sender]', @preferences.server_sender, :class => 'text'
