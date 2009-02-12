@@ -1,3 +1,4 @@
+doc/api
 config/database.yml
 config/session.key
 .DS_Store
