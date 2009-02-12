@@ -1,0 +1,5 @@
+name: FarmFacts
+server_recipients:
+  - admin@localhost
+server_sender: system@localhost
+frontpage_page: /home
