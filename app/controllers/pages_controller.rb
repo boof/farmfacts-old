@@ -1,5 +1,7 @@
 class PagesController < ApplicationController
-  ASSETS = %w[ css flv gif jpeg jpg js png swf exe cgi pl ]
+  # asset extensions that wont be delivered
+  ASSETS = %w[ css flv gif jpeg jpg js png swf exe cgi pl ].
+      map! { |e| ".#{ e }" }
 
   def show
     @page = Page.open request_path
@@ -11,12 +13,12 @@ class PagesController < ApplicationController
 
   protected
   def request_path
-    request.path != '/' ? request.path : '/home'
+    request.path != '/' ? request.path : frontpage_path
   end
 
   def no_assets
-    ASSETS.include? File.extname(request_path)[ 1.. -1 ] and
-    render :nothing => true, :status => '404 Not Found'
+    ASSETS.include? File.extname(request_path) and
+    render :nothing => true, :status => 404
   end
   before_filter :no_assets
 
