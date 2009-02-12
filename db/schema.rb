@@ -23,12 +23,8 @@ ActiveRecord::Schema.define(:version => 20090207153000) do
   add_index "attachments", ["attaching_id", "attaching_type"], :name => "index_attachments_on_attaching_id_and_attaching_type"
 
   create_table "categorizable_categories", :force => true do |t|
-    t.string   "name",              :null => false
-    t.string   "slug",              :null => false
-    t.string   "icon_file_name"
-    t.string   "icon_content_type"
-    t.datetime "icon_updated_at"
-    t.integer  "icon_file_size"
+    t.string   "name",                  :null => false
+    t.integer  "categorizations_count"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -43,8 +39,8 @@ ActiveRecord::Schema.define(:version => 20090207153000) do
     t.datetime "updated_at"
   end
 
-  add_index "categorizable_categorizations", ["categorizable_id", "categorizable_type"], :name => "index_categorizable_categorizations_on_categorizable_id_and_categorizable_type"
-  add_index "categorizable_categorizations", ["category_id", "categorizable_id", "categorizable_type"], :name => "index_categorizable_categorizations_on_category_id_and_categorizable_id_and_categorizable_type", :unique => true
+  add_index "categorizable_categorizations", ["categorizable_id", "categorizable_type", "category_id"], :name => "categorizable_polymorphmic_category", :unique => true
+  add_index "categorizable_categorizations", ["categorizable_id", "categorizable_type"], :name => "categorizable_polymorphmic"
   add_index "categorizable_categorizations", ["category_id"], :name => "index_categorizable_categorizations_on_category_id"
 
   create_table "logins", :force => true do |t|
@@ -86,19 +82,26 @@ ActiveRecord::Schema.define(:version => 20090207153000) do
     t.datetime "updated_at"
   end
 
-  add_index "onlists", ["onlisted_type", "onlisted_id"], :name => "index_onlists_on_onlisted_type_and_onlisted_id", :unique => true
+  add_index "onlists", ["onlisted_id", "onlisted_type"], :name => "index_onlists_on_onlisted_type_and_onlisted_id", :unique => true
 
   create_table "pages", :force => true do |t|
-    t.string   "path",       :null => false
-    t.text     "head"
-    t.text     "body",       :null => false
-    t.string   "title",      :null => false
-    t.string   "summary"
+    t.string   "disposition", :default => ""
+    t.string   "path",                        :null => false
+    t.string   "title",                       :null => false
+    t.text     "body",                        :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "pages", ["path"], :name => "index_pages_on_path", :unique => true
+
+  create_table "pagifications", :force => true do |t|
+    t.integer "page_id"
+    t.integer "pagified_id"
+    t.string  "pagified_type"
+  end
+
+  add_index "pagifications", ["pagified_id", "pagified_type"], :name => "index_pagifications_on_pagified_type_and_pagified_id", :unique => true
 
   create_table "registered_paths", :force => true do |t|
     t.integer "provider_id",   :null => false
@@ -109,15 +112,14 @@ ActiveRecord::Schema.define(:version => 20090207153000) do
   end
 
   add_index "registered_paths", ["path"], :name => "index_registered_paths_on_path", :unique => true
-  add_index "registered_paths", ["provider_type", "provider_id"], :name => "index_registered_paths_on_provider_type_and_provider_id", :unique => true
+  add_index "registered_paths", ["provider_id", "provider_type"], :name => "index_registered_paths_on_provider_type_and_provider_id", :unique => true
   add_index "registered_paths", ["scope"], :name => "index_registered_paths_on_scope"
 
   create_table "users", :force => true do |t|
     t.integer "page_id"
-    t.string  "name",        :null => false
+    t.string  "name",    :null => false
     t.string  "email"
     t.string  "url"
-    t.string  "github_user"
   end
 
 end
