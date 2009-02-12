@@ -2,14 +2,10 @@
 
 %html
   %head
-    %title&= "#{ APPLICATION_NAME } | #{ h page_title }"
+    = page.metadata
+    %title&= page.title
 
-    <meta content='text/html; charset=utf-8' http-equiv='content-type' />
-    <meta content='en' name='content-language' />
-
-    <link rel="stylesheet" href="/stylesheets/blueprint/screen.css" type="text/css" media="screen, projection">
-    <!--[if IE]><link rel="stylesheet" href="/stylesheets/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
-    <link rel="stylesheet" href="/stylesheets/blueprint/application.css" type="text/css" media="screen, projection">
+    = page.stylesheets
 
   %body
     #top.container
@@ -24,7 +20,7 @@
       .clear
 
       .prepend-top
-        %h1&= page_title
+        %h1&= page.title
       %hr.top.bottom
       = yield
     #bottom

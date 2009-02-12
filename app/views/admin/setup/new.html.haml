@@ -11,4 +11,21 @@
     #top.container
       .prepend-top
         %h1&= page.title
-      %hr.top.bottom
+      %hr.top
+      - form_for :user, @user, :url => admin_setup_path do |user_form|
+        = error_messages_for 'user'
+
+        - user_form.fields_for :login do |login_form|
+          .prepend-top
+            = login_form.label :username, 'Username'
+            %div= login_form.text_field :username, :class => 'span-12 title'
+          .append-bottom
+            .first.column
+              = login_form.label :password
+              %div= login_form.password_field :password, :class => 'span-12 text'
+            .last.column
+              = login_form.label :password_confirmation
+              %div= login_form.password_field :password_confirmation, :class => 'span-12 text'
+            %br.clear
+
+        = submit_tag 'Create Initial User'

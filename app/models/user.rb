@@ -3,10 +3,15 @@ class User < ActiveRecord::Base
   extend Bulk::Destroy
   include Gravatar
 
-  has_many :articles, :order => :title, :foreign_key => :author_id
-  has_many :roles
-  has_many :works, :through => :roles
+  # Articles Extension
+  # has_many :articles, :order => :title, :foreign_key => :author_id
+  # Projects Extension
+  # has_many :roles
+  # has_many :works, :through => :roles
+
   has_one :login, :dependent => :destroy
+  accepts_nested_attributes_for :login
+
   belongs_to :page
 
   validates_presence_of :name
