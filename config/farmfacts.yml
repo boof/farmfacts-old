@@ -3,3 +3,12 @@ server_recipients:
   - admin@localhost
 server_sender: system@localhost
 frontpage_path: /home
+
+metadata:
+  content_type: utf8
+  content_language: en
+  keywords: []
+  description: 
+  copyright: 
+  author: 
+  publisher: 

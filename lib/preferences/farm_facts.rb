@@ -36,4 +36,11 @@ class Preferences::FarmFacts < Preferences
     @data['frontpage_path'].replace path
   end
 
+  def metadata
+    @data.fetch 'metadata', {}
+  end
+  def metadata=(data)
+    @data['metadata'] = data
+  end
+
 end
