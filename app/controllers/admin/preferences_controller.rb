@@ -1,6 +1,7 @@
 class Admin::PreferencesController < Admin::Base
 
   def edit
+    page.title = 'Configure Application'
     @module_name, @preferences = module_name, preferences
 
     unless @preferences
@@ -12,8 +13,13 @@ class Admin::PreferencesController < Admin::Base
   def update
     preferences.tap { |o| o.attributes = params[:preferences] }.save
 
+    unless params[:setup]
+      return_or_redirect_to admin_dashboard_path
+    else
+      redirect_to new_admin_page_path(:path => frontpage_path)
+    end
+
     restart
-    return_or_redirect_to admin_dashboard_path
   end
 
   protected

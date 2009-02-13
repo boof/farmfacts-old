@@ -3,7 +3,6 @@ class Admin::SetupController < Admin::Base
   layout false
 
   def new
-    p @user.valid?, @user.errors
     page.title = 'Setup: Create Initial User'
     render :new
   end
@@ -20,7 +19,7 @@ class Admin::SetupController < Admin::Base
 
   def proceed_with_configuration
     session[:user_id] = @user.id
-    redirect_to admin_configure_path
+    redirect_to admin_configure_path(:setup => true)
   end
 
   def assign_user

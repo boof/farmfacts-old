@@ -30,10 +30,10 @@ class Preferences::FarmFacts < Preferences
   end
 
   def frontpage_path
-    @data.fetch 'frontpage', '/'
+    @data.fetch 'frontpage_path', '/'
   end
   def frontpage_path=(path)
-    @data['frontpage'].replace path
+    @data['frontpage_path'].replace path
   end
 
 end

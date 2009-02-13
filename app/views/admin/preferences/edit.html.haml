@@ -1,2 +1,4 @@
 - form_tag do
+  = hidden_field_tag :setup, params[:setup]
   = render "#{ @module_name.underscore }"
+  = submit_tag 'Save and Restart'
