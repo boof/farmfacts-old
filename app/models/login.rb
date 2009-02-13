@@ -26,7 +26,7 @@ class Login < ActiveRecord::Base
     '0' != connection.select_value('SELECT count(id) FROM logins')
   end
 
-  # TODO: rename method
+  # Raises an error if no logins exist.
   def self.new!(*args, &block)
     raise NotImplementedError unless possible?
     new(*args, &block)

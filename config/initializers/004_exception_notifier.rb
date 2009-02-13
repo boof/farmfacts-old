@@ -15,7 +15,7 @@ module ExceptionNotifiable
         @login = Login.new! :return_uri => params[:return_uri] || request.request_uri
         render :template => 'login', :layout => 'application', :status => '401 Unauthorized'
       }
-      type.all  { render :nothing => true, :status => "503 Service Unavailable" }
+      type.all  { render :nothing => true, :status => '503 Service Unavailable' }
     end
   rescue NotImplementedError
     redirect_to admin_setup_path
@@ -24,13 +24,12 @@ module ExceptionNotifiable
   def render_404
     respond_to do |type|
       type.html {
-        title_page Page.not_found.title
-        render :text => Page.not_found.to_html, :layout => true, :status => "404 Not Found"
+        render :text => Page.not_found.to_s, :status => '404 Not Found'
       }
-      type.all  { render :nothing => true, :status => "404 Not Found" }
+      type.all  { render :nothing => true, :status => '404 Not Found' }
     end
   rescue ActiveRecord::RecordNotFound
-    render :file => "#{RAILS_ROOT}/public/404.html", :status => "404 Not Found"
+    send_file Rails.root.path('public', '404.html'), :status => '404 Not Found'
   end
 
   def rescue_action_in_public(exception)
