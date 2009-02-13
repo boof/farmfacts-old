@@ -21,8 +21,10 @@ class ApplicationController < ActionController::Base; protected
   end
 
   def restart
-    # restart Ruby on Rails instances spawned by Passenger.
+    # restart this apps instances spawned by passenger.
     FileUtils.touch Rails.root.join('tmp', 'restart.txt')
+    # restart this very instance of mongrel.
+    #Process.kill 'USR2', Process.pid
   end
 
   def frontpage_path
