@@ -26,6 +26,11 @@ module Admin
       end
     end
 
+    def send_and_render(method)
+      send method
+      render method unless performed?
+    end
+
     def save_or_render(method, name, *args)
       obj = instance_variable_get :"@#{ name }"
       obj.attributes = params[name]
@@ -37,10 +42,9 @@ module Admin
           return_or_redirect_to args
         end
       else
-        send method
-        render :action => method unless performed?
+        send_and_render method
       end
     end
-
+    
   end
 end
