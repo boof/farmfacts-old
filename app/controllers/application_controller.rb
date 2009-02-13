@@ -25,6 +25,8 @@ class ApplicationController < ActionController::Base; protected
     FileUtils.touch Rails.root.join('tmp', 'restart.txt')
     # restart this very instance of mongrel.
     #Process.kill 'USR2', Process.pid
+    # restart this very instance of thin.
+    #Process.kill 'HUP', Process.pid
   end
 
   def frontpage_path
