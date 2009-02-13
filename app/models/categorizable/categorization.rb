@@ -2,7 +2,7 @@ module Categorizable
   class Categorization < ActiveRecord::Base
     set_table_name 'categorizable_categorizations'
 
-    belongs_to :category, :class_name => 'Categorizable::Category', :count_cache => true
+    belongs_to :category, :class_name => 'Categorizable::Category', :counter_cache => true
     validates_presence_of :category_id
     belongs_to :categorizable, :polymorphic => true
     validates_presence_of :categorizable_type, :categorizable_id
