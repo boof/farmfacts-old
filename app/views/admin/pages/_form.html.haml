@@ -7,17 +7,4 @@
   = form.label :path, 'Path (required)'
   %div= form.text_field :path, :class => 'span-10 text'
 .append-bottom
-  .first.column
-    = form.label :summary, 'Description'
-    %div= form.text_field :summary, :class => 'span-14 text'
-  .last.column
-    = form.label :category_names, 'Keywords'
-    %div= form.text_field :category_names, :class => 'span-10 text'
-  %br.clear
-.append-bottom
-  %div{ :style => 'float: right;' }
-    .first.column= link_to_textile
-    .last.column= preview_textile_link 'page_body'
-  %br.clear
-  = textile_editor :page, :body, :class => 'span-24', :style => 'padding-right: 3px;'
-  = preview_field_for 'page_body'
+  = form.text_area :body, :class => 'span-24'
