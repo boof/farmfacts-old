@@ -35,7 +35,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.connect '/configure/:module_name',
       :controller => 'preferences', :action => 'update',
       :module_name => 'FarmFacts',
-      :conditions => { :method => :put }
+      :conditions => { :method => :post }
 
     admin.setup '/setup',
       :controller => 'setup', :action => 'new',
