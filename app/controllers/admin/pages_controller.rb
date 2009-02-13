@@ -20,7 +20,7 @@ class Admin::PagesController < Admin::Base
   end
 
   def new
-    title_page :new
+    page.title = 'New Page'
     render :action => :new
   end
 
@@ -48,7 +48,7 @@ class Admin::PagesController < Admin::Base
 
   protected
   def assign_page
-    @page = ( Page.find params[:id] rescue Page.new )
+    @page = ( Page.find params[:id] rescue Page.new :path => params[:path] )
   end
   before_filter :assign_page, :except => [:index, :bulk]
 
