@@ -1,8 +1,8 @@
-name: FarmFacts
+name: I can't help but love her.
 server_recipients:
   - admin@localhost
 server_sender: system@localhost
-frontpage_path: /home
+frontpage_path: /frontpage
 
 metadata:
   content_type: utf8
