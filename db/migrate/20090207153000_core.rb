@@ -19,8 +19,9 @@ class Core < ActiveRecord::Migration
       create_table :pages do |t|
         t.string :type
         t.string :path, :null => false
+        t.string :compiled_path, :null => false
         t.string :title, :null => false
-        t.string :metadata
+        t.text :metadata
         t.text :body, :null => false
         t.timestamps
       end
@@ -40,7 +41,6 @@ class Core < ActiveRecord::Migration
         t.string :attachable_content_type
         t.integer :attachable_file_size
         t.timestamp :attachable_updated_at
-
       end
       add_index :attachments, [:attaching_id, :attaching_type]
 
@@ -97,8 +97,8 @@ class Core < ActiveRecord::Migration
     end
 
     def self.down
-      drop_table :navigation_nodes
-      drop_table :navigation_containers
+#      drop_table :navigation_nodes
+#      drop_table :navigation_containers
       drop_table :categorizable_categorizations
       drop_table :categorizable_categories
       drop_table :registered_paths

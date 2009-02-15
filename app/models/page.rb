@@ -1,55 +1,59 @@
 class Page < ActiveRecord::Base
+  extend Finder
 
-  extend Page::Finder
   extend Bulk::Destroy
   extend Bulk::Onlist
 
   on_whitelist :updates => :updated_at
+  attach_shadows :assigns => :attributes
   categorizable
-  registers_path { |page| page.path }
+  registers_path :label => proc { |page| page.title } do |page|
+    page.compiled_path
+  end
 
-  has_many :attachments, :as => :attaching, :dependent => :delete_all
+  has_many :attachments, :as => :attaching,
+    :dependent => :destroy,
+    :order => 'position'
 
-  named_scope :with_path, proc { |path| {:conditions => {:path => path}} }
-
-  validates_uniqueness_of :path
+  validates_uniqueness_of :compiled_path
   validates_presence_of :title, :body
 
   def not_found?
-    path == '/not_found'
+    path[1, 3] == '404'
   end
-  def homepage?
-    path == '/home'
+  def index?
+    frontpage_path = Preferences['FarmFacts'].frontpage_path
+    path[1, frontpage_path.length] == frontpage_path
   end
 
-  def to_s
-    title
-  end
+  serialize :metadata, Hash
+  composed_of :metatags, :class_name => 'Page::Metatags',
+    :mapping => %w[metadata],
+    :converter => proc { |data| Metatags.new data }
 
   def self.default
-    new do |instance|
-      instance.title = Preferences::FarmFacts.name
-      instance.stylesheets = [
+    new do |page|
+      page.title = Preferences::FarmFacts.name
+      page.stylesheets = [
         StyleSheet.new('blueprint/screen'),
         StyleSheet.new('blueprint/print', 'print'),
         StyleSheet::IE.new('blueprint/ie'),
         StyleSheet.new('application')
       ]
-      instance.metadata = [
-        Meta::ContentType.new('text/html', :charset => 'utf-8'),
-        Meta::ContentLanguage.new('en')
-      ]
+      page.metadata = {'charset' => 'utf-8', 'language' => 'en'}
     end
   end
 
   # TODO: Implement attributes.
-  attr_accessor :stylesheets, :javascripts, :metadata
+  attr_accessor :stylesheets, :javascripts
 
   protected
-  def slash_path
-    path.insert 0, '/' if path[0, 1] != '/'
+  def compile_path
+    write_attribute :compiled_path, path.dup
+    compiled_path.insert 0, '/' if path[0, 1] != '/'
+    compiled_path.concat ".#{ metadata['language'] }"
   end
-  before_save :slash_path
+  before_validation :compiled_path
 
   class StyleSheet
     def initialize(path, *media)
@@ -65,45 +69,6 @@ class Page < ActiveRecord::Base
     class IE < StyleSheet
       def to_s
         "<!--[if IE]>#{ super }<![endif]-->"
-      end
-    end
-  end
-  module Meta
-    class Name
-      def initialize(name, content)
-        @name, @content = name, content
-      end
-      def to_s
-        %Q'<meta name="#{ @name }" content="#{ @content }" />'
-      end
-    end
-    class Keywords < Name
-      def initialize(*words)
-        super 'keywords', words * ', '
-      end
-    end
-    class Description < Name
-      def initialize(description)
-        super 'description', description
-      end
-    end
-    class HttpEquiv
-      def initialize(equiv, content)
-        @equiv, @content = equiv, content
-      end
-      def to_s
-        %Q'<meta http-equiv="#{ @equiv }" content="#{ @content }" />'
-      end
-    end
-    class ContentLanguage < Name
-      def initialize(language)
-        super 'content-language', language
-      end
-    end
-    class ContentType < HttpEquiv
-      def initialize(content, options = {})
-        options.each { |option, value| content << "; #{ option }=#{ value }" }
-        super 'content-type', content
       end
     end
   end
