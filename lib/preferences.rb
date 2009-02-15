@@ -26,8 +26,8 @@ class Preferences
   end
 
   def save
-    yaml = YAML.dump @data
-    File.open(PATH, 'w') { |file| file << yaml } rescue false
+    yaml = YAML.dump @data.to_hash
+    File.open(self.class.path, 'w') { |file| file << yaml }
   end
 
 end
