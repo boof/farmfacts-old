@@ -19,4 +19,9 @@ module Admin::BaseHelper
     end
     output
   end
+  def render_metadata_form(data, scope, title = 'Meta Information')
+    render 'admin/shared/metadata',
+      :object => data, :scope => scope, :title => title
+  end
+
 end

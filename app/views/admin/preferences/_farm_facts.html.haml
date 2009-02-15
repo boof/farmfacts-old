@@ -1,47 +1,21 @@
+%h3.prepend-top Generic Preferences
+
 %div
   %label{ :for => 'preferences_name' } Application Name
   %br
   = text_field_tag 'preferences[name]', @preferences.name, :class => 'title span-14'
-.small.append-bottom
+.append-bottom
   %div
     %label{ :for => 'preferences_frontpage_path' } Frontpage
     %br
     = text_field_tag 'preferences[frontpage_path]', @preferences.frontpage_path, :class => 'text'
   %div
-    %label{ :for => 'preferences_server_recipients' } Server Recipients (seperated by semicolon)
+    %label{ :for => 'preferences_server_recipients' } Server Recipients (semicolon seperated)
     %br
     = text_field_tag 'preferences[server_recipients]', @preferences.server_recipients * '; ', :class => 'text'
   %div
     %label{ :for => 'preferences_server_sender' } Server Sender
     %br
     = text_field_tag 'preferences[server_sender]', @preferences.server_sender, :class => 'text'
-%h3 Default Metadata
-.small
-  .first.column.span-12
-    %label{ :for => 'preferences_metadata_content_type' } Content-Type
-    %br
-    = text_field_tag 'preferences[metadata][content_type]', @preferences.metadata['content_type'], :class => 'text'
-  .last.column.span-12
-    %label{ :for => 'preferences_metadata_content_language' } Content-Language
-    %br
-    = text_field_tag 'preferences[metadata][content_language]', @preferences.metadata['content_language'], :class => 'text', :maxlength => 2
-  %div
-    %label{ :for => 'preferences_metadata_keywords' } Keywords (comma seperated)
-    %br
-    = text_field_tag 'preferences[metadata][keywords]', @preferences.metadata['keywords'] * ', ', :class => 'text span-24'
-  %div
-    %label{ :for => 'preferences_metadata_description' } Description
-    %br
-    = text_area_tag 'preferences[metadata][description]', @preferences.metadata['description'], :class => 'text span-24'
-  %div
-    %label{ :for => 'preferences_metadata_copyright' } Copyright
-    %br
-    = text_field_tag 'preferences[metadata][copyright]', @preferences.metadata['copyright'], :class => 'text span-24'
-  .first.column.span-12
-    %label{ :for => 'preferences_metadata_author' } Author
-    %br
-    = select_tag 'preferences[metadata][author]', options_for_select(User.all(:select => 'name, id', :order => 'name').map { |u| [u.name, u.id] }, @preferences.metadata['author'])
-  .last.column.span-12
-    %label{ :for => 'preferences_metadata_publisher' } Publisher
-    %br
-    = select_tag 'preferences[metadata][publisher]', options_for_select(User.all(:select => 'name, id', :order => 'name').map { |u| [u.name, u.id] }, @preferences.metadata['publisher'])
+
+.append-bottom=render_metadata_form @preferences.metadata, :preferences, 'Default Meta Information'

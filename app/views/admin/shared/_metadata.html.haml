@@ -1,0 +1,32 @@
+%h3&= title
+
+.first.column.span-3
+  %label{ :for => "#{ scope }_metatags_language" } Language
+  %br
+  = text_field_tag "#{ scope }[metatags][language]", metadata['language'], :class => 'text span-1', :maxlength => 2
+.column.span-3
+  %label{ :for => "#{ scope }_metatags_charset" } Charset
+  %br
+  = text_field_tag "#{ scope }[metatags][charset]", metadata['charset'], :class => 'text span-2'
+.last.column.span-18
+  %label{ :for => "#{ scope }_metatags_keywords" } Keywords (comma seperated)
+  %br
+  = text_field_tag "#{ scope }[metatags][keywords]", metadata['keywords'], :class => 'text span-18'
+.column.span-24
+  %label{ :for => "#{ scope }_metatags_copyright" } Copyright
+  %br
+  = text_field_tag "#{ scope }[metatags][copyright]", metadata['copyright'], :class => 'text span-24'
+.column.span-24
+  %label{ :for => "#{ scope }_metatags_description" } Description
+  %br
+  = text_area_tag "#{ scope }[metatags][description]", metadata['description'], :class => 'text span-24'
+.first.column.span-12
+  %label{ :for => "#{ scope }_metatags_author" } Author
+  %br
+  = select_tag "#{ scope }[metatags][author]", options_for_select(User.select_all(:name, :order => 'name'), metadata['author'])
+.last.column.span-12
+  %label{ :for => "#{ scope }_metatags_publisher" } Publisher
+  %br
+  = select_tag "#{ scope }[metatags][publisher]", options_for_select(User.select_all(:name, :order => 'name'), metadata['publisher'])
+
+%br.clear
