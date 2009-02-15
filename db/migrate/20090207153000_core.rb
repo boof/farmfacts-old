@@ -17,9 +17,10 @@ class Core < ActiveRecord::Migration
       add_index :logins, :username, :unique => true
 
       create_table :pages do |t|
-        t.string :disposition, :default => ''
+        t.string :type
         t.string :path, :null => false
         t.string :title, :null => false
+        t.string :metadata
         t.text :body, :null => false
         t.timestamps
       end
@@ -30,30 +31,16 @@ class Core < ActiveRecord::Migration
       end
       add_index :pagifications, [:pagified_type, :pagified_id], :unique => true
 
-      create_table :navigation_containers do |t|
-        t.string :element_id, :null => false
-        t.text :html_attributes
-        t.timestamps
-      end
-      add_index :navigation_containers, :element_id, :unique => true
-
-      create_table :navigation_nodes do |t|
-        t.references :container, :null => false
-        t.references :registered_path
-        t.integer :position, :default => 0
-        t.string :html_class, :default => 'column'
-        t.string :content, :null => false
-        t.string :url
-        t.timestamps
-      end
-      add_index :navigation_nodes, :registered_path_id
-
       create_table :attachments do |t|
         t.references :attaching, :polymorphic => true, :null => false
+        t.integer :position
+        t.integer :type
+
         t.string :attachable_file_name
         t.string :attachable_content_type
         t.integer :attachable_file_size
         t.timestamp :attachable_updated_at
+
       end
       add_index :attachments, [:attaching_id, :attaching_type]
 
@@ -89,16 +76,35 @@ class Core < ActiveRecord::Migration
       add_index :categorizable_categorizations, :category_id
       add_index :categorizable_categorizations, [:categorizable_id, :categorizable_type], :name => 'categorizable_polymorphmic'
       add_index :categorizable_categorizations, [:category_id, :categorizable_id, :categorizable_type], :unique => true, :name => 'categorizable_polymorphmic_category'
+
+#      create_table :navigation_containers do |t|
+#        t.string :element_id, :null => false
+#        t.text :html_attributes
+#        t.timestamps
+#      end
+#      add_index :navigation_containers, :element_id, :unique => true
+#
+#      create_table :navigation_nodes do |t|
+#        t.references :container, :null => false
+#        t.references :registered_path
+#        t.integer :position, :default => 0
+#        t.string :html_class, :default => 'column'
+#        t.string :content, :null => false
+#        t.string :url
+#        t.timestamps
+#      end
+#      add_index :navigation_nodes, :registered_path_id
     end
 
     def self.down
+      drop_table :navigation_nodes
+      drop_table :navigation_containers
       drop_table :categorizable_categorizations
       drop_table :categorizable_categories
       drop_table :registered_paths
       drop_table :onlists
       drop_table :attachments
-      drop_table :navigation_nodes
-      drop_table :navigation_containers
+      drop_table :pagifications
       drop_table :pages
       drop_table :logins
       drop_table :users
