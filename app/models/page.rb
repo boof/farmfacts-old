@@ -53,7 +53,7 @@ class Page < ActiveRecord::Base
     compiled_path.insert 0, '/' if path[0, 1] != '/'
     compiled_path.concat ".#{ metadata['language'] }"
   end
-  before_validation :compiled_path
+  before_validation :compile_path
 
   class StyleSheet
     def initialize(path, *media)
