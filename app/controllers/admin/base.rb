@@ -39,7 +39,7 @@ module Admin
         yield obj if block_given?
         unless performed?
           args << {:action => :index} if args.empty?
-          return_or_redirect_to args
+          return_or_redirect_to(*args)
         end
       else
         send_and_render method
