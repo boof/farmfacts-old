@@ -1,14 +1,14 @@
+--- 
+server_recipients: 
+- admin@localhost
 name: ego praesto ei meus animus
-server_recipients:
-  - admin@localhost
-server_sender: system@localhost
 frontpage_path: /frontpage
-
 metadata:
-  content_type: utf8
-  content_language: en
-  keywords: []
-  description: 
-  copyright: 
-  author: 
-  publisher: 
+  author: ""
+  language: en
+  publisher: ""
+  charset: utf8
+  copyright: ""
+  description: ""
+  keywords: ""
+server_sender: system@localhost
