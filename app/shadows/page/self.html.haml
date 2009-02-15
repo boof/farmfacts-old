@@ -1,0 +1,18 @@
+!!! Strict
+
+%html
+  %head
+    = @page.metatags
+    %title&= @page.title
+
+    = @page.stylesheets
+    = @page.javascripts
+
+  %body
+    #top.container
+      /=# Navigation::Container.render 'main'
+      %h1&= @page.title
+      %hr.top
+      .append-bottom= yield
+      %hr.bottom
+      .small= last_modified
