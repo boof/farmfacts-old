@@ -66,10 +66,11 @@ ActiveRecord::Schema.define(:version => 20090207153000) do
 
   create_table "pages", :force => true do |t|
     t.string   "type"
-    t.string   "path",       :null => false
-    t.string   "title",      :null => false
-    t.string   "metadata"
-    t.text     "body",       :null => false
+    t.string   "path",          :null => false
+    t.string   "compiled_path", :null => false
+    t.string   "title",         :null => false
+    t.text     "metadata"
+    t.text     "body",          :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
