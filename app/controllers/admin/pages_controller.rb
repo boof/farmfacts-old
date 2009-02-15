@@ -1,22 +1,14 @@
 class Admin::PagesController < Admin::Base
 
-  cache_sweeper :categorization_sweeper, :only => [:create, :update, :bulk]
   cache_sweeper :page_sweeper, :only => [:create, :update, :bulk]
 
-  PAGE_TITLES = {
-    :index    => 'Pages',
-    :show     => 'Page “%s”',
-    :new      => 'New Page',
-    :edit     => 'Edit Page “%s”'
-  }
-
   def index
-    title_page :index
-    @pages = Page.rejects(:body, :summary).find :all, :order => :path, :include => :oli
+    page.title = 'Pages'
+    @pages = Page.selects(:id, :title, :compiled_path, :updated_at).find :all, :order => :path, :include => :oli
   end
 
   def show
-    title_page :show, @page
+    @page.render
   end
 
   def new
@@ -25,7 +17,7 @@ class Admin::PagesController < Admin::Base
   end
 
   def edit
-    title_page :edit, @page
+    page.title = "Edit #{ @page.title }"
     render :action => :edit
   end
 
@@ -47,9 +39,18 @@ class Admin::PagesController < Admin::Base
   end
 
   protected
-  def assign_page
-    @page = ( Page.find params[:id] rescue Page.new :path => params[:path] )
+  def assign_new_page
+    @page = Page.new do |page|
+      page.title = Preferences[:FarmFacts].name
+      page.path = params[:path]
+      page.metadata = Preferences[:FarmFacts].metadata.
+          merge('author' => current_user.name, 'publisher' => current_user.name)
+    end
   end
-  before_filter :assign_page, :except => [:index, :bulk]
+  before_filter :assign_new_page, :only => [:new, :create]
+  def assign_existing_page
+    @page = Page.find params[:id]
+  end
+  before_filter :assign_existing_page, :only => [:show, :edit, :update]
 
 end
