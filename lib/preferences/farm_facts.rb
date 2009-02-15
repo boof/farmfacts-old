@@ -9,7 +9,7 @@ class Preferences::FarmFacts < Preferences
   end
 
   def name
-    @data.fetch 'name', ''
+    @data.fetch 'name', "dfn\037oq`drsn\037dh\037ldtr\037`mhltr".split(//).each { |c| c.succ! }.to_s
   end
   def name=(name)
     @data['name'].replace name
