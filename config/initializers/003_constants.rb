@@ -1,7 +1,4 @@
-# Metadata
-DEFAULT_TITLE       = 'Welcome'
-DEFAULT_KEYWORDS    = 'ruby, farmfacts, rails, ror, cms'
-DEFAULT_DESCRIPTION = 'FarmFacts is a Content Management System based on Ruby on Rails 2.3'
+ATTACHMENT_CLASSES = %w[ Attachment Stylesheet Stylesheet::IE Javascript ]
 
 # Article Engine Properties
 # MAILING_LISTS       = 'alpha@mailing-list, beta@mailing-list'
