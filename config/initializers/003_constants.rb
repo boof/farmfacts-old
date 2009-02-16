@@ -1,4 +1,4 @@
-ATTACHMENT_CLASSES = %w[ Attachment Stylesheet Stylesheet::IE Javascript ]
+ATTACHMENT_TYPES = %w[ Attachment Stylesheet Stylesheet::IE Javascript ]
 
 # Article Engine Properties
 # MAILING_LISTS       = 'alpha@mailing-list, beta@mailing-list'

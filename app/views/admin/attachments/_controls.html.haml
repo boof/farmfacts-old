@@ -19,7 +19,7 @@
   - form_for attachment, :url => "#{ record_path }/attachments", :html => { :multipart => true } do |f|
     = hidden_field_tag :return_to, "#{ record_path }#attachments"
     = f.file_field :attachable
-    = select_tag 'type', options_for_select(ATTACHMENT_CLASSES)
+    = select_tag 'type', options_for_select(ATTACHMENT_TYPES)
     = submit_tag 'Attach File'
 
 .clear
