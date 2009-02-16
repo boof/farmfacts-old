@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(:version => 20090207153000) do
     t.integer  "attaching_id",            :null => false
     t.string   "attaching_type",          :null => false
     t.integer  "position"
-    t.integer  "type"
+    t.string   "type"
     t.string   "attachable_file_name"
     t.string   "attachable_content_type"
     t.integer  "attachable_file_size"
