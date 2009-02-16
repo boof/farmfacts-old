@@ -5,7 +5,7 @@ class Polymorphism
 
   def self.inherited(base)
     basename = base.name
-    basename.slice! 0..-13 if basename[-12, 12] == 'Polymorphism'
+    basename.slice! -12, 12 if basename[-12, 12] == 'Polymorphism'
     basename = basename.underscore
 
     unless basename_index = basename.rindex('/')
@@ -15,9 +15,11 @@ class Polymorphism
       basename.slice! 0, 1
     end
 
-    base.class_variable_set :@@namespace, namespace
-    base.class_variable_set :@@polymorph, "#{ basename }"
-    base.class_variable_set :@@polymorphs, "#{ basename }".pluralize
+    base.module_eval do
+      class_variable_set :@@namespace, namespace
+      class_variable_set :@@polymorph, "#{ basename }"
+      class_variable_set :@@polymorphs, "#{ basename }".pluralize
+    end
   end
 
   def initialize(ctrl)
