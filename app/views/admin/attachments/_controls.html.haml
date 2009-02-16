@@ -1,9 +1,20 @@
+%div{ :style => 'float: right;' }
+  - form_for attachment, :url => "#{ record_path }/attachments", :html => { :multipart => true } do |f|
+    = hidden_field_tag :return_to, "#{ record_path }#attachments"
+    = f.file_field :attachable
+    = select_tag 'type', options_for_select(ATTACHMENT_TYPES)
+    = submit_tag 'Attach File'
+
+%h3 Attachments
+
+.clear
+
 - form_tag "#{ record_path }/attachments/bulk" do
   = hidden_field_tag :return_to, "#{ record_path }#attachments"
-  %table#attachments
+  %table#attachments.bottom
     %thead
       %tr
-        %th.span-14.file_name Attachment
+        %th.span-14.file_name Path
         %th.span-2.file_size Size
         %th.span-4.content_type Content-Type
         %th.span-3.uploaded Uploaded
@@ -14,12 +25,5 @@
   .append-1.push-1
     = select_bulk_action 'destroy'
     = submit_tag 'Attachments', :class => 'span-3'
-
-.prepend-1.pull-1
-  - form_for attachment, :url => "#{ record_path }/attachments", :html => { :multipart => true } do |f|
-    = hidden_field_tag :return_to, "#{ record_path }#attachments"
-    = f.file_field :attachable
-    = select_tag 'type', options_for_select(ATTACHMENT_TYPES)
-    = submit_tag 'Attach File'
 
 .clear

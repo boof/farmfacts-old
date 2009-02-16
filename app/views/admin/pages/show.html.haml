@@ -13,6 +13,7 @@
     .column.loud Categories:
   %br.clear
 
-.prepend-top.clear= render_attachment_controls_for @page
+%h3 Preview
+%iframe{ :src => preview_admin_page_path(@page), :width => '950', :height => '600' }
 
-%iframe{ :src => preview_admin_page_path(@page), :width => '1024', :height => '768', :style => 'margin-left: -37px;' }
+.prepend-top.clear= render_attachment_controls_for @page
