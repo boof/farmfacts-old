@@ -19,11 +19,11 @@ class Page < ActiveRecord::Base
   validates_presence_of :title, :body
 
   def not_found?
-    path[1, 3] == '404'
+    compiled_path[1, 3] == '404'
   end
   def index?
     frontpage_path = Preferences['FarmFacts'].frontpage_path
-    path[1, frontpage_path.length] == frontpage_path
+    compiled_path[1, frontpage_path.length] == frontpage_path
   end
 
   serialize :metadata, Hash
@@ -35,17 +35,26 @@ class Page < ActiveRecord::Base
     new do |page|
       page.title = Preferences::FarmFacts.name
       page.stylesheets = [
-        StyleSheet.new('blueprint/screen'),
-        StyleSheet.new('blueprint/print', 'print'),
-        StyleSheet::IE.new('blueprint/ie'),
-        StyleSheet.new('application')
+        Stylesheet.fake('blueprint/screen'),
+        Stylesheet.fake('blueprint/print', 'print'),
+        Stylesheet::IE.fake('blueprint/ie'),
+        Stylesheet.fake('application')
       ]
       page.metadata = {'charset' => 'utf-8', 'language' => 'en'}
     end
   end
 
-  # TODO: Implement attributes.
-  attr_accessor :stylesheets, :javascripts
+  attr_writer :stylesheets, :javascripts
+
+  def stylesheets
+    @stylesheets ||= attachments.scoped :conditions => ['attachments.type = ?', 'Stylesheet%'], :order => 'position'
+  end
+  def stylesheet_links
+    stylesheets.map { |s| s.to_s :link }
+  end
+  def javascripts
+    @javascripts ||= attachments.scoped :conditions => { :type => 'Javascript' }, :order => 'position'
+  end
 
   protected
   def compile_path
@@ -55,22 +64,5 @@ class Page < ActiveRecord::Base
   end
   before_validation :compile_path
 
-  class StyleSheet
-    def initialize(path, *media)
-      path.insert 0, '/stylesheets/' if path[0, 1] != '/'
-      path << '.css' if path[-4, 4] != '.css'
-      media = %w[ screen projections ] if media.blank?
-
-      @path, @media = path, media * ', '
-    end
-    def to_s
-      %Q'<link rel="stylesheet" href="#{ @path }" type="text/css" media="#{ @media }" />'
-    end
-    class IE < StyleSheet
-      def to_s
-        "<!--[if IE]>#{ super }<![endif]-->"
-      end
-    end
-  end
 
 end
