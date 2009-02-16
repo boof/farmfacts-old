@@ -35,7 +35,7 @@ class Core < ActiveRecord::Migration
       create_table :attachments do |t|
         t.references :attaching, :polymorphic => true, :null => false
         t.integer :position
-        t.integer :type
+        t.string :type
 
         t.string :attachable_file_name
         t.string :attachable_content_type
