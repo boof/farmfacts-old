@@ -34,7 +34,7 @@ class Page < ActiveRecord::Base
   def self.default
     new do |page|
       page.title = Preferences::FarmFacts.name
-      page.stylesheets = [
+      page.instance_variable_set :@stylesheets, [
         Stylesheet.fake('blueprint/screen'),
         Stylesheet.fake('blueprint/print', 'print'),
         Stylesheet::IE.fake('blueprint/ie'),
@@ -44,14 +44,8 @@ class Page < ActiveRecord::Base
     end
   end
 
-  attr_writer :stylesheets, :javascripts
-
   def stylesheets
     @stylesheets ||= attachments.scoped :conditions => ['attachments.type IN (?)', %w[ Stylesheet Stylesheet::IE ]]
-  end
-  def stylesheet_links
-    p stylesheets, self
-    stylesheets.map { |s| s.to_s :link }
   end
   def javascripts
     @javascripts ||= attachments.scoped :conditions => { :type => 'Javascript' }
