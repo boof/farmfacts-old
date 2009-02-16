@@ -9,7 +9,7 @@
         %th.span-3.uploaded Uploaded
         %th.last.span-1.action &nbsp;
     %tbody
-      = yield
+      = render :partial => 'admin/attachments/attachment', :collection => attachments
 
   .append-1.push-1
     = select_bulk_action 'destroy'

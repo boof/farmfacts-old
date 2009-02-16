@@ -51,9 +51,8 @@ module ControlsHelper
     record_path = polymorphic_path [:admin, record]
     attachment  = record.attachments.new
 
-    render :partial => 'admin/attachments/attachment', :collection => record.attachments,
-        :layout => 'admin/attachments/controls',
-        :locals => { :attachment => attachment, :record_path => record_path }
+    render 'admin/attachments/controls', :record_path => record_path,
+      :attachments => record.attachments, :attachment => attachment
   end
 
   def render_navigation(*args, &block)
