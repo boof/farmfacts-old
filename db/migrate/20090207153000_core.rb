@@ -36,6 +36,7 @@ class Core < ActiveRecord::Migration
         t.references :attaching, :polymorphic => true, :null => false
         t.integer :position
         t.string :type
+        t.string :public_id, :limit => 32
 
         t.string :attachable_file_name
         t.string :attachable_content_type
@@ -45,6 +46,7 @@ class Core < ActiveRecord::Migration
         t.string :disposition
       end
       add_index :attachments, [:attaching_id, :attaching_type]
+      add_index :attachments, [:type]
 
       create_table :onlists do |t|
         t.references :onlisted, :null => false, :polymorphic => true

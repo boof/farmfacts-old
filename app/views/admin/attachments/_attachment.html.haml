@@ -1,5 +1,5 @@
 - content_tag_for :tr, attachment, :class => eo(attachment_counter) do
-  %td.span-14.file_name= link_to attachment.attachable, attachment.attachable.url
+  %td.span-14.file_name= link_to attachment.attachable_file_name, attachment.attachable.url
   %td.span-2.file_size= humanized_size attachment.attachable_file_size
   %td.span-4.content_type= attachment.attachable_content_type
   %td.span-3.uploaded= attachment.attachable_updated_at.to_formatted_s(:short)

@@ -7,11 +7,17 @@ class Attachment < ActiveRecord::Base
   validates_presence_of :attaching_type, :attaching_id
 
   Paperclip::Attachment.interpolations[:attaching] = proc do |a, _|
-    i = a.instance; "#{ i.attaching_type.tableize }/#{ i.attaching_id }"
+    i = a.instance; "#{ i.attaching_type.tableize }/#{ i.public_id }"
   end
   has_attached_file :attachable,
     :path => ':rails_root/public/var/attachments/:rails_env/:attaching/:basename.:extension',
     :url  => '/var/attachments/:rails_env/:attaching/:basename.:extension'
   validates_attachment_presence :attachable
+
+  protected
+  def generate_hash
+    self.public_id = Digest::MD5.hexdigest "#{ Time.now }-#{ attaching_id }"
+  end
+  before_create :generate_hash
 
 end

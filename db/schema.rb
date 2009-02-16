@@ -12,10 +12,11 @@
 ActiveRecord::Schema.define(:version => 20090207153000) do
 
   create_table "attachments", :force => true do |t|
-    t.integer  "attaching_id",            :null => false
-    t.string   "attaching_type",          :null => false
+    t.integer  "attaching_id",                          :null => false
+    t.string   "attaching_type",                        :null => false
     t.integer  "position"
     t.string   "type"
+    t.string   "public_id",               :limit => 32
     t.string   "attachable_file_name"
     t.string   "attachable_content_type"
     t.integer  "attachable_file_size"
@@ -24,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20090207153000) do
   end
 
   add_index "attachments", ["attaching_id", "attaching_type"], :name => "index_attachments_on_attaching_id_and_attaching_type"
+  add_index "attachments", ["type"], :name => "index_attachments_on_type"
 
   create_table "categorizable_categories", :force => true do |t|
     t.string   "name",                  :null => false
