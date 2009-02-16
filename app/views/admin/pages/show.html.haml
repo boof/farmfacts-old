@@ -13,6 +13,6 @@
     .column.loud Categories:
   %br.clear
 
-= preview_field_for 'page_body', textile(@page.body)
-
 .prepend-top.clear= render_attachment_controls_for @page
+
+%iframe{ :src => preview_admin_page_path(@page), :width => '1024', :height => '768', :border => '1' }

@@ -7,8 +7,12 @@ class Admin::PagesController < Admin::Base
     @pages = Page.selects(:id, :title, :compiled_path, :updated_at).find :all, :order => :path, :include => :oli
   end
 
-  def show
+  def preview
     @page.render
+  end
+
+  def show
+    page.title = @page.title
   end
 
   def new
@@ -51,6 +55,6 @@ class Admin::PagesController < Admin::Base
   def assign_existing_page
     @page = Page.find params[:id]
   end
-  before_filter :assign_existing_page, :only => [:show, :edit, :update]
+  before_filter :assign_existing_page, :only => [:show, :edit, :update, :preview]
 
 end

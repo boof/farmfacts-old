@@ -11,7 +11,7 @@ ActionController::Routing::Routes.draw do |map|
   map.namespace :admin do |admin|
 
     admin.resources :pages, :except => [:destroy],
-        :collection => { :bulk => :post } do |pages|
+        :collection => { :bulk => :post }, :member => {:preview => :get} do |pages|
       pages.resources :attachments, :only => :create,
           :collection => { :bulk => :post }
     end
