@@ -41,6 +41,8 @@ class Core < ActiveRecord::Migration
         t.string :attachable_content_type
         t.integer :attachable_file_size
         t.timestamp :attachable_updated_at
+
+        t.string :disposition
       end
       add_index :attachments, [:attaching_id, :attaching_type]
 
