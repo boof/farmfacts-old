@@ -12,7 +12,7 @@ class Admin::PagesController < Admin::Base
   end
 
   def show
-    page.title = @page.title
+    page.title = "Show: #{ @page.title }"
   end
 
   def new
@@ -21,7 +21,7 @@ class Admin::PagesController < Admin::Base
   end
 
   def edit
-    page.title = "Edit #{ @page.title }"
+    page.title = "Edit: #{ @page.title }"
     render :action => :edit
   end
 
