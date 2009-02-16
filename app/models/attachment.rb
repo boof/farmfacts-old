@@ -1,6 +1,7 @@
 class Attachment < ActiveRecord::Base
 
   extend Bulk::Destroy
+  acts_as_list :scope => 'attaching_type = #{ attaching_type } AND attaching_id = #{ attaching_id }'
 
   belongs_to :attaching, :polymorphic => true
   validates_presence_of :attaching_type, :attaching_id
