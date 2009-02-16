@@ -1,24 +1,17 @@
 class Admin::UsersController < Admin::Base
 
-  PAGE_TITLES = {
-    :index  => 'Users',
-    :show   => 'User “%s”',
-    :new    => 'New User',
-    :edit   => 'Edit User “%s”'
-  }
-
   def index
-    title_page :index
+    page.title = 'Users'
     @users = User.all :order => :name
   end
 
   def new
-    title_page :new
+    page.title = 'New User'
     render :action => :new
   end
 
   def edit
-    title_page :edit, @user
+    page.title = "Edit: #{ @user }"
     render :action => :edit
   end
 
