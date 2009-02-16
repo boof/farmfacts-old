@@ -56,21 +56,6 @@ module ControlsHelper
         :locals => { :attachment => attachment, :record_path => record_path }
   end
 
-  def render_toolbar_for(record)
-    html = '<div class="push-1"><div style="position:fixed;white-space:nowrap;">'
-    html << link_to('&uArr;', '#top', :style => 'text-decoration: none;')
-    if record.respond_to? :attachments
-      html << '<div class="prepend-top append-bottom">'
-      html << '<strong>Attachments</strong>'
-      for attachment in record.attachments.all :order => 'attachable_file_name'
-        html << "<br />#{ textile_attachment attachment.attachable }"
-      end
-      html << '</div>'
-    end
-    html << link_to('&dArr;', '#bottom', :style => 'text-decoration: none;')
-    html << '</div></div>'
-  end
-
   def render_navigation(*args, &block)
     html_options  = {:class => 'navigation'}.merge args.extract_options!
     html_options[:class].include? 'navigation' or
