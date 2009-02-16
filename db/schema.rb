@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20090207153000) do
     t.string   "attachable_content_type"
     t.integer  "attachable_file_size"
     t.datetime "attachable_updated_at"
+    t.string   "disposition"
   end
 
   add_index "attachments", ["attaching_id", "attaching_type"], :name => "index_attachments_on_attaching_id_and_attaching_type"
