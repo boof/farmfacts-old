@@ -21,7 +21,7 @@ class Admin::AttachmentsController < Admin::Base
 
   protected
   def valid_type?
-    ATTACHMENT_TYPES.include? params[:type]
+    ATTACHMENT_TYPES.any? { |t| t.last == params[:type] }
   end
   def default_type?
     DEFAULT_TYPE.eql? params[:type]

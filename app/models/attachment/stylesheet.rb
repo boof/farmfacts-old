@@ -1,4 +1,4 @@
-class Stylesheet < Attachment
+class Attachment::Stylesheet < Attachment
 
   def self.fake(path, *disposition)
     path << '.css' if path[-4, 4] != '.css'

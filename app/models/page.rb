@@ -35,20 +35,20 @@ class Page < ActiveRecord::Base
     new do |page|
       page.title = Preferences::FarmFacts.name
       page.instance_variable_set :@stylesheets, [
-        Stylesheet.fake('blueprint/screen'),
-        Stylesheet.fake('blueprint/print', 'print'),
-        Stylesheet::IE.fake('blueprint/ie'),
-        Stylesheet.fake('application')
+        ::Attachment::Stylesheet.fake('blueprint/screen'),
+        ::Attachment::Stylesheet.fake('blueprint/print', 'print'),
+        ::Attachment::Stylesheet::IE.fake('blueprint/ie'),
+        ::Attachment::Stylesheet.fake('application')
       ]
       page.metadata = {'charset' => 'utf-8', 'language' => 'en'}
     end
   end
 
   def stylesheets
-    @stylesheets ||= attachments.scoped :conditions => ['attachments.type IN (?)', %w[ Stylesheet Stylesheet::IE ]]
+    @stylesheets ||= attachments.scoped :conditions => ['attachments.type IN (?)', %w[ Attachment::Stylesheet Attachment::Stylesheet::IE ]]
   end
   def javascripts
-    @javascripts ||= attachments.scoped :conditions => { :type => 'Javascript' }
+    @javascripts ||= attachments.scoped :conditions => { :type => 'Attachment::Javascript' }
   end
 
   protected
@@ -58,6 +58,5 @@ class Page < ActiveRecord::Base
     compiled_path.concat ".#{ metadata['language'] }"
   end
   before_validation :compile_path
-
 
 end
