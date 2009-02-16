@@ -55,6 +55,7 @@ class Admin::PagesController < Admin::Base
   def assign_existing_page
     @page = Page.find params[:id]
   end
-  before_filter :assign_existing_page, :only => [:show, :edit, :update, :preview]
+  before_filter :assign_existing_page,
+    :only => [:preview, :show, :edit, :update]
 
 end
