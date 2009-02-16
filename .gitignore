@@ -3,6 +3,7 @@ config/database.yml
 config/session.key
 .DS_Store
 public/syntaxhighlighter.js
+public/plugin_assets
 *.o
 *.so
 all.*
