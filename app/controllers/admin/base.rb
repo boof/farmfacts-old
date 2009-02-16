@@ -1,7 +1,9 @@
 module Admin
-  class Base < ApplicationController
+  class AttachmentPolymorphism < Polymorphism; end
 
-    protected
+  class Base < ApplicationController; protected
+    include ::Admin
+
     def current_user
       @__user ||= begin
         User.find session[:user_id]
@@ -15,10 +17,6 @@ module Admin
       raise Unauthorized unless current_user.authorized?
     end
     before_filter :assert_user_authorized
-
-    def title_page(action, *params)
-      super self.class.const_get(:PAGE_TITLES)[action] % params
-    end
 
     def return_or_redirect_to(*args)
       if params[:return_to].blank? then redirect_to(*args)
