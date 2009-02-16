@@ -1,7 +1,10 @@
 class Admin::AttachmentsController < Admin::Base
 
   def create
-    AttachmentPolymorphism.new(self).proxy.create params[:attachment]
+    attachment = AttachmentPolymorphism.new(self).proxy.new params[:attachment]
+    attachment.type = params[:type] unless params[:type].blank?
+    attachment.save
+
     return_or_redirect_to root_path
   end
 
