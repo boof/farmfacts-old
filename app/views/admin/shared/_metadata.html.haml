@@ -1,32 +1,32 @@
 %h3&= title
 
 .first.column.span-3
-  %label{ :for => "#{ scope }_metatags_language" } Language
+  %label{ :for => "#{ scope }_metadata_language" } Language
   %br
-  = text_field_tag "#{ scope }[metatags][language]", metadata['language'], :class => 'text span-1', :maxlength => 2
+  = text_field_tag "#{ scope }[metadata][language]", metadata['language'], :class => 'text span-1', :maxlength => 2
 .column.span-3
-  %label{ :for => "#{ scope }_metatags_charset" } Charset
+  %label{ :for => "#{ scope }_metadata_charset" } Charset
   %br
-  = text_field_tag "#{ scope }[metatags][charset]", metadata['charset'], :class => 'text span-2'
+  = text_field_tag "#{ scope }[metadata][charset]", metadata['charset'], :class => 'text span-2'
 .last.column.span-18
-  %label{ :for => "#{ scope }_metatags_keywords" } Keywords (comma seperated)
+  %label{ :for => "#{ scope }_metadata_keywords" } Keywords (comma seperated)
   %br
-  = text_field_tag "#{ scope }[metatags][keywords]", metadata['keywords'], :class => 'text span-18'
+  = text_field_tag "#{ scope }[metadata][keywords]", metadata['keywords'], :class => 'text span-18'
 .column.span-24
-  %label{ :for => "#{ scope }_metatags_copyright" } Copyright
+  %label{ :for => "#{ scope }_metadata_copyright" } Copyright
   %br
-  = text_field_tag "#{ scope }[metatags][copyright]", metadata['copyright'], :class => 'text span-24'
+  = text_field_tag "#{ scope }[metadata][copyright]", metadata['copyright'], :class => 'text span-24'
 .column.span-24
-  %label{ :for => "#{ scope }_metatags_description" } Description
+  %label{ :for => "#{ scope }_metadata_description" } Description
   %br
-  = text_area_tag "#{ scope }[metatags][description]", metadata['description'], :class => 'text span-24'
+  = text_area_tag "#{ scope }[metadata][description]", metadata['description'], :class => 'text span-24'
 .first.column.span-12
-  %label{ :for => "#{ scope }_metatags_author" } Author
+  %label{ :for => "#{ scope }_metadata_author" } Author
   %br
-  = select_tag "#{ scope }[metatags][author]", options_for_select(User.select_all(:name, :order => 'name'), metadata['author'])
+  = select_tag "#{ scope }[metadata][author]", options_for_select(User.select_all(:name, :order => 'name'), metadata['author'])
 .last.column.span-12
-  %label{ :for => "#{ scope }_metatags_publisher" } Publisher
+  %label{ :for => "#{ scope }_metadata_publisher" } Publisher
   %br
-  = text_field_tag "#{ scope }[metatags][publisher]", metadata['publisher'], :class => 'text span-24'
+  = text_field_tag "#{ scope }[metadata][publisher]", metadata['publisher'], :class => 'text span-12'
 
 %br.clear
