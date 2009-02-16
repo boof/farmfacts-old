@@ -27,6 +27,6 @@
 .last.column.span-12
   %label{ :for => "#{ scope }_metatags_publisher" } Publisher
   %br
-  = select_tag "#{ scope }[metatags][publisher]", options_for_select(User.select_all(:name, :order => 'name'), metadata['publisher'])
+  = text_field_tag "#{ scope }[metatags][publisher]", metadata['publisher'], :class => 'text span-24'
 
 %br.clear

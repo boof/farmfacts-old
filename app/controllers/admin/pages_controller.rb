@@ -44,7 +44,7 @@ class Admin::PagesController < Admin::Base
       page.title = Preferences[:FarmFacts].name
       page.path = params[:path]
       page.metadata = Preferences[:FarmFacts].metadata.
-          merge('author' => current_user.name, 'publisher' => current_user.name)
+          merge('author' => current_user.name)
     end
   end
   before_filter :assign_new_page, :only => [:new, :create]
