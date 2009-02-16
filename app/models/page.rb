@@ -47,13 +47,14 @@ class Page < ActiveRecord::Base
   attr_writer :stylesheets, :javascripts
 
   def stylesheets
-    @stylesheets ||= attachments.scoped :conditions => ['attachments.type = ?', 'Stylesheet%'], :order => 'position'
+    @stylesheets ||= attachments.scoped :conditions => ['attachments.type IN (?)', %w[ Stylesheet Stylesheet::IE ]]
   end
   def stylesheet_links
+    p stylesheets, self
     stylesheets.map { |s| s.to_s :link }
   end
   def javascripts
-    @javascripts ||= attachments.scoped :conditions => { :type => 'Javascript' }, :order => 'position'
+    @javascripts ||= attachments.scoped :conditions => { :type => 'Javascript' }
   end
 
   protected
