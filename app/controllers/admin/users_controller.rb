@@ -1,7 +1,5 @@
 class Admin::UsersController < Admin::Base
 
-  cache_sweeper :user_sweeper, :only => [:update, :bulk]
-
   PAGE_TITLES = {
     :index  => 'Users',
     :show   => 'User “%s”',
