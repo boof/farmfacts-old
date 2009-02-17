@@ -3,9 +3,14 @@ class Template < ActiveRecord::Base
   # source directory
   TEMPLATE_PATH = Rails.root.join 'vendor', 'templates'
 
-  # Returns a Filepath object pointing to the templates source directory.
+  # Returns a Filepath object pointing to the template source directory.
   def self.path
     TEMPLATE_PATH
+  end
+
+  # Returns a Filepath object pointing to this templates source directory.
+  def path
+    TEMPLATE_PATH.join name
   end
 
   validates_uniqueness_of :name
@@ -16,7 +21,7 @@ class Template < ActiveRecord::Base
     def as_defined(definition)
       proxy_owner.attachments.build do |attachment|
         # assign attachable file
-        attachable_path = Template.path.join proxy_owner.name, definition['path']
+        attachable_path = proxy_owner.path.join definition['path']
         File.open(attachable_path) { |able| attachment.attachable = able }
 
         # assign type for Single Table Inheritance
@@ -68,7 +73,7 @@ class Template < ActiveRecord::Base
 
       # load template and mark it as loaded, unless it's already loaded
       loaded[template_name] ||=
-          ( templates[template_name] = Template.load template_name )
+          ( templates[template_name] = load template_name )
 
       templates
     end
