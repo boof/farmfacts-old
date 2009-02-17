@@ -1,0 +1,17 @@
+!!! Strict
+
+%html
+  %head
+    = @page.metatags
+    %title&= @page.title
+
+    = @template.stylesheets
+    = @page.stylesheets
+    = @template.javascripts
+    = @page.javascripts
+
+  %body
+    #top.container
+      %h1&= @page.title
+      %hr.top
+      .append-bottom= @page.body

@@ -1,0 +1,18 @@
+stylesheets:
+-
+  path: stylesheets/screen.css
+  disposition: "screen, projector"
+-
+  path: stylesheets/print.css
+  disposition: "print"
+-
+  path: stylesheets/ie.css
+  disposition: "screen, projector"
+  type: IE
+javascripts:
+-
+  path: javascripts/jquery.js
+# define type for IE specific includes
+#  type: IE
+elements:
+  plain: "thumbs/plain.png"

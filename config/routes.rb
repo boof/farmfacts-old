@@ -15,12 +15,20 @@ ActionController::Routing::Routes.draw do |map|
       pages.resources :attachments, :only => :create,
           :collection => { :bulk => :post }
     end
-
-    admin.resources :navigations do |navigations|
-      navigations.resources :nodes, :except => [:index, :show, :destroy],
-          :collection => { :bulk => :post },
-          :member => { :move_up => :put, :move_down => :put }
+    admin.resources :templates, :only => [:index] do |templates|
+      templates.resources :templated_pages, :except => [:destroy],
+          :collection => { :bulk => :post }, :member => {:preview => :get} do |pages|
+        pages.resources :attachments, :only => :create,
+            :collection => { :bulk => :post }
+      end
     end
+    
+
+#    admin.resources :navigations do |navigations|
+#      navigations.resources :nodes, :except => [:index, :show, :destroy],
+#          :collection => { :bulk => :post },
+#          :member => { :move_up => :put, :move_down => :put }
+#    end
 
     admin.resources :categories, :except => [:destroy],
         :collection => { :bulk => :post }
