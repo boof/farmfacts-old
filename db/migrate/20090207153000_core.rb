@@ -21,6 +21,7 @@ class Core < ActiveRecord::Migration
         t.string :path, :null => false
         t.string :compiled_path, :null => false
         t.string :title, :null => false
+        t.references :template
         t.text :metadata
         t.text :body, :null => false
         t.timestamps
@@ -81,6 +82,20 @@ class Core < ActiveRecord::Migration
       add_index :categorizable_categorizations, [:categorizable_id, :categorizable_type], :name => 'categorizable_polymorphmic'
       add_index :categorizable_categorizations, [:category_id, :categorizable_id, :categorizable_type], :unique => true, :name => 'categorizable_polymorphmic_category'
 
+      create_table :templates do |t|
+        t.string :name, :null => false
+        t.text :definition
+        t.timestamps
+      end
+      create_table :page_elements do |t|
+        t.references :templated_page
+        t.string :snippet_path
+        t.text :data
+        t.integer :position
+        t.timestamps
+      end
+      add_index :page_elements, :templated_page_id
+
 #      create_table :navigation_containers do |t|
 #        t.string :element_id, :null => false
 #        t.text :html_attributes
@@ -103,6 +118,8 @@ class Core < ActiveRecord::Migration
     def self.down
 #      drop_table :navigation_nodes
 #      drop_table :navigation_containers
+      drop_table :page_elements
+      drop_table :templates
       drop_table :categorizable_categorizations
       drop_table :categorizable_categories
       drop_table :registered_paths
