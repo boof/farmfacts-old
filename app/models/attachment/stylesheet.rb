@@ -1,15 +1,12 @@
 class Attachment::Stylesheet < Attachment
 
-  module Extension
-    def to_s
-      %Q'<link rel="stylesheet" href="#{ attachable }" type="text/css" media="#{ disposition }" />'
-    end
-
-    def disposition
-      self[:disposition].blank?? 'screen, projection' : self[:disposition]
-    end
+  def to_s
+    %Q'<link rel="stylesheet" href="#{ attachable }" type="text/css" media="#{ disposition }" />'
   end
-  include Extension
+
+  def disposition
+    self[:disposition].blank?? 'screen, projection' : self[:disposition]
+  end
 
   def self.fake(path, *disposition)
     path << '.css' if path[-4, 4] != '.css'

@@ -1,10 +1,7 @@
 class Attachment::Javascript < Attachment
 
-  module Extension
-    def to_s
-      %Q'<script type="text/javascript" src="#{ attachable }"></script>'
-    end
+  def to_s
+    %Q'<script type="text/javascript" src="#{ attachable }"></script>'
   end
-  include Extension
 
 end
