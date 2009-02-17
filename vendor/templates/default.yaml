@@ -1,18 +1,17 @@
-stylesheets:
+caption: Default Template
+attachments:
 -
   path: stylesheets/screen.css
   disposition: "screen, projector"
+  type: Stylesheet
 -
   path: stylesheets/print.css
   disposition: "print"
+  type: Stylesheet
 -
   path: stylesheets/ie.css
   disposition: "screen, projector"
-  type: IE
-javascripts:
+  type: Stylesheet::IE
 -
   path: javascripts/jquery.js
-# define type for IE specific includes
-#  type: IE
-elements:
-  plain: "thumbs/plain.png"
+  type: Javascript

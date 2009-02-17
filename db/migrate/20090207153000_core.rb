@@ -84,7 +84,7 @@ class Core < ActiveRecord::Migration
 
       create_table :templates do |t|
         t.string :name, :null => false
-        t.text :definition
+        t.string :caption, :null => false
         t.timestamps
       end
       create_table :page_elements do |t|
@@ -95,29 +95,9 @@ class Core < ActiveRecord::Migration
         t.timestamps
       end
       add_index :page_elements, :templated_page_id
-
-#      create_table :navigation_containers do |t|
-#        t.string :element_id, :null => false
-#        t.text :html_attributes
-#        t.timestamps
-#      end
-#      add_index :navigation_containers, :element_id, :unique => true
-#
-#      create_table :navigation_nodes do |t|
-#        t.references :container, :null => false
-#        t.references :registered_path
-#        t.integer :position, :default => 0
-#        t.string :html_class, :default => 'column'
-#        t.string :content, :null => false
-#        t.string :url
-#        t.timestamps
-#      end
-#      add_index :navigation_nodes, :registered_path_id
     end
 
     def self.down
-#      drop_table :navigation_nodes
-#      drop_table :navigation_containers
       drop_table :page_elements
       drop_table :templates
       drop_table :categorizable_categorizations
