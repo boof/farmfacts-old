@@ -11,8 +11,9 @@ class Page < ActiveRecord::Base
     page.compiled_path
   end
 
-  validates_uniqueness_of :compiled_path
-  validates_presence_of :title, :body
+  validates_presence_of :title, :path
+  validates_uniqueness_of :path, :scope => :compiled_path
+  validates_presence_of :body, :unless => proc { |page| page.type }
 
   has_many :attachments, :as => :attaching, :dependent => :destroy
   has_many :javascripts, :as => :attaching, :class_name => 'Attachment', :conditions => ['attachments.type IN (?)', %w[ Attachment::Javascript ]]
@@ -45,10 +46,15 @@ class Page < ActiveRecord::Base
   end
 
   protected
+  def sanitize_path
+    if path[0, 1] == '/'
+      attribute_will_change! :path
+      path.slice! 0, 1
+    end
+  end
+  before_validation :sanitize_path
   def compile_path
-    write_attribute :compiled_path, path.dup
-    compiled_path.insert 0, '/' if path[0, 1] != '/'
-    compiled_path.concat ".#{ metadata['language'] }"
+    write_attribute :compiled_path, "/#{ path }.#{ metadata['language'] }"
   end
   before_validation :compile_path
 

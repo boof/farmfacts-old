@@ -1,6 +1,6 @@
 - render_navigation :class => 'box' do
   .last= link_to '&laquo; Pages', admin_pages_path
 
-- form_for [:admin, @page] do |f|
-  = render :partial => 'form', :object => f
-  = submit_tag 'Create'
+- form_for [:admin, @page], :url => build_new_admin_page_path do |f|
+  = f.select :template_id, ::Template.select_all(:caption__id, :order => 'caption'), :prompt => 'No Template'
+  = submit_tag 'Continue'

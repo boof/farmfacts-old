@@ -20,11 +20,11 @@ class TemplatedPage < Page
     template.stylesheets + super
   end
 
-  serialize :body, Array
-  # Returns a string with all elements completed.
+  serialize :body
+  # Returns a string with all elements rendered.
   def body
     buffer = ''
-    0.upto(self[:body].length) { |index| buffer << elements[index] }
+    self[:body].length.times { |index| buffer << elements[index] }
 
     buffer
   end

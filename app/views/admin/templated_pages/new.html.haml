@@ -1,0 +1,6 @@
+- render_navigation :class => 'box' do
+  .last= link_to '&laquo; Pages', admin_pages_path
+
+- form_for [:admin, :template, @templated_page], :url => admin_template_templated_pages_path(@templated_page.template) do |f|
+  = render :partial => 'form', :object => f
+  = submit_tag 'Continue'

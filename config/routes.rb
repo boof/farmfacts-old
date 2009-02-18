@@ -11,18 +11,18 @@ ActionController::Routing::Routes.draw do |map|
   map.namespace :admin do |admin|
 
     admin.resources :pages, :except => [:destroy],
-        :collection => { :bulk => :post }, :member => {:preview => :get} do |pages|
+        :collection => { :bulk => :post, :build => :post }, :member => {:preview => :get}, :new => {:build => :post} do |pages|
       pages.resources :attachments, :only => :create,
           :collection => { :bulk => :post }
     end
-    admin.resources :templates, :only => [:index] do |templates|
-      templates.resources :templated_pages, :except => [:destroy],
+    admin.resources :templates, :only => [:index, :update, :destroy] do |templates|
+      templates.resources :templated_pages, :except => [:destroy, :index],
           :collection => { :bulk => :post }, :member => {:preview => :get} do |pages|
         pages.resources :attachments, :only => :create,
             :collection => { :bulk => :post }
       end
     end
-    
+    admin.resources :templated_pages, :only => [:show, :edit, :update]
 
 #    admin.resources :navigations do |navigations|
 #      navigations.resources :nodes, :except => [:index, :show, :destroy],

@@ -6,7 +6,7 @@ class Attachment < ActiveRecord::Base
   default_scope :order => 'position'
 
   belongs_to :attaching, :polymorphic => true
-  validates_presence_of :attaching_type, :attaching_id
+  validates_presence_of :attaching_type, :attaching_id, :if => proc { |a| a.attaching }
 
   Paperclip::Attachment.interpolations[:attaching] = proc do |a, _|
     i = a.instance; "#{ i.attaching_type.tableize }/#{ i.public_id }"

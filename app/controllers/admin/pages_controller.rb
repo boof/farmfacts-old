@@ -16,8 +16,16 @@ class Admin::PagesController < Admin::Base
   end
 
   def new
-    page.title = 'New Page'
-    render :action => :new
+    page.title = 'New Page - Select Template'
+  end
+
+  def build
+    if params[:page][:template_id].blank?
+      page.title = 'New Page - Write Content'
+      render :action => :build
+    else
+      redirect_to new_admin_template_templated_page_path(params[:page][:template_id])
+    end
   end
 
   def edit
@@ -26,7 +34,7 @@ class Admin::PagesController < Admin::Base
   end
 
   def create
-    save_or_render :new, :page do |page|
+    save_or_render :build, :page do |page|
       return_or_redirect_to admin_page_path(page)
     end
   end
@@ -51,7 +59,7 @@ class Admin::PagesController < Admin::Base
           merge('author' => current_user.name)
     end
   end
-  before_filter :assign_new_page, :only => [:new, :create]
+  before_filter :assign_new_page, :only => [:new, :build, :create]
   def assign_existing_page
     @page = Page.find params[:id]
   end

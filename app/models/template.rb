@@ -1,5 +1,7 @@
 class Template < ActiveRecord::Base
 
+  attach_shadows
+
   # source directory
   TEMPLATE_PATH = Rails.root.join 'vendor', 'templates'
 
@@ -13,7 +15,7 @@ class Template < ActiveRecord::Base
     TEMPLATE_PATH.join name
   end
 
-  validates_uniqueness_of :name
+  #validates_uniqueness_of :name
 
   has_many :templated_pages
 
