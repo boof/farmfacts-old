@@ -67,17 +67,6 @@ ActiveRecord::Schema.define(:version => 20090207153000) do
 
   add_index "onlists", ["onlisted_type", "onlisted_id"], :name => "index_onlists_on_onlisted_type_and_onlisted_id", :unique => true
 
-  create_table "page_elements", :force => true do |t|
-    t.integer  "templated_page_id"
-    t.string   "snippet_path"
-    t.text     "data"
-    t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "page_elements", ["templated_page_id"], :name => "index_page_elements_on_templated_page_id"
-
   create_table "pages", :force => true do |t|
     t.string   "type"
     t.string   "path",          :null => false
@@ -111,6 +100,16 @@ ActiveRecord::Schema.define(:version => 20090207153000) do
   add_index "registered_paths", ["path"], :name => "index_registered_paths_on_path", :unique => true
   add_index "registered_paths", ["provider_type", "provider_id"], :name => "index_registered_paths_on_provider_type_and_provider_id", :unique => true
   add_index "registered_paths", ["scope"], :name => "index_registered_paths_on_scope"
+
+  create_table "templated_page_elements", :force => true do |t|
+    t.integer  "templated_page_id"
+    t.string   "path"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "templated_page_elements", ["templated_page_id"], :name => "index_templated_page_elements_on_templated_page_id"
 
   create_table "templates", :force => true do |t|
     t.string   "name",       :null => false

@@ -11,20 +11,12 @@ class Page < ActiveRecord::Base
     page.compiled_path
   end
 
-  has_many :attachments, :as => :attaching,
-    :dependent => :destroy,
-    :order => 'position'
-
   validates_uniqueness_of :compiled_path
   validates_presence_of :title, :body
 
-  def not_found?
-    compiled_path[1, 3] == '404'
-  end
-  def index?
-    frontpage_path = Preferences['FarmFacts'].frontpage_path
-    compiled_path[1, frontpage_path.length] == frontpage_path
-  end
+  has_many :attachments, :as => :attaching, :dependent => :destroy
+  has_many :javascripts, :as => :attaching, :class_name => 'Attachment', :conditions => ['attachments.type IN (?)', %w[ Attachment::Javascript ]]
+  has_many :stylesheets, :as => :attaching, :class_name => 'Attachment', :conditions => ['attachments.type IN (?)', %w[ Attachment::Stylesheet Attachment::Stylesheet::IE ]]
 
   serialize :metadata, Hash
   composed_of :metatags, :class_name => 'Page::Metatags',
@@ -34,7 +26,7 @@ class Page < ActiveRecord::Base
   def self.default
     new do |page|
       page.title = Preferences::FarmFacts.name
-      page.instance_variable_set :@stylesheets, [
+      page.stylesheets = [
         ::Attachment::Stylesheet.fake('blueprint/screen'),
         ::Attachment::Stylesheet.fake('blueprint/print', 'print'),
         ::Attachment::Stylesheet::IE.fake('blueprint/ie'),
@@ -44,11 +36,12 @@ class Page < ActiveRecord::Base
     end
   end
 
-  def stylesheets
-    @stylesheets ||= attachments.scoped :conditions => ['attachments.type IN (?)', %w[ Attachment::Stylesheet Attachment::Stylesheet::IE ]]
+  def not_found?
+    compiled_path[1, 3] == '404'
   end
-  def javascripts
-    @javascripts ||= attachments.scoped :conditions => { :type => 'Attachment::Javascript' }
+  def index?
+    frontpage_path = Preferences['FarmFacts'].frontpage_path
+    compiled_path[1, frontpage_path.length] == frontpage_path
   end
 
   protected

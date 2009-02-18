@@ -87,14 +87,13 @@ class Core < ActiveRecord::Migration
         t.string :caption, :null => false
         t.timestamps
       end
-      create_table :page_elements do |t|
+      create_table :templated_page_elements do |t|
         t.references :templated_page
-        t.string :snippet_path
-        t.text :data
+        t.string :path
         t.integer :position
         t.timestamps
       end
-      add_index :page_elements, :templated_page_id
+      add_index :templated_page_elements, :templated_page_id
     end
 
     def self.down

@@ -1,0 +1,5 @@
+- content_tag_for :tr, template, :class => eo(template_counter) do
+  %td.span-23.caption
+    = template.caption
+    = "(#{ template.installed?? 'installed' : 'not installed' })"
+  %td.last.span-1.action ICON 

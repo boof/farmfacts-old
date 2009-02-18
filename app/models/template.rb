@@ -19,7 +19,7 @@ class Template < ActiveRecord::Base
 
   has_many :attachments, :as => :attaching, :dependent => :destroy do
     def as_defined(definition)
-      proxy_owner.attachments.build do |attachment|
+      build do |attachment|
         # assign attachable file
         attachable_path = proxy_owner.path.join definition['path']
         File.open(attachable_path) { |able| attachment.attachable = able }
