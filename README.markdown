@@ -51,8 +51,8 @@ You can get the source with:
 Don't forget the submodules:
 
     $ cd farmfacts
-    $ git submodule init
-    $ git submodule update
+    $ git submodule update --init
+    $ rake gems:build
 
 Setup:
 
@@ -61,16 +61,15 @@ Setup:
 
     # configure your database (replace erbs)
     $ $EDITOR config/database.yml
-    $ rake gems:build
     $ rake db:create
     $ rake db:migrate
 
     # the generated session key should only be read by you and your webserver
     $ chmod 600 config/session.key
 
-    # start the webserver and open admin/setup, for example:
-    $ thin start
-    $ open http://localhost:3000/admin/setup
+    # start the webserver and open admin, for example:
+    $ script/server
+    $ open http://localhost:3000/admin
 
     # Follow the instructions in your browser...
 
