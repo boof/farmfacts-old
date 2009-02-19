@@ -1,5 +1,7 @@
 require "#{ File.dirname __FILE__ }/boot"
 require "#{ File.dirname __FILE__ }/../vendor/plugins/engines/boot"
+# engines... baka desu
+module Engines::RailsExtensions; end
 
 require "#{ File.dirname __FILE__ }/../lib/preferences"
 require "#{ File.dirname __FILE__ }/../lib/preferences/farm_facts"
