@@ -15,10 +15,11 @@ class Theme < ActiveRecord::Base
     THEME_PATH.join name
   end
 
-  #validates_uniqueness_of :name
+  # FIXME: validates_uniqueness_of :name
 
-  def icon
-    'thumbnails/themed_page.png'
+  # TODO: complete this stub with Attachment::Icon.attachable
+  def icon_path
+    'thumbnails/themed_page.png' # fallback
   end
 
   has_many :themed_pages
