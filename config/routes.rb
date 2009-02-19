@@ -2,33 +2,41 @@ ActionController::Routing::Routes.draw do |map|
 
   map.root :controller => 'pages', :action => 'show'
 
+  map.admin_dashboard '/admin', :controller => 'admin/dashboard'
   map.with_options :controller => 'users', :path_prefix => '/admin' do |users|
     users.auth '/auth', :action => 'auth', :conditions => {:method => :post}
     users.logout '/logout', :action => 'logout'
   end
-
-  map.admin_dashboard '/admin', :controller => 'admin/dashboard'
   map.namespace :admin do |admin|
 
+    admin.page 'pages/theme',
+        :name_prefix => 'theme_admin_',
+        :conditions => {:method => :get},
+        :controller => 'pages', :action => 'theme'
     admin.resources :pages, :except => [:destroy],
-        :collection => { :bulk => :post, :build => :post }, :member => {:preview => :get}, :new => {:build => :post} do |pages|
+        :collection => { :bulk => :post }, :member => {:preview => :get} do |pages|
       pages.resources :attachments, :only => :create,
           :collection => { :bulk => :post }
     end
-    admin.resources :templates, :only => [:index, :update, :destroy] do |templates|
-      templates.resources :templated_pages, :except => [:destroy, :index],
-          :collection => { :bulk => :post }, :member => {:preview => :get} do |pages|
-        pages.resources :attachments, :only => :create,
-            :collection => { :bulk => :post }
-      end
+    admin.with_options :controller => 'themes' do |themes|
+      themes.themes 'themes', :conditions => {:method => :get}
+      themes.theme 'themes/:name', :conditions => {:method => :get},
+          :action => 'show'
+      themes.connect 'themes/:name', :conditions => {:method => :post},
+          :action => 'install'
+      themes.connect 'themes/:name', :conditions => {:method => :delete},
+          :action => 'uninstall'
     end
-    admin.resources :templated_pages, :only => [:show, :edit, :update]
-
-#    admin.resources :navigations do |navigations|
-#      navigations.resources :nodes, :except => [:index, :show, :destroy],
-#          :collection => { :bulk => :post },
-#          :member => { :move_up => :put, :move_down => :put }
-#    end
+    admin.page 'themes/:theme_id/pages/new',
+        :name_prefix => 'new_admin_themed_',
+        :conditions => {:method => :get},
+        :controller => 'themed_pages', :action => 'new'
+    admin.connect 'themes/:theme_id/pages',
+        :name_prefix => 'admin_themed_',
+        :conditions => {:method => :post},
+        :controller => 'themed_pages', :action => 'create'
+    admin.resources :themed_pages,
+        :only => [:edit, :update, :show], :member => {:preview => :get}
 
     admin.resources :categories, :except => [:destroy],
         :collection => { :bulk => :post }

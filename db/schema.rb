@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(:version => 20090207153000) do
     t.string   "path",          :null => false
     t.string   "compiled_path", :null => false
     t.string   "title",         :null => false
-    t.integer  "template_id"
+    t.integer  "theme_id"
     t.text     "metadata"
     t.text     "body",          :null => false
     t.datetime "created_at"
@@ -101,22 +101,24 @@ ActiveRecord::Schema.define(:version => 20090207153000) do
   add_index "registered_paths", ["provider_type", "provider_id"], :name => "index_registered_paths_on_provider_type_and_provider_id", :unique => true
   add_index "registered_paths", ["scope"], :name => "index_registered_paths_on_scope"
 
-  create_table "templated_page_elements", :force => true do |t|
-    t.integer  "templated_page_id"
+  create_table "themed_page_elements", :force => true do |t|
+    t.integer  "themed_page_id"
     t.string   "path"
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "templated_page_elements", ["templated_page_id"], :name => "index_templated_page_elements_on_templated_page_id"
+  add_index "themed_page_elements", ["themed_page_id"], :name => "index_themed_page_elements_on_themed_page_id"
 
-  create_table "templates", :force => true do |t|
+  create_table "themes", :force => true do |t|
     t.string   "name",       :null => false
     t.string   "caption",    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "themes", ["name"], :name => "index_themes_on_name", :unique => true
 
   create_table "users", :force => true do |t|
     t.integer "page_id"

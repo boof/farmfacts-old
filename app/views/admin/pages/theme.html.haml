@@ -1,0 +1,14 @@
+- render_navigation :class => 'box' do
+  .last= link_to '&laquo; Pages', admin_pages_path
+
+.first.box.span-11{ :style => 'text-align: center;' }
+  %h2 Choose Theme
+  - unless @themes.empty?
+    - @themes.each do |theme|
+      = link_to image_tag(theme.icon, :alt => theme.caption), new_admin_themed_page_path(theme, :path => params[:path]), :title => theme.caption
+  - else
+    = "No #{ link_to 'themes', admin_themes_path } installed."
+
+.last.box.span-11{ :style => 'float: right; text-align: center;' }
+  %h2 No Theme
+  = link_to image_tag('thumbnails/page.png', :alt => 'No Theme'), new_admin_page_path(:path => params[:path]), :title => 'No Theme'

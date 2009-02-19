@@ -1,0 +1,16 @@
+%h3.prepend-top Themed Page Form
+
+= error_messages_for 'page', :object => form.object
+
+.append-bottom
+  .first.column
+    = form.label :title, 'Title'
+    %div= form.text_field :title, :class => 'span-14 title'
+  .last.column
+    = form.label :path, 'Path'
+    %div= form.text_field :path, :class => 'span-10 text'
+.clear
+
+%br
+
+.append-bottom= render_metadata_form form.object.metadata, form.object_name
