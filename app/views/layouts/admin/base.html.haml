@@ -11,6 +11,7 @@
     #top.container
       - render_navigation :class => 'prepend-top', :style => 'float: left;' do
         .column= link_to 'Pages', admin_pages_path
+        .column= link_to 'Themes', admin_themes_path
         .column= link_to 'Categories', admin_categories_path
         .column= link_to 'Users', admin_users_path
       - render_navigation :class => 'prepend-top', :style => 'float: right;' do
