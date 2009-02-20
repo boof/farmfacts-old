@@ -15,3 +15,7 @@ attachments:
 -
   path: javascripts/jquery.js
   type: Javascript
+-
+  path: images/icons/text_image.png
+  disposition: "text_image"
+  type: Image::ElementIcon

@@ -1,0 +1,17 @@
+!!! Strict
+
+%html
+  %head
+  %body{ :style => 'margin: 1em auto; width: 970px;' }
+    %h3 Element Form
+
+    - form_tag admin_themed_page_elements_path(themed_page), :multipart => true, :method => @element.new_record?? :post : :put do
+      %div{:style => 'float: left; width: 80%;'}= text_area_tag 'foolish_name', themed_page[:body][1], :style => 'width: 100%;'
+      %div{:style => 'float: right; width: 20%;'}
+        = 'select attachment from themed page'
+        %br
+        = 'or file upload field'
+      %br{ :style => 'clear: both;' }
+      = submit_tag 'Create'
+      or
+      = link_to 'cancel', admin_themed_page_elements_path(themed_page)
