@@ -11,9 +11,21 @@ class Attachment < ActiveRecord::Base
   Paperclip::Attachment.interpolations[:attaching] = proc do |a, _|
     i = a.instance; "#{ i.attaching_type.tableize }/#{ i.public_id }"
   end
+  Paperclip::Attachment.interpolations[:type] = proc do |a, _|
+    module_names = "#{ a.instance.type }".split '::'
+
+    if module_names.empty?
+      module_names << 'Attachment'
+    else
+      # drop 1st element which should be 'Attachment'
+      module_names.shift 
+    end
+
+    module_names.map! { |module_name| module_name.tableize }.join '/'
+  end
   has_attached_file :attachable,
-    :path => ':rails_root/public/var/attachments/:rails_env/:attaching/:basename.:extension',
-    :url  => '/var/attachments/:rails_env/:attaching/:basename.:extension'
+    :path => ':rails_root/public/var/attachments/:rails_env/:attaching/:type/:basename.:extension',
+    :url  => '/var/attachments/:rails_env/:attaching/:type/:basename.:extension'
   validates_attachment_presence :attachable
 
   protected
