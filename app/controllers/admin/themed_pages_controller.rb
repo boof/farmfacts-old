@@ -5,7 +5,7 @@ class Admin::ThemedPagesController < Admin::Base
   end
 
   def create
-    save_or_render(:new, :themed_page) #{ |page| redirect_to admin_themed_page_elements_path(page) }
+    save_or_render(:new, :themed_page) { |page| redirect_to admin_themed_page_elements_path(page) }
   end
 
   protected
@@ -16,6 +16,7 @@ class Admin::ThemedPagesController < Admin::Base
   def assign_new_page
     @themed_page = @theme.themed_pages.build do |page|
       page.title = Preferences[:FarmFacts].name
+      page.body = []
       page.path = params[:path]
       page.metadata = Preferences[:FarmFacts].metadata.
           merge('author' => current_user.name)
