@@ -90,8 +90,8 @@ class Core < ActiveRecord::Migration
       add_index :themes, :name, :unique => true
 
       create_table :themed_page_elements do |t|
-        t.references :themed_page
-        t.string :path
+        t.references :themed_page, :null => false
+        t.string :path, :null => false
         t.integer :position
         t.timestamps
       end
