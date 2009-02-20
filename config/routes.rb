@@ -36,7 +36,9 @@ ActionController::Routing::Routes.draw do |map|
         :conditions => {:method => :post},
         :controller => 'themed_pages', :action => 'create'
     admin.resources :themed_pages,
-        :only => [:edit, :update, :show], :member => {:preview => :get}
+        :only => [:edit, :update, :show], :member => {:preview => :get} do |themed_pages|
+      themed_pages.resources :elements, :collection => {:build => :get}
+    end
 
     admin.resources :categories, :except => [:destroy],
         :collection => { :bulk => :post }
