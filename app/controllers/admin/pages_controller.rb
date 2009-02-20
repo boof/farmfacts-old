@@ -4,7 +4,7 @@ class Admin::PagesController < Admin::Base
 
   def index
     page.title = 'Pages'
-    @pages = Page.selects(:id, :title, :compiled_path, :updated_at).find :all, :order => :path, :include => :oli
+    @pages = Page.selects(:id, :type, :title, :compiled_path, :updated_at).find :all, :order => :path, :include => :oli
   end
 
   def preview
@@ -18,7 +18,6 @@ class Admin::PagesController < Admin::Base
   def theme
     page.title = 'New Page - Theme'
     @themes = Theme.all :order => 'name'
-    @themed_page = ThemedPage.new
   end
 
   def new
