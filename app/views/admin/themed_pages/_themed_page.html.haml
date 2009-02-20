@@ -1,0 +1,7 @@
+- content_tag_for :tr, themed_page, :class => eo(themed_page_counter) do
+  %td.span-7.title= link_to h(themed_page.title), admin_themed_page_elements_path(themed_page)
+  %td.span-12.path&= themed_page.compiled_path
+  %td.span-3
+    = themed_page.updated_at.to_formatted_s :short
+    = "/<br />#{ themed_page.oli.created_at.to_formatted_s :short }" if themed_page.oli
+  %td.last.span-1.action= check_box_tag 'page_ids[]', themed_page.id

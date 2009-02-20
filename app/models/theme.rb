@@ -4,6 +4,8 @@ class Theme < ActiveRecord::Base
 
   # source directory
   THEME_PATH = Rails.root.join 'vendor', 'themes'
+  # class name of element icon
+  ELEMENT_ICON = 'Attachment::Image::ElementIcon'
 
   # Returns a Filepath object pointing to the theme source directory.
   def self.path
@@ -23,6 +25,10 @@ class Theme < ActiveRecord::Base
   end
 
   has_many :themed_pages
+  def downgrade_themed_pages
+    themed_pages.update_all :type => nil, :theme_id => nil
+  end
+  after_destroy :downgrade_themed_pages
 
   has_many :attachments, :as => :attaching, :dependent => :destroy do
     def as_defined(definition)
@@ -91,8 +97,38 @@ class Theme < ActiveRecord::Base
     installed.merge! not_installed
   end
 
+  def icon_for(element)
+    element_icons = attachments.all :conditions => { :type => ELEMENT_ICON }
+    element_icon  = element_icons.
+        find { |icon| icon.disposition == element.name }
+
+    element_icon
+  end
+
+  def element(index_or_name)
+    element_cache case index_or_name
+        when Integer; element_paths[index_or_name]
+        when String, Symbol; element_path index_or_name
+        else raise ArgumentError, 'expected string, symbol or integer'
+        end
+  end
   def elements
-    raise NotImplementedError, 'TODO: implement elements method'
+    element_paths.map { |path| element_cache path }
+  end
+
+  protected
+  def element_names
+    @element_names ||= YAML.load_file path.join('elements.yaml')
+  end
+  def element_path(name)
+    path.join('elements', name)
+  end
+  def element_paths
+    element_names.map { |name| element_path name }
+  end
+  def element_cache(pathname)
+    @element_cache ||= Hash.new { |cache, pathname| cache[pathname] = ThemedPage::Element.new :pathname => pathname, :theme => self }
+    @element_cache[pathname]
   end
 
 end

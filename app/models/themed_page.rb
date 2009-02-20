@@ -4,6 +4,20 @@ class ThemedPage < Page
   belongs_to :theme
 
   has_many :elements, :class_name => 'ThemedPage::Element' do
+    def rendered
+      load_target
+      index = 0
+
+      self[:body].map { |data|
+        rendered_element = proxy_target[index].try :render, data
+        index += 1
+        rendered_element
+      }
+    end
+    # Returns element with theme assigned.
+    def load(name)
+      proxy_owner.theme.element name
+    end
     # Returns completed element on index.
     def [](index)
       load_target
