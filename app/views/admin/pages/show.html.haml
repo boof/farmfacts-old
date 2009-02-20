@@ -14,6 +14,6 @@
   %br.clear
 
 %h3 Preview
-%iframe{ :src => preview_admin_page_path(@page), :width => '950', :height => '600' }
+%object{ :data => preview_admin_page_path(@page), :type => 'text/html', :standby => 'Generating Preview!', :width => '950', :height => '480' }
 
 .prepend-top.clear= render_attachment_controls_for @page
