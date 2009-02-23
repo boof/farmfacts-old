@@ -27,7 +27,7 @@ class ThemedPage < ActiveRecord::Base
     end
   end
 
-  def language
+  def locale
     metadata['language']
   end
 
@@ -40,17 +40,13 @@ class ThemedPage < ActiveRecord::Base
   end
 
   def body
-    theme.to_s :body, :content => elements.render
+    theme.to_s :body, :elements => elements
   end
 
   protected
-  def sanitize_path
-    if path.blank?
-      self.path = "/#{ title.parameterize }.#{ language }"
-    elsif path[0, 1] != '/'
-      self.path = "/#{ path }"
-    end
+  def generate_name
+    self.name = title.parameterize if name.blank?
   end
-  before_save :sanitize_path
+  before_save :generate_name
 
 end

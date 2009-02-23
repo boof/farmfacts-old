@@ -8,3 +8,5 @@
   = hidden_field_tag :return_to, params[:return_to]
   = render :partial => 'form', :object => f
   = submit_tag 'Update'
+  or
+  = link_to 'Cancel', params[:return_to] || admin_dashboard_path

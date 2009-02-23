@@ -1,19 +1,12 @@
 class Admin::CategoriesController < Admin::Base
 
-  PAGE_TITLES = {
-    :index  => 'Categories',
-    :show   => 'Category “%s”',
-    :new    => 'New Category',
-    :edit   => 'Edit Category “%s”'
-  }
-
   def index
     @categorizations_count  = Categorizable::Categorization.count
     @categories             = Categorizable::Category.find :all,
         :include => :categorizations,
         :order => :name
 
-    title_page :index
+    current.title = 'Categories'
   end
 
   def show
@@ -21,14 +14,14 @@ class Admin::CategoriesController < Admin::Base
         :include => :categorizable,
         :order => 'categorizable_type, categorizable_id'
 
-    title_page :show, @category
+    current.title = "Category: #{ @category.name }"
   end
 
   def new
-    title_page :new
+    current.title = 'New Category'
   end
   def edit
-    title_page :edit, @category
+    current.title = "Edit Category: #{ @category.name }"
   end
 
   def create

@@ -4,7 +4,7 @@ class Admin::PagesController < Admin::Base
 
   def index
     current.title = 'Pages'
-    @pages = Page.selects(:id, :path, :disposition, :updated_at).find :all, :order => :path, :include => :oli
+    @pages = Page.rejects(:head, :body).find :all, :order => :path, :include => :oli
   end
 
   def preview
@@ -49,7 +49,7 @@ class Admin::PagesController < Admin::Base
 
   protected
   def assign_new_page
-    @page = Page.new :path => params[:path]
+    @page = Page.new
   end
   before_filter :assign_new_page, :only => [:new, :build, :create, :theme]
   def assign_existing_page

@@ -1,4 +1,4 @@
-= error_messages_for 'user', :object => form.object
+= error_messages_for 'user', :object => form.object, :class => 'box'
 
 %div
   = form.label :name, 'Name (required)'
@@ -18,13 +18,13 @@
   %br.clear
 
 
-= error_messages_for 'login', :object => form.object.login
+= error_messages_for 'login', :object => form.object.login, :class => 'box'
 
 - fields_for 'user[login_attributes]', form.object.login do |login_form|
   %div
     = login_form.label :username, 'Username (required)'
     %div= login_form.text_field :username, :class => 'span-12 text'
-  %div
+  %div.append-bottom
     .first.column
       = login_form.label :password
       %div= login_form.password_field :password, :class => 'span-12 text'

@@ -20,7 +20,8 @@
         .column= link_to 'Categories', admin_categories_path
         .column= link_to 'Users', admin_users_path
       - render_navigation :class => 'prepend-top', :style => 'float: right;' do
-        .column= link_to 'Profile', edit_admin_user_path(current.user, :return_to => request.path)
+        .column= link_to 'Profile', edit_admin_user_path(current.user, :return_to => params[:return_to] || request.path)
+        .column= link_to 'Settings', admin_configure_path('FarmFacts', :return_to => params[:return_to] || request.path)
         .column= link_to 'Logout', logout_path
       .clear
 

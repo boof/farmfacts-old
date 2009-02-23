@@ -1,4 +1,6 @@
 - form_tag do
-  = hidden_field_tag :setup, params[:setup]
+  = hidden_field_tag :return_to, params[:return_to]
   = render "#{ @module_name.underscore }"
   = submit_tag 'Save and Restart'
+  or
+  = link_to 'Cancel', params[:return_to] || admin_dashboard_path

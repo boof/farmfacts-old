@@ -13,7 +13,7 @@ module ExceptionNotifiable
     respond_to do |type|
       type.html {
         @login = Login.new! :return_uri => params[:return_uri] || request.request_uri
-        render :template => 'login', :layout => 'application', :status => '401 Unauthorized'
+        render :template => 'login', :layout => false, :status => '401 Unauthorized'
       }
       type.all  { render :nothing => true, :status => '503 Service Unavailable' }
     end

@@ -44,8 +44,8 @@ ActiveRecord::Schema.define(:version => 20090207153000) do
     t.datetime "updated_at"
   end
 
+  add_index "categorizable_categorizations", ["categorizable_id", "categorizable_type", "category_id"], :name => "categorizable_polymorphmic_category", :unique => true
   add_index "categorizable_categorizations", ["categorizable_id", "categorizable_type"], :name => "categorizable_polymorphmic"
-  add_index "categorizable_categorizations", ["category_id", "categorizable_id", "categorizable_type"], :name => "categorizable_polymorphmic_category", :unique => true
   add_index "categorizable_categorizations", ["category_id"], :name => "index_categorizable_categorizations_on_category_id"
 
   create_table "logins", :force => true do |t|
@@ -65,14 +65,16 @@ ActiveRecord::Schema.define(:version => 20090207153000) do
     t.datetime "updated_at"
   end
 
-  add_index "onlists", ["onlisted_type", "onlisted_id"], :name => "index_onlists_on_onlisted_type_and_onlisted_id", :unique => true
+  add_index "onlists", ["onlisted_id", "onlisted_type"], :name => "index_onlists_on_onlisted_type_and_onlisted_id", :unique => true
 
   create_table "pages", :force => true do |t|
-    t.string   "disposition", :default => "Page"
-    t.string   "path",                            :null => false
+    t.string   "disposition",              :default => "Page"
+    t.string   "name",                                         :null => false
+    t.string   "locale",      :limit => 2
+    t.string   "path",                                         :null => false
     t.string   "doctype"
     t.text     "head"
-    t.text     "body",                            :null => false
+    t.text     "body",                                         :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -85,7 +87,7 @@ ActiveRecord::Schema.define(:version => 20090207153000) do
     t.string  "pagified_type"
   end
 
-  add_index "pagifications", ["pagified_type", "pagified_id"], :name => "index_pagifications_on_pagified_type_and_pagified_id", :unique => true
+  add_index "pagifications", ["pagified_id", "pagified_type"], :name => "index_pagifications_on_pagified_type_and_pagified_id", :unique => true
 
   create_table "registered_paths", :force => true do |t|
     t.integer "provider_id",   :null => false
@@ -96,7 +98,7 @@ ActiveRecord::Schema.define(:version => 20090207153000) do
   end
 
   add_index "registered_paths", ["path"], :name => "index_registered_paths_on_path", :unique => true
-  add_index "registered_paths", ["provider_type", "provider_id"], :name => "index_registered_paths_on_provider_type_and_provider_id", :unique => true
+  add_index "registered_paths", ["provider_id", "provider_type"], :name => "index_registered_paths_on_provider_type_and_provider_id", :unique => true
   add_index "registered_paths", ["scope"], :name => "index_registered_paths_on_scope"
 
   create_table "themed_page_elements", :force => true do |t|
@@ -111,7 +113,7 @@ ActiveRecord::Schema.define(:version => 20090207153000) do
   add_index "themed_page_elements", ["themed_page_id"], :name => "index_themed_page_elements_on_themed_page_id"
 
   create_table "themed_pages", :force => true do |t|
-    t.string   "path",       :null => false
+    t.string   "name",       :null => false
     t.string   "title",      :null => false
     t.integer  "theme_id"
     t.text     "metadata"

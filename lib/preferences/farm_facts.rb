@@ -29,12 +29,12 @@ class Preferences::FarmFacts < Preferences
     @data['server_sender'].replace sender
   end
 
-  def frontpage_path
-    @data.fetch 'frontpage_path', '/'
+  def frontpage_name
+    @data.fetch 'frontpage_name', 'frontpage'
   end
-  def frontpage_path=(path)
-    path = "/#{ path }" if path[0, 1] != '/' # sanitize path
-    @data['frontpage_path'].replace path
+  def frontpage_name=(name)
+    name.slice! 0, 1 unless name.blank? or name[0, 1] != '/'
+    @data['frontpage_name'].replace name
   end
 
   def metadata

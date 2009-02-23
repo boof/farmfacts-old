@@ -5,7 +5,8 @@ class Pagification < ActiveRecord::Base
 
   def before_create
     page = Page.new :disposition => pagified_type do |p|
-      p.path     = pagified.path
+      p.name     = pagified.name
+      p.locale   = pagified.locale
       p.doctype  = pagified.doctype
       p.head     = pagified.head
       p.body     = pagified.body

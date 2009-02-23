@@ -1,8 +1,12 @@
 = error_messages_for 'page', :object => form.object, :class => 'box'
 
 .append-bottom
-  = form.label :path, 'Path'
-  %div= form.text_field :path, :class => 'span-24 text'
+  .first.column.span-22
+    = form.label :name, 'Name'
+    %div= form.text_field :name, :class => 'span-22 text'
+  .last.column.span-2
+    = form.label :locale, 'Locale'
+    %div= form.text_field :locale, :class => 'span-2 text', :maxlength => 2
 .append-bottom
   = form.label :doctype, 'DOCTYPE'
   %div= form.select :doctype, DOC_TYPES

@@ -1,12 +1,5 @@
 = error_messages_for 'category', :object => form.object
 
-%div
+.append-bottom
   = form.label :name, 'Name (required)'
   %div= form.text_field :name, :class => 'span-14 title'
-.append-bottom
-  = form.label :icon, 'Icon'
-  %div
-    = form.file_field :icon
-    - if form.object.icon?
-      = check_box_tag 'category[clear_icon]', true, false, :id => 'clear_icon'
-      = label_tag 'clear_icon', "delete #{ form.object.icon_file_name }"

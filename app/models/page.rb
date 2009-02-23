@@ -8,7 +8,7 @@ class Page < ActiveRecord::Base
   categorizable
   attach_shadows :assign => :attributes
 
-  validates_presence_of :path
+  validates_presence_of :name
   validates_uniqueness_of :path
 
   has_one :pagification
@@ -17,16 +17,30 @@ class Page < ActiveRecord::Base
   delegate :javascripts, :stylesheets, :images, :to => :attachments
 
   def not_found?
-    path[0, 4] == '/404'
+    name == '404'
   end
   def index?
-    path == Preferences['FarmFacts'].frontpage_path
+    name == Preferences['FarmFacts'].frontpage_name
   end
 
   protected
-  def sanitize_path
-    self.path = "/#{ path }" unless path.blank? or path[0, 1] == '/'
+  def sanitize_name
+    unless name.blank? or name[0, 1] != '/'
+      name_will_change!
+      name.slice! 0, 1
+    end
   end
-  before_validation :sanitize_path
+  def generate_path
+    unless name.blank? or not name_or_locale_changed?
+      path_will_change!
+      self.path = "/#{ name }"
+      self.path << ".#{ locale }" unless locale.blank?
+    end
+  end
+  before_validation :sanitize_name, :generate_path
+
+  def name_or_locale_changed?
+    name_changed? or locale_changed?
+  end
 
 end

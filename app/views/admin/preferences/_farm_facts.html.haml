@@ -6,9 +6,9 @@
   = text_field_tag 'preferences[name]', @preferences.name, :class => 'title span-14'
 .append-bottom
   %div
-    %label{ :for => 'preferences_frontpage_path' } Frontpage
+    %label{ :for => 'preferences_frontpage_name' } Frontpage
     %br
-    = text_field_tag 'preferences[frontpage_path]', @preferences.frontpage_path, :class => 'text'
+    = text_field_tag 'preferences[frontpage_name]', @preferences.frontpage_name, :class => 'text'
   %div
     %label{ :for => 'preferences_server_recipients' } Server Recipients (semicolon seperated)
     %br

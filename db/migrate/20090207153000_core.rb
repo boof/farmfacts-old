@@ -18,6 +18,8 @@ class Core < ActiveRecord::Migration
 
       create_table :pages do |t|
         t.string :disposition, :default => 'Page'
+        t.string :name, :null => false
+        t.string :locale, :limit => 2
         t.string :path, :null => false
         t.string :doctype
         t.text :head
@@ -89,7 +91,7 @@ class Core < ActiveRecord::Migration
       add_index :themes, :name, :unique => true
 
       create_table :themed_pages do |t|
-        t.string :path, :null => false
+        t.string :name, :null => false
         t.string :title, :null => false
         t.references :theme
         t.text :metadata

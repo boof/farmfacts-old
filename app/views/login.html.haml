@@ -1,18 +1,34 @@
-- form_for @login, :url => auth_path, :html => { :class => 'span-12 prepend-6' } do |f|
-  = hidden_field_tag :return_uri, @login.return_uri
+!!! Strict
 
-  .box
-    %div
-      &nbsp;
-      = f.label :username
-      %div
-        &nbsp;
-        = f.text_field :username, :class => 'span-11 text'
-    %div
-      &nbsp;
-      = f.label :password
-      %div
-        &nbsp;
-        = f.password_field :password, :class => 'span-11 text'
+%html
+  %head
+    <meta content="en" http-equiv="content-language" />
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
 
-    .prepend-top.prepend-4= submit_tag 'Authenticate', :class => 'span-4'
+    %title&= current.title
+
+    <link rel="stylesheet" href="/stylesheets/blueprint/screen.css?1235338633" type="text/css" media="screen, projection" />
+    <link rel="stylesheet" href="/stylesheets/blueprint/print.css?1235338633" type="text/css" media="print" />
+    <!--[if IE]><link rel="stylesheet" href="/stylesheets/blueprint/ie.css?1235338633" type="text/css" media="screen, projection" /><![endif]-->
+    <link rel="stylesheet" href="/stylesheets/application.css?1235338633" type="text/css" media="screen, projection" />
+
+  %body
+    #top.container
+      - form_for @login, :url => auth_path, :html => { :class => 'span-12 prepend-6' } do |f|
+        = hidden_field_tag :return_uri, @login.return_uri
+
+        .prepend-top.box
+          %div
+            &nbsp;
+            = f.label :username
+            %div
+              &nbsp;
+              = f.text_field :username, :class => 'span-11 text'
+          %div
+            &nbsp;
+            = f.label :password
+            %div
+              &nbsp;
+              = f.password_field :password, :class => 'span-11 text'
+
+          .prepend-top.prepend-4= submit_tag 'Authenticate', :class => 'span-4'
