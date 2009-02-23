@@ -2,7 +2,7 @@
 server_recipients: 
 - admin@localhost
 name: ego praesto ei meus animus
-frontpage_path: /frontpage
+frontpage_name: /frontpage
 metadata:
   author: ""
   language: en
