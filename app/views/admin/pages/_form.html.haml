@@ -1,16 +1,14 @@
-%h3.prepend-top Page Form
-
-= error_messages_for 'page', :object => form.object
+= error_messages_for 'page', :object => form.object, :class => 'box'
 
 .append-bottom
-  .first.column
-    = form.label :title, 'Title'
-    %div= form.text_field :title, :class => 'span-14 title'
-  .last.column
-    = form.label :path, 'Path'
-    %div= form.text_field :path, :class => 'span-10 text'
-
+  = form.label :path, 'Path'
+  %div= form.text_field :path, :class => 'span-24 text'
 .append-bottom
+  = form.label :doctype, 'DOCTYPE'
+  %div= form.select :doctype, DOC_TYPES
+.append-bottom
+  = form.label :head, 'HEAD'
+  = form.text_area :head, :class => 'span-24'
+.append-bottom
+  = form.label :body, 'BODY'
   = form.text_area :body, :class => 'span-24'
-
-.append-bottom= render_metadata_form form.object.metadata, form.object_name

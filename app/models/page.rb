@@ -5,57 +5,28 @@ class Page < ActiveRecord::Base
   extend Bulk::Onlist
 
   on_whitelist :updates => :updated_at
-  attach_shadows :assigns => :attributes
   categorizable
-  registers_path :label => proc { |page| page.title } do |page|
-    page.compiled_path
-  end
+  attach_shadows :assign => :attributes
 
-  validates_presence_of :title, :path
-  validates_uniqueness_of :path, :scope => :compiled_path
-  validates_presence_of :body, :unless => proc { |page| page.type }
+  validates_presence_of :path
+  validates_uniqueness_of :path
+
+  has_one :pagification
 
   has_many :attachments, :as => :attaching, :dependent => :destroy
-  has_many :javascripts, :as => :attaching, :class_name => 'Attachment', :conditions => ['attachments.type IN (?)', %w[ Attachment::Javascript ]]
-  has_many :stylesheets, :as => :attaching, :class_name => 'Attachment', :conditions => ['attachments.type IN (?)', %w[ Attachment::Stylesheet Attachment::Stylesheet::IE ]]
-
-  serialize :metadata, Hash
-  composed_of :metatags, :class_name => 'Page::Metatags',
-    :mapping => %w[metadata],
-    :converter => proc { |data| Metatags.new data }
-
-  def self.default
-    new do |page|
-      page.title = Preferences::FarmFacts.name
-      page.stylesheets = [
-        ::Attachment::Stylesheet.fake('blueprint/screen'),
-        ::Attachment::Stylesheet.fake('blueprint/print', 'print'),
-        ::Attachment::Stylesheet::IE.fake('blueprint/ie'),
-        ::Attachment::Stylesheet.fake('application')
-      ]
-      page.metadata = {'charset' => 'utf-8', 'language' => 'en'}
-    end
-  end
+  delegate :javascripts, :stylesheets, :images, :to => :attachments
 
   def not_found?
-    compiled_path[1, 3] == '404'
+    path[0, 4] == '/404'
   end
   def index?
-    frontpage_path = Preferences['FarmFacts'].frontpage_path
-    compiled_path[1, frontpage_path.length] == frontpage_path
+    path == Preferences['FarmFacts'].frontpage_path
   end
 
   protected
   def sanitize_path
-    if path[0, 1] == '/'
-      attribute_will_change! :path
-      path.slice! 0, 1
-    end
+    self.path = "/#{ path }" unless path.blank? or path[0, 1] == '/'
   end
   before_validation :sanitize_path
-  def compile_path
-    write_attribute :compiled_path, "/#{ path }.#{ metadata['language'] }"
-  end
-  before_validation :compile_path
 
 end

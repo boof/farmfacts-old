@@ -1,7 +1,8 @@
 - content_tag_for :tr, page, :class => eo(page_counter) do
-  %td.span-7.title= link_to h(page.title), admin_page_path(page)
-  %td.span-12.path&= page.compiled_path
-  %td.span-3
+  %td.span-17.title
+    - link_to admin_page_path(page) do
+      = content_tag page.index?? :strong : :span, h(page.path)
+  %td.span-5
     = page.updated_at.to_formatted_s :short
-    = "/<br />#{ page.oli.created_at.to_formatted_s :short }" if page.oli
+    = "/ #{ page.oli.created_at.to_formatted_s :short }" if page.oli
   %td.last.span-1.action= check_box_tag 'page_ids[]', page.id

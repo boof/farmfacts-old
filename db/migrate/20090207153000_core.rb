@@ -17,12 +17,10 @@ class Core < ActiveRecord::Migration
       add_index :logins, :username, :unique => true
 
       create_table :pages do |t|
-        t.string :type
+        t.string :disposition, :default => 'Page'
         t.string :path, :null => false
-        t.string :compiled_path, :null => false
-        t.string :title, :null => false
-        t.references :theme
-        t.text :metadata
+        t.string :doctype
+        t.text :head
         t.text :body, :null => false
         t.timestamps
       end
@@ -85,13 +83,22 @@ class Core < ActiveRecord::Migration
       create_table :themes do |t|
         t.string :name, :null => false
         t.string :caption, :null => false
+        t.string :doctype, :null => false
         t.timestamps
       end
       add_index :themes, :name, :unique => true
 
+      create_table :themed_pages do |t|
+        t.string :path, :null => false
+        t.string :title, :null => false
+        t.references :theme
+        t.text :metadata
+        t.timestamps
+      end
       create_table :themed_page_elements do |t|
         t.references :themed_page, :null => false
         t.string :path, :null => false
+        t.text :data
         t.integer :position
         t.timestamps
       end
@@ -100,6 +107,7 @@ class Core < ActiveRecord::Migration
 
     def self.down
       drop_table :themed_page_elements
+      drop_table :themed_pages
       drop_table :themes
       drop_table :categorizable_categorizations
       drop_table :categorizable_categories

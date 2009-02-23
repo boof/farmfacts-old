@@ -4,8 +4,6 @@ class Theme < ActiveRecord::Base
 
   # source directory
   THEME_PATH = Rails.root.join 'vendor', 'themes'
-  # class name of element icon
-  ELEMENT_ICON = 'Attachment::Image::ElementIcon'
 
   # Returns a Filepath object pointing to the theme source directory.
   def self.path
@@ -26,7 +24,7 @@ class Theme < ActiveRecord::Base
 
   has_many :themed_pages
   def downgrade_themed_pages
-    themed_pages.update_all :type => nil, :theme_id => nil
+    ThemedPage.destroy_all ['id IN (?)', themed_page_ids]
   end
   after_destroy :downgrade_themed_pages
 
@@ -46,8 +44,7 @@ class Theme < ActiveRecord::Base
       end
     end
   end
-  has_many :javascripts, :as => :attaching, :class_name => 'Attachment', :conditions => ['attachments.type IN (?)', %w[ Attachment::Javascript ]]
-  has_many :stylesheets, :as => :attaching, :class_name => 'Attachment', :conditions => ['attachments.type IN (?)', %w[ Attachment::Stylesheet Attachment::Stylesheet::IE ]]
+  delegate :javascripts, :stylesheets, :element_icons, :to => :attachments
 
   # Returns true when this theme is already installed.
   def installed?() true end
@@ -63,8 +60,9 @@ class Theme < ActiveRecord::Base
     definition = YAML.load_file definitions_path
 
     new do |theme|
-      theme.name     = name
-      theme.caption  = definition['caption'] || name.humanize
+      theme.name    = name
+      theme.caption = definition['caption'] || name.humanize
+      theme.doctype = DOC_TYPES.find { |d| d[0] == definition['doctype'] }[1]
       theme.build_attachments definition['attachments']
 
       # overwrite method to indicate that this theme is not installed
@@ -98,22 +96,20 @@ class Theme < ActiveRecord::Base
   end
 
   def icon_for(element)
-    element_icons = attachments.all :conditions => { :type => ELEMENT_ICON }
-    element_icon  = element_icons.
-        find { |icon| icon.disposition == element.name }
-
-    element_icon
+    element_icons.first :conditions => { :disposition => element.name }
   end
 
   def element(index_or_name)
-    element_cache case index_or_name
+    path = case index_or_name
         when Integer; element_paths[index_or_name]
         when String, Symbol; element_path index_or_name
         else raise ArgumentError, 'expected string, symbol or integer'
         end
+
+    element_cache[path]
   end
   def elements
-    element_paths.map { |path| element_cache path }
+    element_paths.map { |path| element_cache[path] }
   end
 
   protected
@@ -126,9 +122,11 @@ class Theme < ActiveRecord::Base
   def element_paths
     element_names.map { |name| element_path name }
   end
-  def element_cache(pathname)
-    @element_cache ||= Hash.new { |cache, pathname| cache[pathname] = ThemedPage::Element.new :pathname => pathname, :theme => self }
-    @element_cache[pathname]
+  def element_cache
+    @element_cache ||= Hash.new { |cache, pathname|
+      attributes = { :pathname => pathname, :theme => self }
+      cache[pathname] = ThemedPage::Element.new attributes
+    }
   end
 
 end

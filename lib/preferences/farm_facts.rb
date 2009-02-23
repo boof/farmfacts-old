@@ -33,6 +33,7 @@ class Preferences::FarmFacts < Preferences
     @data.fetch 'frontpage_path', '/'
   end
   def frontpage_path=(path)
+    path = "/#{ path }" if path[0, 1] != '/' # sanitize path
     @data['frontpage_path'].replace path
   end
 

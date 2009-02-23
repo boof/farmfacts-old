@@ -38,6 +38,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :themed_pages,
         :only => [:edit, :update, :show], :member => {:preview => :get} do |themed_pages|
       themed_pages.resources :elements, :collection => {:build => :get}
+      themed_pages.resources :attachments, :only => :create, :collection => { :bulk => :post }
     end
 
     admin.resources :categories, :except => [:destroy],

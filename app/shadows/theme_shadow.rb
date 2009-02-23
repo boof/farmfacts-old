@@ -1,13 +1,13 @@
 class ThemeShadow < Shadows::Base
 
-#  def embed(locals)
-#    # TODO: replace magic number vendor/themes
-#    render :file => "#{ @origin.path }"[/vendor\/themes(.+)/, 1], :locals => locals
-#  end
-#
-#  def builder(locals)
-#    render :file => "#{ @origin.builder_path }"[/vendor\/themes(.+)/, 1], :locals => locals
-#  end
+  def head(locals)
+    locals.merge! :theme => @origin
+    render_shape "#{ @origin.name }/head", :locals => locals
+  end
+  def body(locals)
+    locals.merge! :theme => @origin
+    render_shape "#{ @origin.name }/body", :locals => locals
+  end
 
   protected
   def _load_paths

@@ -1,11 +1,5 @@
-!!! Strict
+= @page.doctype
 
 %html
-  %head
-    = @page.metatags
-    %title&= @title
-
-    = @page.stylesheets
-    = @page.javascripts
-
-  %body= @body
+  %head= @page.head
+  %body= @page.body

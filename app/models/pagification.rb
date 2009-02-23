@@ -1,13 +1,18 @@
-class Pagification
+class Pagification < ActiveRecord::Base
 
   belongs_to :page
   belongs_to :pagified, :polymorphic => true
 
-  attr_accessor :body
-
-  def after_save
-    page || build_page(:disposition => pagified_type)
+  def before_create
+    page = Page.new :disposition => pagified_type do |p|
+      p.path     = pagified.path
+      p.doctype  = pagified.doctype
+      p.head     = pagified.head
+      p.body     = pagified.body
+    end
     page.save
+
+    self.page_id = page.id
   end
   def after_destroy
     page.destroy

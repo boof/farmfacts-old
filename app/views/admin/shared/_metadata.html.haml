@@ -8,25 +8,25 @@
   %label{ :for => "#{ scope }_metadata_charset" } Charset
   %br
   = text_field_tag "#{ scope }[metadata][charset]", metadata['charset'], :class => 'text span-2'
+.column.span-9
+  %label{ :for => "#{ scope }_metadata_copyright" } Copyright
+  %br
+  = text_field_tag "#{ scope }[metadata][copyright]", metadata['copyright'], :class => 'text span-9'
+.last.column.span-9
+  %label{ :for => "#{ scope }_metadata_publisher" } Publisher
+  %br
+  = text_field_tag "#{ scope }[metadata][publisher]", metadata['publisher'], :class => 'text span-9'
+.first.column.span-6
+  %label{ :for => "#{ scope }_metadata_author" } Author
+  %br
+  = select_tag "#{ scope }[metadata][author]", options_for_select(User.select_all(:name, :order => 'name'), metadata['author'])
 .last.column.span-18
   %label{ :for => "#{ scope }_metadata_keywords" } Keywords (comma seperated)
   %br
   = text_field_tag "#{ scope }[metadata][keywords]", metadata['keywords'], :class => 'text span-18'
 .column.span-24
-  %label{ :for => "#{ scope }_metadata_copyright" } Copyright
-  %br
-  = text_field_tag "#{ scope }[metadata][copyright]", metadata['copyright'], :class => 'text span-24'
-.column.span-24
   %label{ :for => "#{ scope }_metadata_description" } Description
   %br
   = text_area_tag "#{ scope }[metadata][description]", metadata['description'], :class => 'text span-24'
-.first.column.span-12
-  %label{ :for => "#{ scope }_metadata_author" } Author
-  %br
-  = select_tag "#{ scope }[metadata][author]", options_for_select(User.select_all(:name, :order => 'name'), metadata['author'])
-.last.column.span-12
-  %label{ :for => "#{ scope }_metadata_publisher" } Publisher
-  %br
-  = text_field_tag "#{ scope }[metadata][publisher]", metadata['publisher'], :class => 'text span-12'
 
 %br.clear

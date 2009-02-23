@@ -14,7 +14,7 @@
     %div= form.text_field :url, :class => 'span-14 text'
   .last.column
     %br
-    %div= form.select :page_id, Page.all.map { |p| [p.title, p.id] }, :include_blank => true
+    %div= form.select :page_id, Page.select_all(:path__id), :include_blank => true
   %br.clear
 
 

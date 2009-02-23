@@ -1,7 +1,7 @@
 class Admin::ThemesController < Admin::Base
 
   def index
-    page.title = 'Themes'
+    current.title = 'Themes'
     @themes = Theme.available.values.sort_by { |theme| theme.name }
   end
 

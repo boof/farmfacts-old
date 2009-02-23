@@ -2,18 +2,23 @@
 
 %html
   %head
-    = page.metatags
-    %title&= page.title
+    <meta content="en" http-equiv="content-language" />
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
 
-    = page.stylesheets
+    %title&= current.title
+
+    <link rel="stylesheet" href="/stylesheets/blueprint/screen.css?1235338633" type="text/css" media="screen, projection" />
+    <link rel="stylesheet" href="/stylesheets/blueprint/print.css?1235338633" type="text/css" media="print" />
+    <!--[if IE]><link rel="stylesheet" href="/stylesheets/blueprint/ie.css?1235338633" type="text/css" media="screen, projection" /><![endif]-->
+    <link rel="stylesheet" href="/stylesheets/application.css?1235338633" type="text/css" media="screen, projection" />
 
   %body
     #top.container
       .prepend-top
-        %h1&= page.title
+        %h1&= current.title
       %hr.top
-      - form_for :user, @user, :url => admin_setup_path do |user_form|
-        = error_messages_for 'user'
+      - form_for :user, current.user, :url => admin_setup_path do |user_form|
+        = error_messages_for 'user', :object => current.user
 
         - user_form.fields_for :login do |login_form|
           .prepend-top

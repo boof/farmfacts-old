@@ -1,4 +1,4 @@
-class Page::Metatags
+class Pagification::Metatags
   include Enumerable
 
   def metadata

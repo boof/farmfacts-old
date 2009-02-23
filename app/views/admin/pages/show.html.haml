@@ -1,7 +1,11 @@
 .box
   - render_navigation :style => 'float: left;', :class => '' do
     .column= link_to '&laquo; Pages', admin_pages_path
-    .column= link_to 'Edit', edit_admin_page_path(@page)
+    .column
+      - if @page.pagification
+        = link_to 'Edit', polymorphic_path([:admin, @page.pagification.pagified])
+      - else
+        = link_to 'Edit', edit_admin_page_path(@page)
     .column= link_to 'Attachments', :anchor => 'attachments'
   - render_navigation :style => 'float: right;', :class => 'span-6' do
     - unless @page.categories.empty?

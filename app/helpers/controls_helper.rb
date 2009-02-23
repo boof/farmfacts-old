@@ -47,7 +47,7 @@ module ControlsHelper
     select_tag :bulk_action, options_for_select(options)
   end
 
-  def render_attachment_controls_for(record)
+  def render_attachment_controls_for(record, record_path = nil)
     record_path = polymorphic_path [:admin, record]
     attachment  = record.attachments.new
 

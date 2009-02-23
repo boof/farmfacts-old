@@ -4,8 +4,9 @@ class PagesController < ApplicationController
       map! { |e| ".#{ e }" }
 
   def show
-    @page = Page.open request_path
+    @page = Page.open request_path, request.accept_language
     @page.render
+    # modify page caching that it caches all available locales
   rescue ActiveRecord::RecordNotFound
     request_path != '/404' ? redirect_to('/404') : render_404
   end

@@ -1,14 +1,14 @@
 class Admin::SetupController < Admin::Base
-  skip_before_filter :assert_user_authorized, :assign_navigation
+  skip_before_filter :assert_user_authorized
   layout false
 
   def new
-    page.title = 'Setup: Create Initial User'
+    current.title = 'Create Initial User'
     render :new
   end
 
   def create
-    @user.save ? proceed_with_configuration : send(:new)
+    current.user.save ? proceed_with_configuration : send(:new)
   end
 
   protected
@@ -18,14 +18,9 @@ class Admin::SetupController < Admin::Base
   prepend_before_filter :setup_possible?
 
   def proceed_with_configuration
-    session[:user_id] = @user.id
-    redirect_to admin_configure_path(:setup => true)
+    Theme.not_installed['default'].save
+    session[:user_id] = current.user.id
+    redirect_to admin_configure_path
   end
-
-  def assign_user
-    @user = User.new
-    @user.attributes = params[:user]
-  end
-  before_filter :assign_user
 
 end

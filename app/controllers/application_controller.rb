@@ -34,9 +34,4 @@ class ApplicationController < ActionController::Base; protected
   end
   helper_method :frontpage_path
 
-  def page
-    @__page ||= Page.default
-  end
-  helper_method :page
-
 end

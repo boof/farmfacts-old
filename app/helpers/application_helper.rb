@@ -4,7 +4,7 @@ module ApplicationHelper
     if (1.kilobyte ... 1.megabyte).include? size
       '%.2fkb' % (size.to_f / 1.kilobyte)
     elsif (1.megabyte ... 1.gigabyte).include? size
-      '%.2fgb' % (size.to_f / 1.megabyte)
+      '%.2fmb' % (size.to_f / 1.megabyte)
     else
       '%i bytes' % size
     end

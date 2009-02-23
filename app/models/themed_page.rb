@@ -1,46 +1,56 @@
-class ThemedPage < Page
+class ThemedPage < ActiveRecord::Base
 
-  validates_presence_of :theme_id
+  validates_presence_of :theme_id, :title
   belongs_to :theme
 
-  has_many :elements, :class_name => 'ThemedPage::Element' do
-    def rendered
-      load_target
-      index = 0
+  include Pagificator
+  categorizable
 
-      self[:body].map { |data|
-        rendered_element = proxy_target[index].try :render, data
-        index += 1
-        rendered_element
-      }
+  has_many :elements, :class_name => 'ThemedPage::Element', :dependent => :delete_all do
+    def available
+      proxy_owner.theme.elements
+    end
+    def render
+      reload
+      proxy_target.inject('') { |buf, el| buf << el.to_s(:completed) }
     end
     # Returns element with theme assigned.
     def load(name)
-      proxy_owner.theme.element name
-    end
-    # Returns completed element on index.
-    def [](index)
       load_target
-      proxy_target[index].try :render, proxy_owner[:body][index]
+
+      element = proxy_owner.theme.element name
+      element.themed_page = proxy_owner
+      element.data = {}
+      proxy_target << element
+
+      element
     end
   end
 
-  # Returns attached javascripts from theme and self.
-  def javascripts
-    theme.javascripts + super
-  end
-  # Returns attached stylesheets from theme and self.
-  def stylesheets
-    theme.stylesheets + super
+  def language
+    metadata['language']
   end
 
-  serialize :body
-  # Returns a string with all elements rendered.
+  def doctype
+    theme.doctype
+  end
+
+  def head
+    theme.to_s :head, :page => self
+  end
+
   def body
-    buffer = ''
-    self[:body].length.times { |index| buffer << elements[index] }
-
-    buffer
+    theme.to_s :body, :content => elements.render
   end
+
+  protected
+  def sanitize_path
+    if path.blank?
+      self.path = "/#{ title.parameterize }.#{ language }"
+    elsif path[0, 1] != '/'
+      self.path = "/#{ path }"
+    end
+  end
+  before_save :sanitize_path
 
 end

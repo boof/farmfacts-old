@@ -3,8 +3,8 @@ class Admin::PagesController < Admin::Base
   cache_sweeper :page_sweeper, :only => [:create, :update, :bulk]
 
   def index
-    page.title = 'Pages'
-    @pages = Page.selects(:id, :type, :title, :compiled_path, :updated_at).find :all, :order => :path, :include => :oli
+    current.title = 'Pages'
+    @pages = Page.selects(:id, :path, :disposition, :updated_at).find :all, :order => :path, :include => :oli
   end
 
   def preview
@@ -12,26 +12,26 @@ class Admin::PagesController < Admin::Base
   end
 
   def show
-    page.title = "Show: #{ @page.title }"
+    current.title = "Show: #{ @page.path }"
   end
 
   def theme
-    page.title = 'New Page - Theme'
+    current.title = 'New Page: Theme'
     @themes = Theme.all :order => 'name'
   end
 
   def new
-    page.title = 'New Page - Content'
+    current.title = 'New Page: Content'
     render :action => :new
   end
 
   def edit
-    page.title = "Edit: #{ @page.title }"
+    current.title = "Edit: #{ @page.path }"
     render :action => :edit
   end
 
   def create
-    save_or_render :build, :page do |page|
+    save_or_render :new, :page do |page|
       return_or_redirect_to admin_page_path(page)
     end
   end
@@ -49,12 +49,7 @@ class Admin::PagesController < Admin::Base
 
   protected
   def assign_new_page
-    @page = Page.new do |page|
-      page.title = Preferences[:FarmFacts].name
-      page.path = params[:path]
-      page.metadata = Preferences[:FarmFacts].metadata.
-          merge('author' => current_user.name)
-    end
+    @page = Page.new :path => params[:path]
   end
   before_filter :assign_new_page, :only => [:new, :build, :create, :theme]
   def assign_existing_page

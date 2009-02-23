@@ -1,17 +1,17 @@
 class Admin::UsersController < Admin::Base
 
   def index
-    page.title = 'Users'
+    current.title = 'Users'
     @users = User.all :order => :name
   end
 
   def new
-    page.title = 'New User'
+    current.title = 'New User'
     render :action => :new
   end
 
   def edit
-    page.title = "Edit: #{ @user }"
+    current.title = "Edit: #{ @user }"
     render :action => :edit
   end
 

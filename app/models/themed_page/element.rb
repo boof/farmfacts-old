@@ -5,9 +5,11 @@ class ThemedPage::Element < ActiveRecord::Base
   default_scope :order => 'position'
 
   attach_shadows
+  serialize :data
 
   belongs_to :themed_page
-  attr_accessor :theme
+  attr_writer :theme
+  def theme() @theme ||= themed_page.theme end
 
   composed_of :pathname, :mapping => [ %w[ path to_s ] ],
     :class_name => 'Pathname',
@@ -17,5 +19,15 @@ class ThemedPage::Element < ActiveRecord::Base
   def name
     "#{ pathname.basename }"
   end
+
+  def icon
+    theme.icon_for self
+  end
+
+  protected
+  def pagify_page
+    themed_page.update_attribute :updated_at, updated_at
+  end
+  after_save :pagify_page
 
 end
