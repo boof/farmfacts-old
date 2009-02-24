@@ -1,0 +1,7 @@
+- form_for :element, @element, form_opts do |form|
+  = render_element :form, locals.merge(:form => form)
+
+  .clear
+  = submit_tag 'Save'
+  or
+  = link_to 'Cancel', admin_themed_page_path(@element.themed_page)

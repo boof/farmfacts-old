@@ -78,7 +78,7 @@ class Theme < ActiveRecord::Base
   def self.not_installed
     loaded = select_all(:name).inject({}) { |m, n| m.merge! n => true }
 
-    Dir[ path.join('*') ].inject({}) do |themes, theme_name|
+    Dir[ path.join('*.yaml') ].inject({}) do |themes, theme_name|
       theme_name = File.basename theme_name # strip directories
       theme_name = theme_name[/^[^\.]+/] # strip extensions
 
@@ -127,7 +127,6 @@ class Theme < ActiveRecord::Base
   end
   def element_attributes(pathname)
     name = element_names.find { |name| element_path(name) == pathname }
-    
     { :pathname => pathname, :theme => self }.
         update :data => element_definitions[name]
   end

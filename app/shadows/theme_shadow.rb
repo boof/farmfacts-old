@@ -10,8 +10,11 @@ class ThemeShadow < Shadows::Base
   end
 
   protected
+  def themes_path
+    Theme.path
+  end
   def _load_paths
-    super + [ Theme.path.to_s ]
+    super + [ themes_path.to_s ]
   end
 
 end
