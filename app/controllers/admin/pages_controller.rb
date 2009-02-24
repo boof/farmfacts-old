@@ -8,7 +8,7 @@ class Admin::PagesController < Admin::Base
   end
 
   def preview
-    @page.render
+    @page.render :preview
   end
 
   def show
