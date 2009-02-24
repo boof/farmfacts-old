@@ -4,7 +4,7 @@ class ThemedPage::Element < ActiveRecord::Base
   acts_as_list :scope => :themed_page
   default_scope :order => 'position'
 
-  attach_shadows
+  attach_shadows :assigns => :data
   serialize :data
 
   belongs_to :themed_page

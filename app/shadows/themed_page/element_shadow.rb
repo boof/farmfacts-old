@@ -4,13 +4,29 @@ class ThemedPage::ElementShadow < ThemeShadow
     @origin.icon.to_s
   end
   def form(locals = {})
-    render_shape "#{ @origin.pathname.to_s[/vendor\/themes(.+)/, 1] }_form", :locals => locals
+    http_method, http_action = @origin.new_record??
+      [:post, admin_themed_page_elements_path(@origin.themed_page)] :
+      [:put, admin_themed_page_element_path(@origin.themed_page, @origin)]
+
+    render '/form', :locals => locals, :form_opts => {
+      :uri => http_action,
+      :html => { :method => http_method }
+    }
   end
   def completed
-    render_shape "#{ @origin.pathname.to_s[/vendor\/themes(.+)/, 1] }"
+    render_element
   end
   def sketch(locals = {})
-    render_shape "#{ @origin.pathname.to_s[/vendor\/themes(.+)/, 1] }_sketch", :locals => locals
+    render_element :sketch, locals
+  end
+
+  protected
+  def render_element(face = '', locals = {})
+    render_shape "#{ relative_element_pathname }_#{ face }", :locals => locals
+  end
+  def relative_element_pathname
+    @relative_element_pathname ||=
+        @origin.pathname.relative_path_from themes_path
   end
 
 end

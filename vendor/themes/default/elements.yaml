@@ -1,2 +1,4 @@
 ---
-- text_image
+text_image: 
+  text: Default Text
+  image_upload: 

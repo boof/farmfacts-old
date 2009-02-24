@@ -20,7 +20,6 @@ class ThemedPage < ActiveRecord::Base
 
       element = proxy_owner.theme.element name
       element.themed_page = proxy_owner
-      element.data = {}
       proxy_target << element
 
       element

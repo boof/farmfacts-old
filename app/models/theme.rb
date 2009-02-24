@@ -78,7 +78,7 @@ class Theme < ActiveRecord::Base
   def self.not_installed
     loaded = select_all(:name).inject({}) { |m, n| m.merge! n => true }
 
-    Dir[ path.join('*') ].inject({}) do |themes, theme_name|
+    Dir[ path.join('*.yaml') ].inject({}) do |themes, theme_name|
       theme_name = File.basename theme_name # strip directories
       theme_name = theme_name[/^[^\.]+/] # strip extensions
 
@@ -113,8 +113,11 @@ class Theme < ActiveRecord::Base
   end
 
   protected
+  def element_definitions
+    @element_definitions ||= YAML.load_file path.join('elements.yaml')
+  end
   def element_names
-    @element_names ||= YAML.load_file path.join('elements.yaml')
+    element_definitions.keys
   end
   def element_path(name)
     path.join('elements', name)
@@ -122,9 +125,14 @@ class Theme < ActiveRecord::Base
   def element_paths
     element_names.map { |name| element_path name }
   end
+  def element_attributes(pathname)
+    name = element_names.find { |name| element_path(name) == pathname }
+    { :pathname => pathname, :theme => self }.
+        update :data => element_definitions[name]
+  end
   def element_cache
     @element_cache ||= Hash.new { |cache, pathname|
-      attributes = { :pathname => pathname, :theme => self }
+      attributes = element_attributes pathname
       cache[pathname] = ThemedPage::Element.new attributes
     }
   end

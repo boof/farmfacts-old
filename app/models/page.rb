@@ -11,7 +11,7 @@ class Page < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :path
 
-  has_one :pagification
+  has_one :pagification, :dependent => :destroy
 
   has_many :attachments, :as => :attaching, :dependent => :destroy
   delegate :javascripts, :stylesheets, :images, :to => :attachments
