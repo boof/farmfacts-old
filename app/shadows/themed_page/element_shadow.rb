@@ -9,7 +9,7 @@ class ThemedPage::ElementShadow < ThemeShadow
       [:put, admin_themed_page_element_path(@origin.themed_page, @origin)]
 
     render '/form', :locals => locals, :form_opts => {
-      :uri => http_action,
+      :url => http_action,
       :html => { :method => http_method }
     }
   end
@@ -22,7 +22,8 @@ class ThemedPage::ElementShadow < ThemeShadow
 
   protected
   def render_element(face = '', locals = {})
-    render_shape "#{ relative_element_pathname }_#{ face }", :locals => locals
+    face = "_#{ face }" unless face.blank?
+    render_shape "#{ relative_element_pathname }#{ face }", :locals => locals
   end
   def relative_element_pathname
     @relative_element_pathname ||=

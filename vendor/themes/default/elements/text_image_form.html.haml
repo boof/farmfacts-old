@@ -1,11 +1,11 @@
 .first.span-18
   .box
     %h3 Input content
-    %div{ :style => 'text-align: center;' }= text_area_tag 'element[text]', @origin.data['text'], :class => 'span-17'
+    %div{ :style => 'text-align: center;' }= text_area_tag 'element[text]', @text, :class => 'span-17'
 .last.span-6
   .box
     %h3 Select image
     - themed_page.images.each do |image|
       %div
-        = radio_button_tag 'element[image]', image.attachable.url(nil, false), @origin.data['image'] == image.attachable.url(nil, false)
+        = radio_button_tag 'element[image]', image.attachable.url(nil, false), @image == image.attachable.url(nil, false)
         = link_to image.attachable_file_name, image.attachable.to_s
