@@ -4,29 +4,29 @@ class Pagification < ActiveRecord::Base
   belongs_to :pagified, :polymorphic => true
 
   def generate_page
-    Page.new :disposition => pagified_type do |p|
-      p.name     = pagified.name
-      p.locale   = pagified.locale
-      p.doctype  = pagified.doctype
-      p.head     = pagified.head
-      p.body     = pagified.body
+    build_page pagified_attributes.merge(:disposition => pagified_type)
+  end
+
+  protected
+  def save_and_assign_page
+    success = if page
+      page.update_attributes pagified_attributes
+    else
+      generate_page.save
     end
-  end
-  
-  def create_and_assign_page
-    page = generate_page
-    page.save
 
-    self.page_id = page.id
+    success and self.page_id = page.id
   end
-  before_create :create_and_assign_page
+  before_save :save_and_assign_page
 
-  def destroy_page
-    page.try :destroy
+  def pagified_attributes
+    {
+      :name     => pagified.name,
+      :locale   => pagified.locale,
+      :doctype  => pagified.doctype,
+      :head     => pagified.head,
+      :body     => pagified.body
+    }
   end
-  def destroy_pagified
-    pagified.try :destroy
-  end
-  after_destroy :destroy_page, :destroy_pagified
 
 end

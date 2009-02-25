@@ -16,12 +16,9 @@ module Pagificator
   end
 
   def pagify
-    if pagification
-      pagification.destroy
-      pagification.reset
-    end
-
-    build_pagification.save
+    pagification ?
+      pagification.save_without_dirty :
+      build_pagification(:pagified => self).save
   end
 
 end

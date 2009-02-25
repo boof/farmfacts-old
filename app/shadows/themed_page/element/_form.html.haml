@@ -1,4 +1,5 @@
 - form_for :element, @element, form_opts do |form|
+  = hidden_field_tag :element_name, @origin.name
   = render_element :form, locals.merge(:form => form)
 
   .clear

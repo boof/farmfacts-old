@@ -1,0 +1,6 @@
+- render_navigation :class => 'box' do
+  .last= link_to '&laquo; Pages', admin_pages_path
+
+- form_for :themed_page, @themed_page, :url => {:theme_id => @theme, :action => :update}, :html => {:method => :put} do |f|
+  = render :partial => 'form', :object => f
+  = submit_tag 'Save'

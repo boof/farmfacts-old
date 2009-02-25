@@ -27,6 +27,10 @@ ActionController::Routing::Routes.draw do |map|
       themes.connect 'themes/:name', :conditions => {:method => :delete},
           :action => 'uninstall'
     end
+    admin.pages 'themes/:theme_id/pages',
+        :name_prefix => 'new_admin_themed_',
+        :conditions => {:method => :get},
+        :controller => 'themed_pages', :action => 'index'
     admin.page 'themes/:theme_id/pages/new',
         :name_prefix => 'new_admin_themed_',
         :conditions => {:method => :get},

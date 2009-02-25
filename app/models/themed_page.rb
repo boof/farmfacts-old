@@ -11,7 +11,7 @@ class ThemedPage < ActiveRecord::Base
       proxy_owner.theme.elements
     end
     def render
-      reload
+      load_target
       proxy_target.inject('') { |buf, el| buf << el.to_s(:completed) }
     end
     # Returns element with theme assigned.
