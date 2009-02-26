@@ -20,8 +20,8 @@
     - @themed_page.elements.available.each do |element|
       .column= link_to element.to_s(:icon, :size => '35x22'), new_admin_themed_page_element_path(@themed_page, :element_name => element.name), :title => "Add #{ element.name.titleize } Element"
   - render_navigation :style => 'float: right;', :class => 'span-2' do
-    .column= link_to 'Preview', preview_admin_page_path(@themed_page.page)
-    .column= link_to 'Close', admin_pages_path
+    .column= link_to image_tag('icons/emblem-symbolic-link.png'), preview_admin_page_path(@themed_page.page)
+    .column= link_to image_tag('icons/emblem-unreadable.png'), admin_pages_path
   %br.clear
 
 .first.column.span-24
@@ -42,8 +42,8 @@
     - @themed_page.elements.available.each do |element|
       .column= link_to element.to_s(:icon, :size => '35x22'), new_admin_themed_page_element_path(@themed_page, :element_name => element.name), :title => "Add #{ element.name.titleize } Element"
   - render_navigation :style => 'float: right;', :class => 'span-2' do
-    .column= link_to 'Preview', preview_admin_page_path(@themed_page.page)
-    .column= link_to 'Close', admin_pages_path
+    .column= link_to image_tag('icons/emblem-symbolic-link.png'), preview_admin_page_path(@themed_page.page)
+    .column= link_to image_tag('icons/emblem-unreadable.png'), admin_pages_path
   %br.clear
 
 .prepend-top.clear= render_attachment_controls_for @themed_page
