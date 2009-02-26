@@ -1,6 +1,7 @@
 - content_tag_for :tr, theme, :class => eo(theme_counter) do
   %td.span-23.caption
-    = link_to theme.caption, admin_theme_path(theme.name)
+    = link_to theme.caption, admin_themed_pages_path(theme)
+    / admin_theme_path(theme.name)
   %td.last.span-1.action 
     - if theme.installed?
       = link_to image_tag('icons/media-eject.png', :alt => 'Uninstall'), admin_theme_path(theme.name), :method => :delete, :title => 'Uninstall this theme.'
