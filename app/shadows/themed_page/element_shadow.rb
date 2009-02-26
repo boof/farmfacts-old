@@ -1,7 +1,7 @@
 class ThemedPage::ElementShadow < ThemeShadow
 
-  def icon
-    @origin.icon.to_s
+  def icon(options = {})
+    @origin.icon.to_s options
   end
   def form(locals = {})
     http_method, http_action = @origin.new_record??
