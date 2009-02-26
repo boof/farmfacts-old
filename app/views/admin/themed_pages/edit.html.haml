@@ -1,5 +1,5 @@
 - render_navigation :class => 'box' do
-  .last= link_to '&laquo; Pages', admin_pages_path
+  .last= link_to '&laquo; Themed Page', admin_themed_page_path(@themed_page)
 
 - form_for :themed_page, @themed_page, :url => {:theme_id => @theme, :action => :update}, :html => {:method => :put} do |f|
   = render :partial => 'form', :object => f

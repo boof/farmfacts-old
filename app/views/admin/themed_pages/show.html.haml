@@ -13,9 +13,18 @@
     .column.loud Categories:
   %br.clear
 
-%h3 Page Builder
+%h3 Page Builder (doppelt)
+%hr.bottom
+.box
+  - render_navigation :style => 'float: left;', :class => '' do
+    - @themed_page.elements.available.each do |element|
+      .column= link_to element.to_s(:icon, :size => '35x22'), new_admin_themed_page_element_path(@themed_page, :element_name => element.name), :title => "Add #{ element.name.titleize } Element"
+  - render_navigation :style => 'float: right;', :class => 'span-2' do
+    .column= link_to 'Preview', preview_admin_page_path(@themed_page.page)
+    .column= link_to 'Close', admin_pages_path
+  %br.clear
 
-.first.column.span-20
+.first.column.span-24
   - if @themed_page.elements.empty?
     &nbsp;
   - @themed_page.elements.each do |element|
@@ -26,12 +35,15 @@
       %br.clear
       %hr.bottom
     = element.to_s(:sketch)
-.last.column.span-4
-  .box{:style => 'text-align: center;'}= link_to 'Preview', preview_admin_page_path(@themed_page.page)
-  .box{:style => 'text-align: center;'}= link_to 'Close', admin_pages_path
-  - @themed_page.elements.available.each do |element|
-    %div= link_to element.to_s(:icon), new_admin_themed_page_element_path(@themed_page, :element_name => element.name), :title => "Add #{ element.name.titleize } Element"
-
 .clear
+
+.box
+  - render_navigation :style => 'float: left;', :class => '' do
+    - @themed_page.elements.available.each do |element|
+      .column= link_to element.to_s(:icon, :size => '35x22'), new_admin_themed_page_element_path(@themed_page, :element_name => element.name), :title => "Add #{ element.name.titleize } Element"
+  - render_navigation :style => 'float: right;', :class => 'span-2' do
+    .column= link_to 'Preview', preview_admin_page_path(@themed_page.page)
+    .column= link_to 'Close', admin_pages_path
+  %br.clear
 
 .prepend-top.clear= render_attachment_controls_for @themed_page
