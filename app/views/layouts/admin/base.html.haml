@@ -12,6 +12,9 @@
     <!--[if IE]><link rel="stylesheet" href="/stylesheets/blueprint/ie.css?1235338633" type="text/css" media="screen, projection" /><![endif]-->
     <link rel="stylesheet" href="/stylesheets/application.css?1235338633" type="text/css" media="screen, projection" />
 
+    <script type="text/javascript" src="/javascripts/tiny_mce/tiny_mce.js"></script>
+    <script type="text/javascript">tinyMCE.init({mode : "specific_textareas", theme : "simple", editor_selector : "mceSimple"});</script>
+
   %body
     #top.container
       - render_navigation :class => 'prepend-top', :style => 'float: left;' do
