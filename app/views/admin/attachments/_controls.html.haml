@@ -1,6 +1,7 @@
 %div{ :style => 'float: right;' }
   - form_for attachment, :url => "#{ record_path }/attachments", :html => { :multipart => true } do |f|
     = hidden_field_tag :return_to, "#{ record_path }#attachments"
+    = f.text_field :disposition, :class => 'span-5 text'
     = select_tag 'type', options_for_select(ATTACHMENT_TYPES)
     = f.file_field :attachable
     = submit_tag 'Attach File'
@@ -14,7 +15,8 @@
   %table#attachments.bottom
     %thead
       %tr
-        %th.span-14.file_name Path
+        %th.span-8.file_name Path
+        %th.span-6.move_up_and_down &nbsp;
         %th.span-2.file_size Size
         %th.span-4.content_type Content-Type
         %th.span-3.uploaded Uploaded
