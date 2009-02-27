@@ -31,6 +31,10 @@
     - render_navigation do
       .first.column Element:
       .column= link_to 'Edit', edit_admin_themed_page_element_path(@themed_page, element)
+      - unless element.first?
+        .column= link_to 'Move Up', move_up_admin_themed_page_element_path(@themed_page, element), :method => :put
+      - unless element.last?
+        .column= link_to 'Move Down', move_down_admin_themed_page_element_path(@themed_page, element), :method => :put
       .last.column= link_to 'Destroy', admin_themed_page_element_path(@themed_page, element), :method => :delete
       %br.clear
       %hr.bottom
