@@ -41,8 +41,8 @@ ActionController::Routing::Routes.draw do |map|
         :controller => 'themed_pages', :action => 'create'
     admin.resources :themed_pages,
         :only => [:edit, :update, :show], :member => {:preview => :get} do |themed_pages|
-      themed_pages.resources :elements, :collection => {:build => :get}
-      themed_pages.resources :attachments, :only => :create, :collection => { :bulk => :post }
+      themed_pages.resources :elements, :member => {:move_up => :put, :move_down => :put}
+      themed_pages.resources :attachments, :member => {:move_up => :put, :move_down => :put}, :only => :create, :collection => { :bulk => :post }
     end
 
     admin.resources :categories, :except => [:destroy],
