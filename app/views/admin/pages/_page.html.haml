@@ -1,7 +1,10 @@
 - content_tag_for :tr, page, :class => eo(page_counter) do
   %td.span-17.title
-    - link_to admin_page_path(page) do
-      = content_tag page.index?? :strong : :span, h(page.path)
+    - if page.pagification
+      = link_to h(page.path), polymorphic_path([:admin, page.pagification.pagified])
+    - else
+      - link_to admin_page_path(page) do
+        = content_tag page.index?? :strong : :span, h(page.path)
   %td.span-5
     = page.updated_at.to_formatted_s :short
     = "/ #{ page.oli.created_at.to_formatted_s :short }" if page.oli
