@@ -34,7 +34,8 @@ Rails::Initializer.run do |config|
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
   config.load_paths += [
-    %w[app sweepers]
+    %w[app sweepers],
+    %w[vendor misc algorithms lib]
   ].map! { |p| File.join Rails.root, *p }
 
   # config.active_record.observers = :garbage_collector
