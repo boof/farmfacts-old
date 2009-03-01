@@ -82,10 +82,22 @@ class Core < ActiveRecord::Migration
       add_index :categorizable_categorizations, [:categorizable_id, :categorizable_type], :name => 'categorizable_polymorphmic'
       add_index :categorizable_categorizations, [:category_id, :categorizable_id, :categorizable_type], :unique => true, :name => 'categorizable_polymorphmic_category'
 
+      create_table :navigations do |t|
+        t.integer :parent_id
+        t.integer :lft
+        t.integer :rgt
+        t.string :path, :null => false
+        t.string :label
+        t.string :locale
+        t.boolean :blank
+        t.references :registered_path
+      end
+
       create_table :themes do |t|
         t.string :name, :null => false
         t.string :caption, :null => false
         t.string :doctype, :null => false
+        t.string :navigation, :default => false
         t.timestamps
       end
       add_index :themes, :name, :unique => true

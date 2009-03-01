@@ -1,47 +1,35 @@
 class Admin::NavigationsController < Admin::Base
 
-  cache_sweeper :navigation_sweeper, :only => [:create, :update]
-  # main: sweeps actions /categories/\n+
-
-  PAGE_TITLES = {
-    :index  => 'Navigations',
-    :new    => 'New Navigation',
-    :show   => 'Navigation “%s”',
-    :edit   => 'Edit Navigation “%s”'
-  }
-  FILE = File.join Rails.root, %w[ app views shared navigation.html.haml ]
-
   def index
-    @navigations = Navigation::Container.find :all, :order => :element_id
-    title_page :index
+    @navigations = Navigation.root.all
   end
 
   def show
-    title_page :show, @navigation
+    @navigation = Navigation.find params[:ids].last, :include => :navigations
   end
 
   def new
-    title_page :new
   end
   def create
-    save_or_render(:new, :navigation) { |navigation|
-        redirect_to admin_navigation_path(navigation) }
+    ActiveRecord::Base.transaction do
+      save_or_render(:new, :navigation) { |navigation|
+        parent = navigation.parent and parent.add_child navigation
+        return_or_redirect_to admin_navigation_path(:ids => navigation.coords)
+      }
+    end
   end
 
   def edit
-    title_page :edit, @navigation
   end
   def update
-    save_or_render :edit, :navigation, admin_navigation_path(@navigation)
   end
 
   protected
   def assign_new_navigation
-    @navigation = Navigation::Container.new
+    @navigation = Navigation.new :parent => Navigation.find_by_id(params[:parent_id])
   end
   before_filter :assign_new_navigation, :only => [:new, :create]
   def assign_navigation_by_id
-    @navigation = Navigation::Container.find params[:id]
   end
   before_filter :assign_navigation_by_id, :only => [:show, :edit, :update]
 

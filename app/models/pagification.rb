@@ -4,7 +4,9 @@ class Pagification < ActiveRecord::Base
   belongs_to :pagified, :polymorphic => true
 
   def generate_page
-    build_page pagified_attributes.merge(:disposition => pagified_type)
+    build_page
+    page.attributes = pagified_attributes.merge(:disposition => pagified_type)
+    page
   end
 
   protected
@@ -24,8 +26,8 @@ class Pagification < ActiveRecord::Base
       :name     => pagified.name,
       :locale   => pagified.locale,
       :doctype  => pagified.doctype,
-      :head     => pagified.head,
-      :body     => pagified.body
+      :head     => pagified.head(page),
+      :body     => pagified.body(page)
     }
   end
 

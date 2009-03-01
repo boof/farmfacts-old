@@ -47,6 +47,10 @@ ActionController::Routing::Routes.draw do |map|
 
     admin.resources :categories, :except => [:destroy],
         :collection => { :bulk => :post }
+    admin.navigations 'navigations', :controller => 'navigations', :action => 'index', :conditions => { :method => :get }
+    admin.navigation 'navigations/new', :controller => 'navigations', :action => 'new', :name_prefix => 'new_admin_'
+    admin.connect 'navigations', :controller => 'navigations', :action => 'create', :conditions => { :method => :post }
+    admin.navigation 'navigations/browse/*ids', :controller => 'navigations', :action => 'show'
 
     admin.resources :users, :except => [:destroy, :show],
       :collection => { :bulk => :post }

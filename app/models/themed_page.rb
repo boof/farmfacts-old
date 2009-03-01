@@ -34,12 +34,12 @@ class ThemedPage < ActiveRecord::Base
     theme.doctype
   end
 
-  def head
-    theme.to_s :head, :page => self
+  def head(target)
+    theme.to_s :head, :page => self, :target => target
   end
 
-  def body
-    theme.to_s :body, :elements => elements
+  def body(target)
+    theme.to_s :body, :elements => elements, :target => target
   end
 
   protected

@@ -1,5 +1,6 @@
 caption: Default Theme
 doctype: XHTML 1.0 Strict
+navigation: infinite
 attachments:
 -
   path: stylesheets/screen.css

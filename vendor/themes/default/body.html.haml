@@ -1,1 +1,4 @@
-.container= elements.render
+.container
+  %ul.navigation= @origin.to_s :navigation, :page => target
+  %hr
+  = elements.render

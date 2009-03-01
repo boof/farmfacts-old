@@ -1,14 +1,26 @@
 = error_messages_for 'navigation', :object => form.object
 
+= form.hidden_field :parent_id
 .append-bottom
-  = form.label :element_id, 'ID (required, valid characters are a-z, A-Z and 0-9)'
-  %div= form.text_field :element_id, :class => 'span-14 title'
+  .column
+    = form.label :label
+    %div= form.text_field :label, :class => 'title span-20'
+  .column
+    = form.label :blank, 'visible'
+    = form.check_box :blank
+  .clear
 
-%table.attributes
-  - html_attributes = form.object.html_attributes
-  %tr
-    %td.span-2= label_tag :html_class, 'Class'
-    %td= text_field_tag 'navigation[html_attributes][class]', html_attributes['class'], :id => 'html_class', :class => 'span-11 text'
-  %tr
-    %td.span-2= label_tag :html_style, 'Style'
-    %td= text_field_tag 'navigation[html_attributes][style]', html_attributes['style'], :id => 'html_style', :class => 'span-11 text'
+
+.append-bottom
+  .column
+    = form.label :path
+    %div= form.text_field :path, :class => 'text span-20'
+  .column
+    = form.label :locale
+    %div= form.text_field :locale, :class => 'text span-1'
+  .clear
+  = form.label :registered_path_id, 'or a registered path'
+  - if params[:parent_id] and locale = form.object.parent.locale
+    = form.select :registered_path_id, RegisteredPath.have_scope(locale).select_all(:label__id), :prompt => ''
+  - else
+    = form.select :registered_path_id, RegisteredPath.select_all(:label__id), :prompt => ''

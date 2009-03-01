@@ -7,6 +7,11 @@ class Page < ActiveRecord::Base
   on_whitelist :updates => :updated_at
   categorizable
   attach_shadows :assign => :attributes
+  registers_path :scope => proc { |p| p.locale }, :label => proc { |p| p.name }, :path => proc { |p| p.path }
+
+  def navigation
+    Navigation.find_by_locale locale
+  end
 
   validates_presence_of :name
   validates_uniqueness_of :path

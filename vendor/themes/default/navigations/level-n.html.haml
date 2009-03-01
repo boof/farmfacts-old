@@ -1,0 +1,6 @@
+%li
+  %b= link_to h(root.label), root.path
+  - unless root.children.empty?
+    %ul{ :class => "level-#{ level + 1 }"}
+      - root.children.each do |child|
+        = @origin.to_s :navigation, :page => page, :level => level + 1, :root => child

@@ -57,6 +57,17 @@ ActiveRecord::Schema.define(:version => 20090207153000) do
 
   add_index "logins", ["username"], :name => "index_logins_on_username", :unique => true
 
+  create_table "navigations", :force => true do |t|
+    t.integer "parent_id"
+    t.integer "lft"
+    t.integer "rgt"
+    t.string  "path",               :null => false
+    t.string  "label"
+    t.string  "locale"
+    t.boolean "blank"
+    t.integer "registered_path_id"
+  end
+
   create_table "onlists", :force => true do |t|
     t.integer  "onlisted_id",   :null => false
     t.string   "onlisted_type", :null => false
@@ -122,9 +133,10 @@ ActiveRecord::Schema.define(:version => 20090207153000) do
   end
 
   create_table "themes", :force => true do |t|
-    t.string   "name",       :null => false
-    t.string   "caption",    :null => false
-    t.string   "doctype",    :null => false
+    t.string   "name",                        :null => false
+    t.string   "caption",                     :null => false
+    t.string   "doctype",                     :null => false
+    t.string   "navigation", :default => "0"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
