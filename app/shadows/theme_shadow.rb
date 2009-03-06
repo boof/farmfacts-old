@@ -18,13 +18,14 @@ class ThemeShadow < Shadows::Base
   def navigation(locals)
     locals[:level] ||= 0
     locals[:root] ||= locals[:page].navigation
+    locals[:active_route] ||= locals[:root].route_by_path locals[:page].path
 
     case @origin.navigation
-    when :infinite
-      render_shape "#{ @origin.name }/level-n", :locals => locals
-    when :finite
-      render_shape "#{ @origin.name }/level-#{ locals[:level] }", :locals => locals
-    end if locals[:root].blank?
+    when 'infinite'
+      render_shape "#{ @origin.name }/navigations/level-n", :locals => locals
+    when 'finite'
+      render_shape "#{ @origin.name }/navigations/level-#{ locals[:level] }", :locals => locals
+    end unless locals[:root].blank?
   end
   def body(locals)
     locals.merge! :theme => @origin

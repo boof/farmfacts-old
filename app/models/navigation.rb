@@ -25,6 +25,7 @@ class Navigation < ActiveRecord::Base
 
     # searches tree for given path in nodes
     last_node = set.find { |node| node.path == path }
+    return [] unless last_node
     route << last_node
 
     while parent_id = last_node.parent_id
@@ -46,6 +47,9 @@ class Navigation < ActiveRecord::Base
     route
   end
 
+  def route_by_path(path)
+    self.class.route_by_path locale, path
+  end
   def route
     self.class.route_by_coords coords
   end
@@ -70,6 +74,11 @@ class Navigation < ActiveRecord::Base
   end
   before_validation :complete_locale
 
+  def pagify_mein_gehirn
+    root = self.class.root.find_by_locale locale
+    p root
+  end
+  after_save :pagify_mein_gehirn
   # after_save
   # rewrite navigated pages when node is visible (global change)
   # rewrite navigated page when node is invisible (local change)

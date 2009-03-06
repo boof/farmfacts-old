@@ -1,7 +1,8 @@
 .box
   - render_navigation :style => 'float: left;', :class => '' do
     .column= link_to '&laquo; Navigations', admin_navigations_path
-    .column= link_to '&laquo; Navigation New', new_admin_navigation_path(:parent_id => @navigation)
+    .column= link_to 'New Navigation', new_admin_navigation_path(:parent_id => @navigation)
+    .column= link_to 'Edit', edit_admin_navigation_path(@navigation, :parent_id => @navigation)
   %br.clear
 
 %table#navigations

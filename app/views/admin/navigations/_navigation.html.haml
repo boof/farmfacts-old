@@ -1,6 +1,7 @@
 - content_tag_for :tr, navigation, :class => eo(navigation_counter) do
   %td.span-8.label
-    = navigation.parent.route.reverse!.map! { |n| link_to h(n.label), admin_navigation_path(:ids => n.coords) } * ' / '
-    \/
+    - if navigation.parent
+      = navigation.parent.route.reverse!.map! { |n| link_to h(n.label), admin_navigation_path(:ids => n.coords) } * ' / '
+      \/
     = link_to h(navigation.label), admin_navigation_path(:ids => navigation.coords)
-  %td.span-16.path= link_to h(navigation.path)
+  %td.span-16.path= link_to h(navigation.path), navigation.path

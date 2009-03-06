@@ -1,5 +1,7 @@
 class Admin::NavigationsController < Admin::Base
 
+  cache_sweeper :page_sweeper, :except => [:create, :update, :destroy]
+
   def index
     @navigations = Navigation.root.all
   end
@@ -22,6 +24,10 @@ class Admin::NavigationsController < Admin::Base
   def edit
   end
   def update
+    ActiveRecord::Base.transaction do
+      save_or_render :edit, :navigation,
+        admin_navigation_path(:ids => @navigation.coords)
+    end
   end
 
   protected
@@ -30,7 +36,8 @@ class Admin::NavigationsController < Admin::Base
   end
   before_filter :assign_new_navigation, :only => [:new, :create]
   def assign_navigation_by_id
+    @navigation = Navigation.find params[:id]
   end
-  before_filter :assign_navigation_by_id, :only => [:show, :edit, :update]
+  before_filter :assign_navigation_by_id, :only => [:edit, :update]
 
 end

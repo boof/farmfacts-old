@@ -50,6 +50,8 @@ ActionController::Routing::Routes.draw do |map|
     admin.navigations 'navigations', :controller => 'navigations', :action => 'index', :conditions => { :method => :get }
     admin.navigation 'navigations/new', :controller => 'navigations', :action => 'new', :name_prefix => 'new_admin_'
     admin.connect 'navigations', :controller => 'navigations', :action => 'create', :conditions => { :method => :post }
+    admin.navigation 'navigations/:id/edit', :controller => 'navigations', :action => 'edit', :name_prefix => 'edit_admin_'
+    admin.connect 'navigation/:id', :controller => 'navigations', :action => 'update', :conditions => { :method => :put }
     admin.navigation 'navigations/browse/*ids', :controller => 'navigations', :action => 'show'
 
     admin.resources :users, :except => [:destroy, :show],

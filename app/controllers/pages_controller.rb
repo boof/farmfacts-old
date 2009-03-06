@@ -7,10 +7,10 @@ class PagesController < ApplicationController
     @page = Page.open request_path, request.accept_language
     @page.render
     # modify page caching that it caches all available locales
+    cache_page response.body, "#{ @page.path }.html"
   rescue ActiveRecord::RecordNotFound
     request_path != '/404' ? redirect_to('/404') : render_404
   end
-  caches_page :show
 
   protected
   def request_path

@@ -28,18 +28,18 @@ class Page < ActiveRecord::Base
     name == Preferences['FarmFacts'].frontpage_name
   end
 
-  protected
-  def sanitize_name
-    unless name.blank? or name[0, 1] != '/'
-      name_will_change!
-      name.slice! 0, 1
-    end
-  end
   def generate_path
     unless name.blank? or not name_or_locale_changed?
       path_will_change!
       self.path = "/#{ name }"
       self.path << ".#{ locale }" unless locale.blank?
+    end
+  end
+  protected
+  def sanitize_name
+    unless name.blank? or name[0, 1] != '/'
+      name_will_change!
+      name.slice! 0, 1
     end
   end
   before_validation :sanitize_name, :generate_path

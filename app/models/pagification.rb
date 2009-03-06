@@ -6,6 +6,8 @@ class Pagification < ActiveRecord::Base
   def generate_page
     build_page
     page.attributes = pagified_attributes.merge(:disposition => pagified_type)
+    page.generate_path
+    page.attributes = rendered_attributes
     page
   end
 
@@ -25,7 +27,12 @@ class Pagification < ActiveRecord::Base
     {
       :name     => pagified.name,
       :locale   => pagified.locale,
-      :doctype  => pagified.doctype,
+      :doctype  => pagified.doctype
+    }
+  end
+
+  def rendered_attributes
+    {
       :head     => pagified.head(page),
       :body     => pagified.body(page)
     }

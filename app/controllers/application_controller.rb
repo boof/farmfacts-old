@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base; protected
   end
 
   def frontpage_path
-    Preferences[:FarmFacts].frontpage_path
+    "/#{ Preferences[:FarmFacts].frontpage_name }"
   end
   helper_method :frontpage_path
 

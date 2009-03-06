@@ -6,7 +6,7 @@ class PageSweeper < ActionController::Caching::Sweeper
   end
   def after_update(page)
     expire_index if page.index?
-    expire_page @page_path
+    expire_page "#{ @page_path }.html"
   end
 
   def after_create(page)
@@ -15,7 +15,7 @@ class PageSweeper < ActionController::Caching::Sweeper
 
   def default_expire(page)
     expire_index if page.index?
-    expire_page page.path
+    expire_page "#{ page.path }.html"
   end
   alias_method :after_destroy, :default_expire
   alias_method :when_accepted, :default_expire
