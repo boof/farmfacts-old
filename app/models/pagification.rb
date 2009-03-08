@@ -13,13 +13,14 @@ class Pagification < ActiveRecord::Base
 
   protected
   def save_and_assign_page
-    success = if page
-      page.update_attributes pagified_attributes
+    if page
+      page.attributes = pagified_attributes
+      page.attributes = rendered_attributes
     else
-      generate_page.save
+      generate_page
     end
 
-    success and self.page_id = page.id
+    page.save and self.page_id = page.id
   end
   before_save :save_and_assign_page
 

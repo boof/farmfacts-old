@@ -1,8 +1,8 @@
 module Page::Finder
 
   def self.extended(base)
-    base.named_scope :with_path,
-      proc { |path| { :conditions => ['pages.path = ?', path] } }
+    base.named_scope :with_paths,
+      proc { |*paths| { :conditions => ['pages.path IN (?)', paths] } }
   end
 
   def open(path, locales)
@@ -10,7 +10,7 @@ module Page::Finder
     # else try locales in order
     # de-de,de;q=0.8,en-us;q=0.5,en;q=0.3
     # else try without locale
-    accepted.with_path(path).first or raise ActiveRecord::RecordNotFound
+    accepted.with_paths(path).first or raise ActiveRecord::RecordNotFound
   end
 
   def not_found

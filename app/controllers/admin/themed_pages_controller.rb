@@ -1,5 +1,7 @@
 class Admin::ThemedPagesController < Admin::Base
 
+  cache_sweeper :page_sweeper, :only => [:create, :update, :bulk]
+
   def index
     current.title = 'Themed Pages'
   end
@@ -20,6 +22,11 @@ class Admin::ThemedPagesController < Admin::Base
   end
   def update
     save_or_render :edit, :themed_page, admin_themed_page_path(@themed_page)
+  end
+
+  # TODO: Implement Me...
+  def bulk
+    raise NotImplementedError, 'Implement Me...'
   end
 
   protected

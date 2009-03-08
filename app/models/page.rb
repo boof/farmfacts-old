@@ -28,6 +28,13 @@ class Page < ActiveRecord::Base
     name == Preferences['FarmFacts'].frontpage_name
   end
 
+  def pagified?
+    !pagification.nil?
+  end
+  def pagify
+    pagification.pagified.pagify
+  end
+
   def generate_path
     unless name.blank? or not name_or_locale_changed?
       path_will_change!

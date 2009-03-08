@@ -1,6 +1,6 @@
 class Admin::NavigationsController < Admin::Base
 
-  cache_sweeper :page_sweeper, :except => [:create, :update, :destroy]
+  cache_sweeper :page_sweeper, :only => [:create, :update, :destroy]
 
   def index
     @navigations = Navigation.root.all
@@ -13,21 +13,28 @@ class Admin::NavigationsController < Admin::Base
   def new
   end
   def create
-    ActiveRecord::Base.transaction do
-      save_or_render(:new, :navigation) { |navigation|
-        parent = navigation.parent and parent.add_child navigation
-        return_or_redirect_to admin_navigation_path(:ids => navigation.coords)
-      }
-    end
+    save_or_render(:new, :navigation) { |navigation|
+      parent = navigation.parent and parent.add_child navigation
+      return_or_redirect_to admin_browse_navigation_path(:ids => navigation.coords)
+    }
   end
 
   def edit
   end
   def update
-    ActiveRecord::Base.transaction do
-      save_or_render :edit, :navigation,
-        admin_navigation_path(:ids => @navigation.coords)
+    save_or_render :edit, :navigation,
+      admin_browse_navigation_path(:ids => @navigation.coords)
+  end
+  def destroy
+    navigation = Navigation.find params[:id]
+    return_path = unless navigation.root?
+      admin_browse_navigation_path(:ids => navigation.parent.coords)
+    else
+      admin_navigations_path
     end
+
+    Navigation.transaction { navigation.destroy }
+    redirect_to return_path
   end
 
   protected
