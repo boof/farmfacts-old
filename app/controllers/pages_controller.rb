@@ -4,19 +4,17 @@ class PagesController < ApplicationController
       map! { |e| ".#{ e }" }
 
   def show
-    @page = Page.open request_path, request.accept_language
-    @page.render
-    # modify page caching that it caches all available locales
-    cache_page response.body, "#{ @page.path }.html"
+    negotiated_page = Page.negotiate request
+    Page.named(negotiated_page.name).each do |page|
+      cache_page page.to_s, "#{ page.path }.html"
+    end
+    send_file "#{ Rails.public_path }/#{ negotiated_page.path }.html",
+      :type => 'text/html'
   rescue ActiveRecord::RecordNotFound
     request_path != '/404' ? redirect_to('/404') : render_404
   end
 
   protected
-  def request_path
-    request.path != '/' ? request.path : frontpage_path
-  end
-
   def no_assets
     ASSETS.include? File.extname(request_path) and
     render :nothing => true, :status => 404

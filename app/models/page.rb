@@ -21,6 +21,11 @@ class Page < ActiveRecord::Base
   has_many :attachments, :as => :attaching, :dependent => :destroy
   delegate :javascripts, :stylesheets, :images, :to => :attachments
 
+  def self.negotiate(request, scope = :accepted)
+    negotiator = Negotiator.new request, scopes[scope]
+    negotiator.negotiate
+  end
+
   def not_found?
     name == '404'
   end
