@@ -1,5 +1,7 @@
 class Admin::ElementsController < Admin::Base
 
+  cache_sweeper :page_sweeper, :except => [:new, :edit]
+
   def new
     render_form "#{t :new} #{t :element}"
   end

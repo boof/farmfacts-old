@@ -6,7 +6,7 @@
     = form.label :label
     %div= form.text_field :label, :class => 'title span-20'
   .column
-    = form.label :blank, 'visible'
+    = form.label :blank, 'Hidden'
     = form.check_box :blank
   .clear
 
@@ -20,7 +20,7 @@
     %div= form.text_field :locale, :class => 'text span-1'
   .clear
   = form.label :registered_path_id, 'or a registered path'
-  - if params[:parent_id] and locale = form.object.parent.locale
+  - if form.object.parent_id and locale = form.object.parent.locale
     = form.select :registered_path_id, RegisteredPath.have_scope(locale).select_all(:label__id), :prompt => ''
   - else
-    = form.select :registered_path_id, RegisteredPath.select_all(:label__id), :prompt => ''
+    = form.select :registered_path_id, RegisteredPath.select_all(:label__id, :order => 'label'), :prompt => ''

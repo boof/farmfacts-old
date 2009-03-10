@@ -36,14 +36,18 @@ module Admin
       obj = instance_variable_get :"@#{ name }"
       obj.attributes = params[name]
 
-      if obj.save
-        yield obj if block_given?
-        unless performed?
-          args << {:action => :index} if args.empty?
-          return_or_redirect_to(*args)
+      ActiveRecord::Base.transaction do
+
+        if obj.save
+          yield obj if block_given?
+          unless performed?
+            args << {:action => :index} if args.empty?
+            return_or_redirect_to(*args)
+          end
+        else
+          send_and_render method
         end
-      else
-        send_and_render method
+
       end
     end
     

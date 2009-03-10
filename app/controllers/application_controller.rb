@@ -29,9 +29,4 @@ class ApplicationController < ActionController::Base; protected
     #Process.kill 'HUP', Process.pid
   end
 
-  def frontpage_path
-    Preferences[:FarmFacts].frontpage_path
-  end
-  helper_method :frontpage_path
-
 end

@@ -21,6 +21,15 @@ class Page < ActiveRecord::Base
   has_many :attachments, :as => :attaching, :dependent => :destroy
   delegate :javascripts, :stylesheets, :images, :to => :attachments
 
+  def self.negotiate(request, scope = :accepted)
+    negotiator = Negotiator.new request, send(scope)
+    negotiator.negotiate
+  end
+
+  def path
+    "/#{ name }.html.#{ locale }"
+  end
+
   def not_found?
     name == '404'
   end
@@ -28,18 +37,25 @@ class Page < ActiveRecord::Base
     name == Preferences['FarmFacts'].frontpage_name
   end
 
-  protected
-  def sanitize_name
-    unless name.blank? or name[0, 1] != '/'
-      name_will_change!
-      name.slice! 0, 1
-    end
+  def pagified?
+    !pagification.nil?
   end
+  def pagify
+    pagification.pagified.pagify
+  end
+
   def generate_path
     unless name.blank? or not name_or_locale_changed?
       path_will_change!
       self.path = "/#{ name }"
       self.path << ".#{ locale }" unless locale.blank?
+    end
+  end
+  protected
+  def sanitize_name
+    unless name.blank? or name[0, 1] != '/'
+      name_will_change!
+      name.slice! 0, 1
     end
   end
   before_validation :sanitize_name, :generate_path

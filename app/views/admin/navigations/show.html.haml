@@ -1,7 +1,9 @@
 .box
   - render_navigation :style => 'float: left;', :class => '' do
     .column= link_to '&laquo; Navigations', admin_navigations_path
-    .column= link_to '&laquo; Navigation New', new_admin_navigation_path(:parent_id => @navigation)
+    .column= link_to 'New Navigation', new_admin_navigation_path(:parent_id => @navigation)
+    .column= link_to 'Edit', edit_admin_navigation_path(@navigation, :parent_id => @navigation)
+    .column= link_to 'Destroy', admin_navigation_path(@navigation), :method => :delete, :confirm => 'Are you sure?'
   %br.clear
 
 %table#navigations
@@ -12,5 +14,5 @@
   %tbody
     - if @navigation.parent_id
       - content_tag_for :tr, @navigation, :class => 'odd' do
-        %td.span-24.label{ :colspan => 2 }= link_to '..', admin_navigation_path(:ids => @navigation.parent.coords)
+        %td.span-24.label{ :colspan => 2 }= link_to '..', admin_browse_navigation_path(:ids => @navigation.parent.coords)
     = render :partial => 'navigation', :collection => @navigation.navigations

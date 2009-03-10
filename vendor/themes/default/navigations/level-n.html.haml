@@ -1,6 +1,6 @@
 %li
-  %b= link_to h(root.label), root.path
-  - unless root.children.empty?
+  = link_to h(root.label), root.path, :class => active_route.include?(root)? 'quiet' : ''
+  - unless root.direct_children.empty?
     %ul{ :class => "level-#{ level + 1 }"}
-      - root.children.each do |child|
+      - root.direct_children.each do |child|
         = @origin.to_s :navigation, :page => page, :level => level + 1, :root => child

@@ -5,7 +5,7 @@ module PathRegistry
       Navigation.transaction do
         navigations = Navigation.find_all_by_registered_path_id id
         navigations.each { |navigation| navigation.update_attribute :path, path }
-      end
+      end if path_changed?
     end
     on.destroy do
       Navigation.transaction do
