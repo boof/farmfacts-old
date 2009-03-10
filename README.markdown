@@ -78,12 +78,7 @@ ROADMAP:
 
 **1.0**
 
-* `Core:    Add metadata where a page inherits metadata from app [New Feature]`
-* `FAFA-1:  Template Support [Improvement]`
-* `FAFA-2:  Fix CacheSweeper [Bug]`
 * `Plugins: Onlist inline option [Improvement]`
-* `UI:      Use TinyMCE instead of textile...helper`
-* `FAFA-6:  Non-AJAX preview mixin [Improvement]`
 * `FAFA-5:  Support Apache's MultiViews language negotiation [New Feature]`
 
 **1.x**
@@ -110,5 +105,6 @@ CREDITS:
 
 * sequel - initial motivation
 * fork - further motivation
-* dfue - for pleasant support
-* haml and paperclip coders for their code
+* alexander - possibility, support
+* dfue - fun, support
+* rails, haml and paperclip coders for their code
