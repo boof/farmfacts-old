@@ -1,7 +1,7 @@
 class Admin::ThemesController < Admin::Base
 
   def index
-    current.title = 'Themes'
+    current.title = translate :themes
     @themes = Theme.available.values.sort_by { |theme| theme.name }
   end
 

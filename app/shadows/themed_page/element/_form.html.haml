@@ -3,6 +3,6 @@
   = render_element :form, locals.merge(:form => form)
 
   .clear
-  = submit_tag 'Save'
-  or
-  = link_to 'Cancel', admin_themed_page_path(@element.themed_page)
+  = submit_tag t(:save)
+  = t(:or)
+  = link_to t(:cancel), admin_themed_page_path(@element.themed_page)

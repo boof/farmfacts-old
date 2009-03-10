@@ -1,10 +1,10 @@
 class Admin::ElementsController < Admin::Base
 
   def new
-    render_form 'New Element'
+    render_form "#{t :new} #{t :element}"
   end
   def edit
-    render_form 'Edit Element'
+    render_form "#{t :edit} #{t :element}"
   end
 
   def create

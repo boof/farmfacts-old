@@ -1,22 +1,22 @@
 class Admin::ThemedPagesController < Admin::Base
 
   def index
-    current.title = 'Themed Pages'
+    current.title = t :themed_pages
   end
 
   def show
-    current.title = 'Page Builder'
+    current.title = t :page_builder
   end
 
   def new
-    current.title = 'New Themed Page'
+    current.title = "#{ t :new } #{ t :themed_page }"
   end
   def create
     save_or_render(:new, :themed_page) { |page| redirect_to admin_themed_page_path(page) }
   end
 
   def edit
-    current.title = "Edit: #{ @themed_page.name }"
+    current.title = "#{t :edit} #{t :themed_page} #{@themed_page.name}"
   end
   def update
     save_or_render :edit, :themed_page, admin_themed_page_path(@themed_page)

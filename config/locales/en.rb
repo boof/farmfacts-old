@@ -1,0 +1,23 @@
+{ 'en' => {
+  :welcome => 'Welcome {{name}}!',
+  :new => 'New',
+  :show => 'Show',
+  :edit => 'Edit',
+  :themes => 'Themes',
+  :theme => 'Theme',
+  :navigations => 'Navigations',
+  :navigation => 'Navigation',
+  :categories => 'Categories',
+  :category => 'Category',
+  :pages => 'Pages',
+  :page => 'Page',
+  :content => 'Content',
+  :elements => 'Elements',
+  :element => 'Element',
+  :themed_pages => 'Themed Pages',
+  :themed_page => 'Themed Page',
+  :page_builder => 'Page Builder',
+  :save => 'Save',
+  :or => 'or',
+  :cancel => 'Cancel'
+} }

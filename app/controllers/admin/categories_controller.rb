@@ -6,7 +6,7 @@ class Admin::CategoriesController < Admin::Base
         :include => :categorizations,
         :order => :name
 
-    current.title = 'Categories'
+     current.title = translate :categories
   end
 
   def show
@@ -14,14 +14,14 @@ class Admin::CategoriesController < Admin::Base
         :include => :categorizable,
         :order => 'categorizable_type, categorizable_id'
 
-    current.title = "Category: #{ @category.name }"
+    current.title = "#{ translate :category }: #{ @category.name }"
   end
 
   def new
-    current.title = 'New Category'
+    current.title = "#{ translate :new } #{ translate :category }"
   end
   def edit
-    current.title = "Edit Category: #{ @category.name }"
+    current.title = "#{ translate :edit } #{ translate :category }: #{ @category.name }"
   end
 
   def create

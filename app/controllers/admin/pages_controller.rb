@@ -3,7 +3,7 @@ class Admin::PagesController < Admin::Base
   cache_sweeper :page_sweeper, :only => [:create, :update, :bulk]
 
   def index
-    current.title = 'Pages'
+    current.title = translate :pages
     @pages = Page.rejects(:head, :body).find :all, :order => :path, :include => :oli
   end
 
@@ -12,21 +12,21 @@ class Admin::PagesController < Admin::Base
   end
 
   def show
-    current.title = "Show: #{ @page.path }"
+    current.title = "#{ translate :show } #{ translate :page }: #{ @page.path }"
   end
 
   def theme
-    current.title = 'New Page: Theme'
+    current.title = "#{ translate :new } #{ translate :page }: #{ translate :theme }"
     @themes = Theme.all :order => 'name'
   end
 
   def new
-    current.title = 'New Page: Content'
+    current.title = "#{ translate :new } #{ translate :page }: #{ translate :content }"
     render :action => :new
   end
 
   def edit
-    current.title = "Edit: #{ @page.path }"
+    current.title = "#{ translate :edit }: #{ @page.path }"
     render :action => :edit
   end
 
