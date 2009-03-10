@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta content="boof" name="author" /><meta content="en" http-equiv="content-language" /><meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <title>Frontpage</title>
+    <link rel="stylesheet" href="/var/development/attachments/themes/6e9f363f27a0f537fd7181aa7dae736f/stylesheets/screen.css?1236667772" type="text/css" media="screen, projector" /><link rel="stylesheet" href="/var/development/attachments/themes/6e9f363f27a0f537fd7181aa7dae736f/stylesheets/print.css?1236667772" type="text/css" media="print" /><!--[if IE]><link rel="stylesheet" href="/var/development/attachments/themes/6e9f363f27a0f537fd7181aa7dae736f/stylesheets/ies/ie.css?1236667772" type="text/css" media="screen, projector" /><![endif]-->
+    <script type="text/javascript" src="/var/development/attachments/themes/6e9f363f27a0f537fd7181aa7dae736f/javascripts/jquery.js?1236667772"></script>
+  </head>
+  <body>
+    <div class='container'>
+      <ul class='navigation'></ul>
+      <hr />
+      <div class='first column span-18'>
+        <p>Default Text</p>
+      </div>
+      <div class='last column span-6'>
+      </div>
+      <div class='clear'></div>
+    </div>
+  </body>
+</html>

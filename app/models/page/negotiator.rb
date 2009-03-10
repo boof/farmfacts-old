@@ -23,7 +23,7 @@ class Page::Negotiator
  def ids_by_locale
   @ids_by_locale ||= @scope.named(name).
       select_all(:locale__id).
-      inject({}) { |mem, (locale, id)| mem[locale] = id }
+      inject({}) { |mem, (locale, id)| mem.merge locale => id }
  end
  def locale_by_path
    downcased_path = @request.path.downcase

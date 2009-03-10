@@ -22,8 +22,12 @@ class Page < ActiveRecord::Base
   delegate :javascripts, :stylesheets, :images, :to => :attachments
 
   def self.negotiate(request, scope = :accepted)
-    negotiator = Negotiator.new request, scopes[scope]
+    negotiator = Negotiator.new request, send(scope)
     negotiator.negotiate
+  end
+
+  def path
+    "/#{ name }.html.#{ locale }"
   end
 
   def not_found?

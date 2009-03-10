@@ -6,7 +6,7 @@ module Page::Finder
 
   # TODO: negotiate this
   def not_found
-    accepted.named('404'.first or raise ActiveRecord::RecordNotFound
+    accepted.named('404').first or raise ActiveRecord::RecordNotFound
   end
 
   def path_by_id(id)

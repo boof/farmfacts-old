@@ -6,17 +6,18 @@ class PagesController < ApplicationController
   def show
     negotiated_page = Page.negotiate request
     Page.named(negotiated_page.name).each do |page|
-      cache_page page.to_s, "#{ page.path }.html"
+      html = page.to_s
+      cache_page html, page.path
+      cache_page html, "/index.html#{ ".#{ page.locale }" if page.locale }" if page.index?
     end
-    send_file "#{ Rails.public_path }/#{ negotiated_page.path }.html",
-      :type => 'text/html'
+    render :file => "#{ Rails.public_path }#{ negotiated_page.path }"
   rescue ActiveRecord::RecordNotFound
-    request_path != '/404' ? redirect_to('/404') : render_404
+    request.path != '/404' ? redirect_to('/404') : render_404
   end
 
   protected
   def no_assets
-    ASSETS.include? File.extname(request_path) and
+    ASSETS.include? File.extname(request.path) and
     render :nothing => true, :status => 404
   end
   before_filter :no_assets
