@@ -4,7 +4,7 @@ class Navigation < ActiveRecord::Base
   named_scope :local_root, proc { |locale|
     {:conditions => { :parent_id => nil, :locale => locale }}
   }
-  validates_uniqueness_of :locale, :scope => :parent_id, :unless => proc { |r| p r.parent_id; r.parent_id }
+  validates_uniqueness_of :locale, :scope => :parent_id, :unless => proc { |r| r.parent_id }
 
   acts_as_nested_set :scope => 'locale = #{ quote_value locale }'
   default_scope :order => 'navigations.lft'
