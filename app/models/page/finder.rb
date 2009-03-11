@@ -2,6 +2,7 @@ module Page::Finder
 
   def self.extended(base)
     base.named_scope :named, proc { |n| {:conditions => ['pages.name = ?', n]} }
+    base.named_scope :with_paths, proc { |*paths| { :conditions => ['pages.path IN (?)', paths] } }
   end
 
   # TODO: negotiate this
