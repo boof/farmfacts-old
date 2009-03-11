@@ -14,7 +14,10 @@ class Admin::NavigationsController < Admin::Base
   end
   def create
     save_or_render(:new, :navigation) { |navigation|
-      parent = navigation.parent and parent.add_child navigation
+      if parent_id = navigation.parent_id
+        parent = Navigation.find(parent_id)
+        parent.add_child navigation or raise parent.errors.inspect
+      end
       return_or_redirect_to admin_browse_navigation_path(:ids => navigation.coords)
     }
   end
@@ -39,7 +42,7 @@ class Admin::NavigationsController < Admin::Base
 
   protected
   def assign_new_navigation
-    @navigation = Navigation.new :parent => Navigation.find_by_id(params[:parent_id])
+    @navigation = Navigation.new :parent_id => params[:parent_id]
   end
   before_filter :assign_new_navigation, :only => [:new, :create]
   def assign_navigation_by_id
