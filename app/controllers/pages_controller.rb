@@ -7,10 +7,10 @@ class PagesController < ApplicationController
     negotiated_page = Page.negotiate request
     Page.named(negotiated_page.name).each do |page|
       html = page.to_s
-      cache_page html, page.path
-      cache_page html, "/index.html#{ ".#{ page.locale }" if page.locale }" if page.index?
+      cache_page html, "#{ page.path }.html"
+      cache_page html, "/index#{ ".#{ page.locale }" if page.locale }.html" if page.index?
     end
-    render :file => "#{ Rails.public_path }#{ negotiated_page.path }"
+    render :file => "#{ Rails.public_path }#{ negotiated_page.path }.html"
   rescue ActiveRecord::RecordNotFound
     request.path != '/404' ? redirect_to('/404') : render_404
   end

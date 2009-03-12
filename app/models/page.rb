@@ -26,10 +26,6 @@ class Page < ActiveRecord::Base
     negotiator.negotiate
   end
 
-  def path
-    "/#{ name }.html.#{ locale }"
-  end
-
   def not_found?
     name == '404'
   end

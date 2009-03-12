@@ -9,7 +9,7 @@ class Page::Negotiator
      path   = @request.path
      limit  = path.index '.', path.rindex('/')
 
-     path[1, limit]
+     limit ? path[1, limit] : path[1..-1]
    else
      Preferences[:FarmFacts].frontpage_name
    end

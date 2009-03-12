@@ -67,6 +67,9 @@ Setup:
     # the generated session key should only be read by you and your webserver
     $ chmod 600 config/session.key
 
+    # Configure Apache for Language Negotiation:
+    # You must allow the virtual server to overwrite options!
+
     # start the webserver and open admin, for example:
     $ script/server
     $ open http://localhost:3000/admin
@@ -79,7 +82,6 @@ ROADMAP:
 **1.0**
 
 * `Plugins: Onlist inline option [Improvement]`
-* `FAFA-5:  Support Apache's MultiViews language negotiation [New Feature]`
 
 **1.x**
 
