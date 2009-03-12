@@ -4,7 +4,7 @@ class Navigation < ActiveRecord::Base
   named_scope :local_root, proc { |locale|
     {:conditions => { :parent_id => nil, :locale => locale }}
   }
-  validates_uniqueness_of :lft, :scope => [:locale, :parent_id]
+  validates_uniqueness_of :locale, :scope => :parent_id, :unless => proc { |r| r.parent_id }
 
   acts_as_nested_set :scope => 'locale = #{ quote_value locale }'
   default_scope :order => 'navigations.lft'
@@ -13,7 +13,7 @@ class Navigation < ActiveRecord::Base
   has_many :navigations, :foreign_key => :parent_id
   belongs_to :parent, :class_name => "Navigation"
 
-  validates_presence_of :locale, :path, :label
+  validates_presence_of :path, :label
 
   # Returns a set of itself and all of its nested children
   def full_set
