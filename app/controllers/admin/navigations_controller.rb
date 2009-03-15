@@ -1,13 +1,13 @@
 class Admin::NavigationsController < Admin::Base
 
-  cache_sweeper :page_sweeper, :only => [:create, :update, :destroy]
+  cache_sweeper :page_sweeper, :only => [:create, :update, :destroy, :refresh]
 
   def index
-    @navigations = Navigation.root.all
+    @navigations = Navigation.roots.all
   end
 
   def show
-    @navigation = Navigation.find params[:ids].last, :include => :navigations
+    @navigation = Navigation.find params[:ids].last
   end
 
   def new
@@ -28,6 +28,14 @@ class Admin::NavigationsController < Admin::Base
     save_or_render :edit, :navigation,
       admin_browse_navigation_path(:ids => @navigation.coords)
   end
+
+   def refresh
+    navigation = Navigation.find params[:id]
+    navigation.save_without_dirty
+
+    return_or_redirect_to admin_browse_navigation_path(:ids => navigation.coords)
+  end
+
   def destroy
     navigation = Navigation.find params[:id]
     return_path = unless navigation.root?

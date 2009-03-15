@@ -49,7 +49,7 @@ ActionController::Routing::Routes.draw do |map|
         :collection => { :bulk => :post }
 
     admin.browse_navigation 'navigations/browse/*ids', :controller => 'navigations', :action => 'show'
-    admin.resources :navigations
+    admin.resources :navigations, :member => {:refresh => :post}
 
     admin.resources :users, :except => [:destroy, :show],
       :collection => { :bulk => :post }

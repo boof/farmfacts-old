@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(:version => 20090207153000) do
     t.integer "parent_id"
     t.integer "lft"
     t.integer "rgt"
-    t.string  "path",               :null => false
+    t.string  "path"
     t.string  "label"
     t.string  "locale"
     t.boolean "blank"
@@ -133,10 +133,9 @@ ActiveRecord::Schema.define(:version => 20090207153000) do
   end
 
   create_table "themes", :force => true do |t|
-    t.string   "name",                        :null => false
-    t.string   "caption",                     :null => false
-    t.string   "doctype",                     :null => false
-    t.string   "navigation", :default => "f"
+    t.string   "name",       :null => false
+    t.string   "caption",    :null => false
+    t.string   "doctype",    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

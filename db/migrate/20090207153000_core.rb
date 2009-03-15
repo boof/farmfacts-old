@@ -86,7 +86,7 @@ class Core < ActiveRecord::Migration
         t.integer :parent_id
         t.integer :lft
         t.integer :rgt
-        t.string :path, :null => false
+        t.string :path
         t.string :label
         t.string :locale
         t.boolean :blank
@@ -97,7 +97,6 @@ class Core < ActiveRecord::Migration
         t.string :name, :null => false
         t.string :caption, :null => false
         t.string :doctype, :null => false
-        t.string :navigation, :default => false
         t.timestamps
       end
       add_index :themes, :name, :unique => true

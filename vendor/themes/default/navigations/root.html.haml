@@ -1,0 +1,11 @@
+%li
+  - if active_route.include? root
+    = link_to h(root.label), root.calculated_path, :class => 'selected'
+  - else
+    = link_to h(root.label), root.calculated_path
+
+- unless root.children.empty?
+  - stack.insert stack_index + 1, '</ul>'
+  - root.children.all(:order => 'navigations.lft DESC').each do |child|
+    - stack.insert stack_index + 1, [:root, child, active_route, level + 1]
+  - stack.insert stack_index + 1, %Q'<ul class="navigation-#{ level + 1 }">'

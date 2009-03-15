@@ -9,10 +9,6 @@ class Page < ActiveRecord::Base
   attach_shadows :assign => :attributes
   registers_path :scope => proc { |p| p.locale }, :label => proc { |p| p.name }, :path => proc { |p| p.path }
 
-  def navigation
-    Navigation.find_by_locale locale
-  end
-
   validates_presence_of :name
   validates_uniqueness_of :path
 

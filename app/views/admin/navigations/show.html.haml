@@ -15,4 +15,4 @@
     - if @navigation.parent_id
       - content_tag_for :tr, @navigation, :class => 'odd' do
         %td.span-24.label{ :colspan => 2 }= link_to '..', admin_browse_navigation_path(:ids => @navigation.parent.coords)
-    = render :partial => 'navigation', :collection => @navigation.navigations
+    = render :partial => 'navigation', :collection => @navigation.children
