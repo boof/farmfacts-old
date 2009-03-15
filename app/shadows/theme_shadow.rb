@@ -14,7 +14,6 @@ class ThemeShadow < Shadows::Base
     buffer, index = '', 0
     while index < stack.length
       navigation stack, index, buffer
-      p stack
       index += 1
     end
 
