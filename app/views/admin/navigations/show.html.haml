@@ -4,6 +4,7 @@
     .column= link_to 'New Navigation', new_admin_navigation_path(:parent_id => @navigation)
     .column= link_to 'Edit', edit_admin_navigation_path(@navigation, :parent_id => @navigation)
     .column= link_to 'Destroy', admin_navigation_path(@navigation), :method => :delete, :confirm => 'Are you sure?'
+    .column= link_to 'Refresh', refresh_admin_navigation_path(@navigation), :method => :post, :confirm => 'Are you sure?'
   %br.clear
 
 %table#navigations
