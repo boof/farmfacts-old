@@ -6,15 +6,17 @@ class ThemeShadow < Shadows::Base
   end
 
   def themed_navigation(page, tmpl = :root, level = 0)
-    root  = Navigation.roots.find_by_locale page.locale
-    route = root.route_to_path page.path
-
-    stack = [ [ tmpl, root, route, level ] ]
-
     buffer, index = '', 0
-    while index < stack.length
-      navigation stack, index, buffer
-      index += 1
+
+    if root = Navigation.roots.find_by_locale(page.locale)
+      route = root.route_to_path page.path
+
+      stack = [ [ tmpl, root, route, level ] ]
+
+      while index < stack.length
+        navigation stack, index, buffer
+        index += 1
+      end
     end
 
     buffer
