@@ -5,32 +5,39 @@ class ThemeShadow < Shadows::Base
     render_shape "#{ @origin.name }/head", :locals => locals
   end
 
-=begin
-  # set css class in Shadow
-  if active_route.include? self
-    # render self
-    # dive into children
-  else
-    # render self
+  def themed_navigation(page, tmpl = :root, level = 0)
+    root  = Navigation.roots.find_by_locale page.locale
+    route = root.route_to_path page.path
+
+    stack = [ [ tmpl, root, route, level ] ]
+
+    buffer, index = '', 0
+    while index < stack.length
+      navigation stack, index, buffer
+      index += 1
+    end
+
+    buffer
   end
-=end
+  def navigation(stack, index, buffer)
+    buffer << case stack[index]
+    when Array
+      tmpl, root, route, level = stack[index]
 
-  def navigation(locals)
-    locals[:level] ||= 0
-    locals[:root] ||= locals[:page].navigation
+      locals = {
+        :root         => root,
+        :active_route => route,
+        :level        => level,
+        :stack        => stack,
+        :stack_index  => index
+      }
 
-    unless locals[:root].blank?
-      locals[:active_route] ||= locals[:root].route_by_path locals[:page].path
-
-      case @origin.navigation
-      when 'infinite'
-        render_shape "#{ @origin.name }/navigations/level-n", :locals => locals
-      when 'finite'
-        render_shape "#{ @origin.name }/navigations/level-#{ locals[:level] }", :locals => locals
-      end
-
+      render_shape("#{ @origin.name }/navigations/#{ tmpl }", :locals => locals)
+    when String
+      stack[index]
     end
   end
+
   def body(locals)
     locals.merge! :theme => @origin
     render_shape "#{ @origin.name }/body", :locals => locals

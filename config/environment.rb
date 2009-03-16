@@ -35,8 +35,7 @@ Rails::Initializer.run do |config|
 
   config.load_paths += [
     %w[app sweepers],
-    %w[vendor misc algorithms lib]
-  ].map! { |p| File.join Rails.root, *p }
+  ].map! { |p| Rails.root.join *p }
 
   # config.active_record.observers = :garbage_collector
   # config.log_level = :debug

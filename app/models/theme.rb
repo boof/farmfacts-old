@@ -54,9 +54,6 @@ class Theme < ActiveRecord::Base
     definitions.each { |definition| attachments.as_defined definition }
   end
 
-#  Make this a strategy
-#  composed_of :navigation_rendering_strategy, :mapping => [%w[navigation]]
-
   # Loads named theme from source directory.
   def self.load(name)
     definitions_path = path.join "#{ name }.yaml"
@@ -66,7 +63,6 @@ class Theme < ActiveRecord::Base
       theme.name    = name
       theme.caption = definition['caption'] || name.humanize
       theme.doctype = DOC_TYPES.find { |d| d[0] == definition['doctype'] }[1]
-      theme.navigation = definition['navigation']
       theme.build_attachments definition['attachments']
 
       # overwrite method to indicate that this theme is not installed

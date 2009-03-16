@@ -34,9 +34,6 @@
 [submodule "vendor/plugins/action_sequence"]
 	path = vendor/plugins/action_sequence
 	url = git://github.com/boof/action_sequence.git
-[submodule "vendor/misc/algorithms"]
-	path = vendor/misc/algorithms
-	url = git://github.com/kanwei/algorithms.git
 [submodule "vendor/plugins/acts_as_nested_set"]
 	path = vendor/plugins/acts_as_nested_set
 	url = git://github.com/rails/acts_as_nested_set.git
