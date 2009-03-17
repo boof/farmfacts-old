@@ -28,8 +28,12 @@ class Navigation < ActiveRecord::Base
   AND node.id = %i
   ORDER BY parent.lft'.freeze
   def coords
-    statement = SELECT_COORDS_BY_PATH % id
-    connection.select_all(statement).map! { |attrs| attrs['id'].to_i }
+    if parent_id
+      statement = SELECT_COORDS_BY_PATH % id
+      connection.select_all(statement).map! { |attrs| attrs['id'].to_i }
+    else
+      [ id ]
+    end
   end
 
   def route

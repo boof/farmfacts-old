@@ -16,7 +16,7 @@ class Page::Negotiator
  end
 
  def negotiate
-   @scope.find ids_by_locale[locale]
+   @scope.find ids_by_locale[ locale ]
  end
 
  protected
@@ -35,7 +35,8 @@ class Page::Negotiator
    locales_ordered_by_quality.find { |locale| ids_by_locale[locale] }
  end
  def locale
-   locale_by_path || locale_by_priority
+   locale_by_path || locale_by_priority ||
+   Preferences[:FarmFacts].metadata['language']
  end
  def locales_ordered_by_quality
    pairs = @request.accept_language.split ','                                # ["da", " en-gb;q=0.8", " en;q=0.7"]
