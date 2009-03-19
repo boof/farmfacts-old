@@ -35,7 +35,7 @@ class ThemeShadow < Shadows::Base
 
       if root = Navigation.roots.find_by_locale(page.locale)
         @route = root.route_to_path page.path
-        self << [ template, root, 0 ]
+        self << [ template, root, 0 ] unless @route.empty?
       end
     end
 
