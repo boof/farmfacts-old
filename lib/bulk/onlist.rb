@@ -3,7 +3,7 @@ module Bulk::Onlist
 
   def bulk_accept(ids, *args)
     transaction do
-      find(ids).all? do |record|
+      [*find(ids)].all? do |record|
         record.onlist.accept
         record.accepted?
       end or raise ActiveRecord::Rollback
@@ -13,7 +13,7 @@ module Bulk::Onlist
   alias_method :bulk_show, :bulk_accept
   def bulk_reject(ids, *args)
     transaction do
-      find(ids).all? do |record|
+      [*find(ids)].all? do |record|
         record.onlist.reject
         record.rejected?
       end or raise ActiveRecord::Rollback
