@@ -2,13 +2,14 @@ class Navigation < ActiveRecord::Base
 
   named_scope :roots, :conditions => { :parent_id => nil }
   named_scope :l10n, proc { |locale| {:conditions => { :locale => locale }} }
+
+  validates_presence_of :locale
   # restrict to root per locale
   validates_uniqueness_of :locale, :scope => :parent_id, :unless => proc { |r| r.parent_id }
   # restrict url to be unique per locale
   validates_uniqueness_of :path, :allow_blank => true, :scope => :locale
 
   acts_as_nested_set :scope => 'locale = #{ quote_value locale }'
-  default_scope :order => 'navigations.lft'
   uses_registered_path :scope => :locale
   attach_shadows
   belongs_to :parent, :class_name => 'Navigation'
@@ -60,7 +61,7 @@ class Navigation < ActiveRecord::Base
   before_validation :complete_locale
 
   def tree_scope
-    self.class.l10n locale
+    self.class.l10n(locale).scoped :order => 'navigations.lft'
   end
 
   def children
