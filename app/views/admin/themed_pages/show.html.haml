@@ -25,7 +25,7 @@
     .column= link_to image_tag('icons/emblem-unreadable.png'), admin_pages_path
   .clear
 
-- @themed_page.elements.in_groups_of(5).each do |elements|
+- @themed_page.elements.in_groups_of(5, false).each do |elements|
   .first.column.span-24
     - elements.each do |element|
       - render_navigation do
@@ -41,13 +41,15 @@
       = element.to_s(:sketch)
   .clear
 
-  .box
-    - render_navigation :style => 'float: left;', :class => '' do
-      - @themed_page.elements.available.each do |element|
-        .column= link_to element.to_s(:icon, :size => '35x22'), new_admin_themed_page_element_path(@themed_page, :element_name => element.name), :title => "Add #{ element.name.titleize } Element"
-    - render_navigation :style => 'float: right;', :class => 'span-2' do
-      .column= link_to image_tag('icons/emblem-symbolic-link.png'), preview_admin_page_path(@themed_page.page)
-      .column= link_to image_tag('icons/emblem-unreadable.png'), admin_pages_path
-    .clear
+  - if elements.length == 5
+    .box
+      - render_navigation :style => 'float: left;', :class => '' do
+        - @themed_page.elements.available.each do |element|
+          .column= link_to element.to_s(:icon, :size => '35x22'), new_admin_themed_page_element_path(@themed_page, :element_name => element.name), :title => "Add #{ element.name.titleize } Element"
+      - render_navigation :style => 'float: right;', :class => 'span-2' do
+        .column= link_to image_tag('icons/emblem-symbolic-link.png'), preview_admin_page_path(@themed_page.page)
+        .column= link_to image_tag('icons/emblem-unreadable.png'), admin_pages_path
+      .clear
+
 
 .prepend-top.clear= render_attachment_controls_for @themed_page
