@@ -3,7 +3,7 @@ class Admin::NavigationsController < Admin::Base
   cache_sweeper :page_sweeper, :only => [:create, :update, :destroy, :refresh]
 
   def index
-    @navigations = Navigation.roots.all
+    @navigations = Navigation.roots.scoped :order => 'locale'
   end
 
   def show
