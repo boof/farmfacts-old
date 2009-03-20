@@ -39,7 +39,7 @@ class Page::Negotiator
    Preferences[:FarmFacts].metadata['language']
  end
  def locales_ordered_by_quality
-   pairs = @request.accept_language.split ','                                # ["da", " en-gb;q=0.8", " en;q=0.7"]
+   pairs = "#{ @request.accept_language }".split ','                                # ["da", " en-gb;q=0.8", " en;q=0.7"]
    pairs.map! do |pair|                                                      # [["da", 1.0], ["en-gb", 0.8], ["en", 0.7]]
      lang, q = pair.split(';').first 2
 
