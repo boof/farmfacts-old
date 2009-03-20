@@ -19,5 +19,8 @@
   :page_builder => 'Page Builder',
   :save => 'Save',
   :or => 'or',
-  :cancel => 'Cancel'
+  :cancel => 'Cancel',
+  :publish => 'Publish',
+  :revoke => 'Revoke',
+  :destroy => 'Destroy'
 } }
