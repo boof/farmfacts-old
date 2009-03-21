@@ -38,7 +38,7 @@ class Navigation < ActiveRecord::Base
   end
 
   def route
-    self.class.find coords
+    self.class.find coords, :order => 'navigations.lft'
   end
   def route_to_path(child_path)
     self.class.route_by_path locale, child_path
@@ -66,6 +66,9 @@ class Navigation < ActiveRecord::Base
 
   def children
     tree_scope.scoped :conditions => {:parent_id => id}
+  end
+  def child(path)
+    children.find_by_path path
   end
 
   def calculated_path
