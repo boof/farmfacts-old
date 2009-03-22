@@ -96,7 +96,14 @@ class Theme < ActiveRecord::Base
   end
 
   def icon_for(element)
-    element_icons.first :conditions => { :disposition => element.name }
+    unless attachments.loaded?
+      element_icons.first :conditions => { :disposition => element.name }
+    else
+      attachments.target.find { |a|
+        a.type == 'Attachment::Image::ElementIcon' &&
+        a.disposition == element.name
+      }
+    end
   end
 
   def element(index_or_name)
