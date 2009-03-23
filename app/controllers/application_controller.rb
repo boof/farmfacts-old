@@ -12,9 +12,7 @@ class ApplicationController < ActionController::Base; protected
   filter_parameter_logging %w[ password ]
 
   def current
-    @current ||= Current.new do |current|
-      current.title = 'FarmFacts'
-    end
+    @current ||= Current.new(request) { |cur| cur.title = 'FarmFacts' }
   end
   helper_method :current
 

@@ -6,13 +6,15 @@ module Admin
 
     def current
       @current ||= begin
-        super
+        current = super
 
-        @current.user = begin
+        current.user = begin
           User.find session[:user_id]
         rescue ActiveRecord::RecordNotFound
           User.new params[:user] || {:login_attributes => {}}
         end
+
+        current
       end
     end
 
