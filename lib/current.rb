@@ -12,4 +12,8 @@ class Current
     I18n.locale = locale
   end
 
+  def navigation
+    Navigation.roots.l10n(locale).first
+  end
+
 end
