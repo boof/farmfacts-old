@@ -17,8 +17,8 @@ class Current
     Navigation.roots.l10n(locale).first
   end
 
-  def route
-    navigation.route_to_path @request.path
+  def route(path = @request.path)
+    navigation.route_to_path path
   end
 
 end
