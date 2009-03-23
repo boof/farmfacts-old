@@ -11,6 +11,13 @@ class ApplicationController < ActionController::Base; protected
   helper :all
   filter_parameter_logging %w[ password ]
 
+  def current
+    @current ||= Current.new do |current|
+      current.title = 'FarmFacts'
+    end
+  end
+  helper_method :current
+
   def rescue_action(exception)
     case exception
     when Unauthorized
