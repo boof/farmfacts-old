@@ -1,7 +1,7 @@
 class Navigation < ActiveRecord::Base
 
   named_scope :roots, :conditions => { :parent_id => nil }
-  named_scope :l10n, proc { |locale| {:conditions => { :locale => locale }} }
+  named_scope :l10n, proc { |locale| {:conditions => { :locale => locale.to_s }} }
 
   validates_presence_of :locale
   # restrict to root per locale
