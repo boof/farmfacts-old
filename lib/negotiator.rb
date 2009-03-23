@@ -41,7 +41,7 @@ class Negotiator
       lang.strip!
       q = q ? q[2, 3].to_f : 1.0
 
-      [ lang, q ]
+      [ lang[0, 2], q ]
     end
 =begin
     pairs.sort! { |x, y| -1 * ( x.last <=> y.last ) }                         # [["da", 1.0], ["en-gb", 0.8], ["en", 0.7]]
