@@ -1,7 +1,8 @@
 class Current
   attr_accessor :user, :title
 
-  def initialize
+  def initialize(request)
+    @request = request
     yield self if block_given?
   end
 
@@ -10,6 +11,14 @@ class Current
   end
   def locale=(locale)
     I18n.locale = locale
+  end
+
+  def navigation
+    Navigation.roots.l10n(locale).first
+  end
+
+  def route(path = @request.path)
+    navigation.route_to_path path
   end
 
 end

@@ -1,14 +1,14 @@
 class ThemedPage < ActiveRecord::Base
 
   validates_presence_of :theme_id, :title
-  belongs_to :theme
+  belongs_to :theme, :include => :attachments
 
   include Pagificator
   categorizable
 
   has_many :elements, :class_name => 'ThemedPage::Element', :dependent => :delete_all do
     def available
-      proxy_owner.theme.elements
+      proxy_owner.theme.elements.each { |el| el.theme = proxy_owner.theme }
     end
     def render
       load_target

@@ -1,6 +1,6 @@
 - render_navigation :class => 'box' do
   .column= link_to '&laquo; Navigations', admin_navigations_path
-  .last= link_to 'Show', admin_navigation_path(@navigation)
+  .last= link_to 'Show', admin_navigation_path(:ids => @navigation.coords)
 
 - form_for :navigation, @navigation, :url => admin_navigation_path(@navigation), :html => {:method => :put} do |f|
   = render :partial => 'form', :object => f

@@ -6,6 +6,20 @@ class Page < ActiveRecord::Base
 
   on_whitelist :updates => :updated_at
   categorizable
+  def self.negotiate(request, scope = :accepted)
+    negotiator = Negotiator.new request,
+        :locales => Preferences[:FarmFacts].metadata['language'],
+        :name => Preferences[:FarmFacts].frontpage_name
+
+    negotiator.negotiate do |negotiator|
+      id = nil
+      mapping = send(scope).named(negotiator.name).select_all(:locale__id).
+          inject({}) { |mem, (locale, id)| mem.merge locale => id }
+
+      find id if negotiator.locales.any? { |locale| id = mapping[ locale ] }
+    end
+  end
+
   attach_shadows :assign => :attributes
   registers_path :scope => proc { |p| p.locale }, :label => proc { |p| p.name }, :path => proc { |p| p.path }
 
@@ -16,11 +30,6 @@ class Page < ActiveRecord::Base
 
   has_many :attachments, :as => :attaching, :dependent => :destroy
   delegate :javascripts, :stylesheets, :images, :to => :attachments
-
-  def self.negotiate(request, scope = :accepted)
-    negotiator = Negotiator.new request, send(scope)
-    negotiator.negotiate
-  end
 
   def not_found?
     name == '404'

@@ -43,7 +43,7 @@ module ControlsHelper
   end
 
   def select_bulk_action(*options)
-    options.map! { |option| ["#{ option }", "bulk_#{ option.underscore }"] }
+    options.map! { |option| ["#{ t(option.to_sym) }", "bulk_#{ option.underscore }"] }
     select_tag :bulk_action, options_for_select(options)
   end
 

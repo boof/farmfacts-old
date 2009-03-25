@@ -5,16 +5,18 @@ module Admin
     include ::Admin
 
     def current
-      @current ||= Current.new do |current|
-        current.title = 'FarmFacts'
+      @current ||= begin
+        current = super
+
         current.user = begin
           User.find session[:user_id]
         rescue ActiveRecord::RecordNotFound
           User.new params[:user] || {:login_attributes => {}}
         end
+
+        current
       end
     end
-    helper_method :current
 
     def assert_user_authorized
       raise Unauthorized unless current.user.authorized?

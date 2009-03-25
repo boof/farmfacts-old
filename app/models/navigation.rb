@@ -1,7 +1,7 @@
 class Navigation < ActiveRecord::Base
 
   named_scope :roots, :conditions => { :parent_id => nil }
-  named_scope :l10n, proc { |locale| {:conditions => { :locale => locale }} }
+  named_scope :l10n, proc { |locale| {:conditions => { :locale => locale.to_s }} }
 
   validates_presence_of :locale
   # restrict to root per locale
@@ -38,7 +38,7 @@ class Navigation < ActiveRecord::Base
   end
 
   def route
-    self.class.find coords
+    self.class.find coords, :order => 'navigations.lft'
   end
   def route_to_path(child_path)
     self.class.route_by_path locale, child_path
@@ -66,6 +66,9 @@ class Navigation < ActiveRecord::Base
 
   def children
     tree_scope.scoped :conditions => {:parent_id => id}
+  end
+  def child(path)
+    children.find_by_path path
   end
 
   def calculated_path

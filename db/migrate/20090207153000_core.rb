@@ -92,6 +92,9 @@ class Core < ActiveRecord::Migration
         t.boolean :blank
         t.references :registered_path
       end
+      add_index :navigations, :path
+      add_index :navigations, :locale
+      add_index :navigations, :parent_id
 
       create_table :themes do |t|
         t.string :name, :null => false
