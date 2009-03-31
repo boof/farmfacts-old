@@ -125,6 +125,7 @@ class Core < ActiveRecord::Migration
       drop_table :themed_page_elements
       drop_table :themed_pages
       drop_table :themes
+      drop_table :navigations
       drop_table :categorizable_categorizations
       drop_table :categorizable_categories
       drop_table :registered_paths
