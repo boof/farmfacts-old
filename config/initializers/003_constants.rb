@@ -7,5 +7,7 @@ DOC_TYPES = [
   ['XHTML 1.0 Transitional', %Q'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"\n  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'],
   ['XHTML 1.0 Frameset', %Q'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN"\n  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">']
 ]
+LINEBREAKS_RX = /(?:\r\n|\r|\n)/
+
 # Article Engine Properties
 # MAILING_LISTS       = 'alpha@mailing-list, beta@mailing-list'
