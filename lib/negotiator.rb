@@ -5,7 +5,7 @@ class Negotiator
   end
 
   def name
-    @name ||= if @request.path != '/'
+    @name ||= if @request.path != '/' or @request.path != '/index'
       path   = @request.path
       limit  = path.index '.', path.rindex('/')
 
