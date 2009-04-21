@@ -39,7 +39,7 @@ class ThemedPage < ActiveRecord::Base
   end
 
   def body(target)
-    theme.to_s :body, :elements => elements, :target => target
+    theme.to_s :body, :elements => elements, :target => target, :source => self
   end
 
   protected
