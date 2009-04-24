@@ -21,6 +21,6 @@
   .clear
   = form.label :registered_path_id, 'or a registered path'
   - if form.object.parent_id and locale = form.object.parent.locale
-    = form.select :registered_path_id, RegisteredPath.have_scope(locale).select_all(:label__id, :order => 'label'), :prompt => ''
+    = form.select :registered_path_id, RegisteredPath.have_scope(locale).select_all(:label__id, :order => 'label'), :include_blank => true
   - else
-    = form.select :registered_path_id, RegisteredPath.select_all(:label__id, :order => 'label'), :prompt => ''
+    = form.select :registered_path_id, RegisteredPath.select_all(:label__id, :order => 'label'), :include_blank => true
