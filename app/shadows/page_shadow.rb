@@ -1,11 +1,12 @@
 class PageShadow < Shadows::Base
   def preview
+    old_locale, I18n.locale = I18n.locale, @origin.locale
+
     locals = if @origin.pagification
       { :page => @origin.pagification.generate_page }
     else
       { :page => @origin }
     end
-    old_locale, I18n.locale = I18n.locale, @origin.locale
 
     begin
       render_shape :preview, :locals => locals
