@@ -21,7 +21,7 @@ class Preferences::FarmFacts < Preferences
       split(';').
       each { |r| r.strip! }
   end
-  def server_recipients=(*recipients)
+  def server_recipients=(recipients)
     @data['server_recipients'].replace recipients
   end
 
