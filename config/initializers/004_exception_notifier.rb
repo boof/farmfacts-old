@@ -29,7 +29,7 @@ module ExceptionNotifiable
       type.all  { render :nothing => true, :status => '404 Not Found' }
     end
   rescue ActiveRecord::RecordNotFound
-    send_file Rails.root.path('public', '404.html'), :status => '404 Not Found'
+    send_file Rails.root.join('public', '404.html'), :status => '404 Not Found'
   end
 
   def rescue_action_in_public(exception)
