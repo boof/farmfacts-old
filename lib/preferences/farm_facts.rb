@@ -16,9 +16,10 @@ class Preferences::FarmFacts < Preferences
   end
 
   def server_recipients
-    recipients = @data.fetch 'server_recipients', 'admin@localhost'
-    recipients = recipients.split ';'
-    recipients.each { |r| r.strip! }
+    @data.
+      fetch('server_recipients', 'admin@localhost').
+      split(';').
+      each { |r| r.strip! }
   end
   def server_recipients=(*recipients)
     @data['server_recipients'].replace recipients
