@@ -5,7 +5,12 @@ class PageShadow < Shadows::Base
     else
       { :page => @origin }
     end
+    old_locale, I18n.locale = I18n.locale, @origin.locale
 
-    render_shape :preview, :locals => locals
+    begin
+      render_shape :preview, :locals => locals
+    ensure
+      I18n.locale = old_locale
+    end
   end
 end
