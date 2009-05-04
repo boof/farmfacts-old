@@ -1,15 +1,12 @@
 = error_messages_for 'navigation', :object => form.object
 
 = form.hidden_field :parent_id
+
 .append-bottom
   .column
     = form.label :label
     %div= form.text_field :label, :class => 'title span-20'
-  .column
-    = form.label :blank, 'Hidden'
-    = form.check_box :blank
   .clear
-
 
 .append-bottom
   .column

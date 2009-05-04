@@ -9,6 +9,8 @@ class Navigation < ActiveRecord::Base
   # restrict url to be unique per locale
   validates_uniqueness_of :path, :allow_blank => true, :scope => :locale
 
+  serialize :appendix, Hash
+
   acts_as_nested_set :scope => 'locale = #{ quote_value locale }'
   uses_registered_path :scope => :locale
   attach_shadows
