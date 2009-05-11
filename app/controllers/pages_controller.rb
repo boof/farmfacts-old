@@ -16,6 +16,18 @@ class PagesController < ApplicationController
     end
   end
 
+  def sitemap
+    negotiator = Negotiator.new request, :name => 'sitemap'
+
+    locale = negotiator.negotiate do |n|
+      me_locales = n.locales & Navigation.roots.select_all(:locale)
+      me_locales.first || Preferences[:FarmFacts].metadata['language']
+    end
+
+    root = Navigation.roots.l10n(locale).first
+    @navigations = (root.lft and root.rgt) ? root.full_set : [root]
+  end
+
   protected
   def no_assets
     ASSETS.include? File.extname(request.path) and

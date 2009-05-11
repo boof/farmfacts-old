@@ -30,7 +30,7 @@ class Negotiator
   def locale_by_path
     downcased_path = @request.path.downcase
     ext = downcased_path["/#{ name }".length..-1].to_s
-    ext.gsub!(/\.html/, '')
+    ext.gsub!(/\.#{ @request.params[:format] || 'html' }/, '')
     ext[/\.([a-z]{2})/i, 1]
   end
   def locales_ordered_by_quality

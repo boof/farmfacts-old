@@ -71,7 +71,12 @@ ActionController::Routing::Routes.draw do |map|
       :conditions => { :method => :post }
   end
 
-  map.page_by_name '*p', :conditions => { :method => :get },
-    :controller => 'pages', :action => 'show'
+  map.with_options :controller => 'pages', :conditions => { :method => :get } do |pages|
+    pages.with_options :action => 'sitemap', :format => 'xml' do |sitemap|
+      sitemap.connect 'sitemap.xml'
+      sitemap.connect 'sitemap.xml.:locale'
+    end
+    pages.page_by_name '*p', :action => 'show'
+  end
 
 end
