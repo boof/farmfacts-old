@@ -25,7 +25,9 @@ class PagesController < ApplicationController
     end
 
     root = Navigation.roots.l10n(locale).first
-    @navigations = (root.lft and root.rgt) ? root.full_set : [root]
+    @paths = (root.lft and root.rgt) ? root.full_set : [root]
+    @paths.map! { |navigation| navigation.path }
+    @paths.compact!
   end
 
   protected

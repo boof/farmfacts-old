@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <% for navigation in @navigations %>
+  <% for path in @paths %>
   <url>
-      <loc><%= navigation.path %></loc>
+      <loc><%= path %></loc>
   </url>
   <% end %>
 
