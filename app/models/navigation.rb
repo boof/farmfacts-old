@@ -13,7 +13,6 @@ class Navigation < ActiveRecord::Base
 
   acts_as_nested_set :scope => 'locale = #{ quote_value locale }'
   uses_registered_path :scope => :locale
-  attach_shadows
   belongs_to :parent, :class_name => 'Navigation'
 
   validates_presence_of :label
