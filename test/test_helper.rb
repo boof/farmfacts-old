@@ -53,6 +53,16 @@ module Builder
     n
   end
 
+  def build_navigation_with_registered_path(opts = {})
+    build_navigation opts do |navigation|
+      stub_registered_path do |p|
+        navigation.registered_path_id = p.id
+        navigation.registered_path = p
+      end
+      yield navigation
+    end
+  end
+
   def stub_navigation(opts = {})
     build_navigation opts do |n|
       def n.save(*args) true end
