@@ -1,147 +1,129 @@
-class Theme < ActiveRecord::Base
+class Theme < ActiveRecord::Base; CLASS = self
 
-  attach_shadows
+  validates_uniqueness_of :name
 
-  # source directory
-  THEME_PATH = Rails.root.join 'vendor', 'themes'
+  has_many :templates, :class_name => 'Theme::Template', :dependent => :delete_all
 
-  # Returns a Filepath object pointing to the theme source directory.
-  def self.path
-    THEME_PATH
+  has_many :compositions, :class_name => 'Page::Composition', :dependent => :delete_all
+  has_many :pages, :through => :compositions do
+    def rebuild
+    end
   end
-
-  # Returns a Filepath object pointing to this themes source directory.
-  def path
-    THEME_PATH.join name
-  end
-
-  # FIXME: validates_uniqueness_of :name
-
-  # TODO: complete this stub with Attachment::Icon.attachable
-  def icon_path
-    'thumbnails/themed_page.png' # fallback
-  end
-
-  has_many :themed_pages
-  def downgrade_themed_pages
-    ThemedPage.destroy_all ['id IN (?)', themed_page_ids]
-  end
-  after_destroy :downgrade_themed_pages
 
   has_many :attachments, :as => :attaching, :dependent => :destroy do
-    def as_defined(definition)
-      build do |attachment|
-        # assign attachable file
-        attachable_path = proxy_owner.path.join definition['path']
-        File.open(attachable_path) { |able| attachment.attachable = able }
+    def root
+      @directory ||= proxy_owner.path.join 'attachments'
+    end
+    def restore
+      begin
+        clear and read_directory root
+      rescue
+        STDERR.puts $!
+      end
+    end
+    protected
+    def setup(filename)
+      @builder ||= proxy_owner.definition.attachments
+      @builder.build directory + filename
+    end
+    def read_directory(parent_path)
+      parent_path.each_entry do |entry|
+        next if %w[ . .. ].include? entry.to_s
 
-        # assign type for Single Table Inheritance
-        type = definition['type'] and
-        attachment.type = "Attachment::#{ type }"
-
-        # assign disposition
-        attachment.disposition = definition['disposition']
+        absolute_path = parent_path.join entry
+        if absolute_path.file?
+          self << setup(absolute_path)
+        elsif absolute_path.directory?
+          read_directory absolute_path
+        end
       end
     end
   end
-  delegate :javascripts, :stylesheets, :element_icons, :to => :attachments
 
-  # Returns true when this theme is already installed.
-  def installed?() true end
+  # path themes can be installed from
+  PATH = Rails.root
 
-  # Builds defined attachments into theme.
-  def build_attachments(definitions)
-    definitions.each { |definition| attachments.as_defined definition }
+  # Returns a Theme::List for all themes from <tt>relative_path</tt>.
+  def self.fetch(relative_path)
+    CLASS::List.new find_in_path(relative_path)
   end
-
-  # Loads named theme from source directory.
-  def self.load(name)
-    definitions_path = path.join "#{ name }.yaml"
-    definition = YAML.load_file definitions_path
-
-    new do |theme|
-      theme.name    = name
-      theme.caption = definition['caption'] || name.humanize
-      theme.doctype = DOC_TYPES.find { |d| d[0] == definition['doctype'] }[1]
-      theme.build_attachments definition['attachments']
-
-      # overwrite method to indicate that this theme is not installed
-      def theme.installed?() false end
-    end
-  end
-
-  # Returns a hash with all themes which are installed.
+  # Returns a Theme::List for all themes stored in DB.
   def self.installed
-    find(:all).inject({}) { |m, t| m.merge! t.name => t }
-  end
-  # Returns a hash with all themes which aren't already installed.
-  def self.not_installed
-    loaded = select_all(:name).inject({}) { |m, n| m.merge! n => true }
-
-    Dir[ path.join('*.yaml') ].inject({}) do |themes, theme_name|
-      theme_name = File.basename theme_name # strip directories
-      theme_name = theme_name[/^[^\.]+/] # strip extensions
-
-      # load theme and mark it as loaded, unless it's already loaded
-      loaded[theme_name] ||=
-          ( themes[theme_name] = load theme_name )
-
-      themes
-    end
+    CLASS::List.new find(:all)
   end
 
-  # Returns a hash with all themes.
-  def self.available
-    installed.merge! not_installed
+  # Returns true if named theme was successfully installated from
+  # <tt>relative_path</tt>.
+  def self.install(name, relative_path = 'vendor/themes')
+    fetch(relative_path)[name].install
+  end
+  # Returns true if named theme was successfully uninstalled.
+  def self.uninstall(name)
+    installed[name].uninstall
+  end
+  class << self
+    extend ActiveSupport::Memoizable and memoize :fetch
   end
 
-  def icon_for(element)
-    unless attachments.loaded?
-      element_icons.first :conditions => { :disposition => element.name }
-    else
-      attachments.target.find { |a|
-        a.type == 'Attachment::Image::ElementIcon' &&
-        a.disposition == element.name
-      }
-    end
+  alias_method :install, :save
+  alias_method :uninstall, :destroy
+
+  # Returns true when this theme is installed.
+  def installed?
+    !new_record? or CLASS::exists? :name => name
   end
 
-  def element(index_or_name)
-    path = case index_or_name
-        when Integer; element_paths[index_or_name]
-        when String, Symbol; element_path index_or_name
-        else raise ArgumentError, 'expected string, symbol or integer'
-        end
+  # Restores attachments and optionally rebuilds associated pages.
+  def repair(rebuild_pages = true)
+    repaired = installed?
 
-    element_cache[path]
+    repaired &&= attachments.restore
+    repaired &&= pages.rebuild if rebuild_pages
+
+    repaired
   end
-  def elements
-    element_paths.map { |path| element_cache[path] }
+
+  def path(extname)
+    CLASS::path.join "#{ name }#{ extname }"
+  end
+
+  # Returns a Theme::Definition for this theme.
+  def definition
+    @definition ||= CLASS::Definition.load path('.yml')
   end
 
   protected
-  def element_definitions
-    @element_definitions ||= YAML.load_file path.join('elements.yaml')
+  def self.read_package(relative_path, path_prefix)
+    raise NotImplementedError
+    # read definition
+    # build Theme
+
+    # the next should be lazy-loaded have a state...
+    # read attachments
+    # assign attachments to theme
+    # read templates
+    # assign templates to theme
   end
-  def element_names
-    element_definitions.keys
+  def self.read_yaml(relative_path, path_prefix)
+    definition = CLASS::Definition.load path_prefix + relative_path
   end
-  def element_path(name)
-    path.join('elements', name)
-  end
-  def element_paths
-    element_names.map { |name| element_path name }
-  end
-  def element_attributes(pathname)
-    name = element_names.find { |name| element_path(name) == pathname }
-    { :pathname => pathname, :theme => self }.
-        update :data => element_definitions[name]
-  end
-  def element_cache
-    @element_cache ||= Hash.new { |cache, pathname|
-      attributes = element_attributes pathname
-      cache[pathname] = ThemedPage::Element.new attributes
-    }
+  def self.find_in_path(path)
+    path = Pathname.new path unless Pathname == path
+    return false if path.absolute?
+
+    path = PATH + path
+    return false unless path.directory?
+
+    themes = []
+
+    path.each_entry do |entry|
+      case entry.extname
+      when '.fat'; themes << read_package(entry, path)
+      when '.yml'; themes << read_yaml(entry, path)
+      end
+    end
+
+    themes
   end
 
 end

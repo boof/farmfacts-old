@@ -1,35 +1,29 @@
 class Admin::ThemesController < Admin::Base
 
-  def index
-    current.title = translate :themes
-    @themes = Theme.available.values.sort_by { |theme| theme.name }
+  Theme.source_path = Rails.root.join 'vendor', 'themes'
+
+  def list
+    themes_list = Theme.available.sort!
+    themes_list.render
   end
+  alias_method :index, :list
 
-  # FIXME: Works only for installed themes.
-  def show
-    theme = Theme.available.fetch params[:name]
-
-    page = ThemedPage.new do |p|
-      p.theme     = theme
-      p.elements  = theme.elements
-      p.metadata  = Preferences[:FarmFacts].metadata
-    end
-
-    page.build_pagification(:pagified => page).generate_page.render :preview
+  def preview
+    preview_page = Theme.preview params[:name]
+    preview_page.render
   end
+  alias_method :show, :preview
 
   def install
-    theme = Theme.not_installed.fetch params[:name]
-    theme.save
-
+    Theme.install params[:name]
     return_or_redirect_to admin_themes_path
   end
+  alias_method :create, :install
 
   def uninstall
-    theme = Theme.installed.fetch params[:name]
-    theme.destroy
-
+    Theme.uninstall params[:name]
     return_or_redirect_to admin_themes_path
   end
+  alias_method :destroy, :uninstall
 
 end
