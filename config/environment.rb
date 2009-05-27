@@ -1,8 +1,4 @@
 require "#{ File.dirname __FILE__ }/boot"
-require "#{ File.dirname __FILE__ }/../vendor/plugins/engines/boot"
-# engines... baka desu
-module Engines::RailsExtensions; end
-
 require "#{ File.dirname __FILE__ }/../lib/preferences"
 require "#{ File.dirname __FILE__ }/../lib/preferences/farm_facts"
 
@@ -26,15 +22,14 @@ Rails::Initializer.run do |config|
   config.frameworks -= [ :active_resource ]
 
   config.gem 'haml'
-  # used by lib/git_hub.rb
-  # TODO: used by lib/last_fm.rb
-  # TODO: used by lib/twitter.rb
-  # config.gem 'httparty'
 
-  # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
+  config.gem 'rr'
+  config.gem 'thoughtbot-factory_girl',
+      :lib    => 'factory_girl',
+      :source => 'http://gems.github.com'
 
   config.load_paths += [
-    %w[app sweepers],
+    %w[ app sweepers ],
   ].map! { |p| Rails.root.join *p }
 
   # config.active_record.observers = :garbage_collector
