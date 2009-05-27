@@ -13,9 +13,6 @@
 [submodule "vendor/plugins/path_registry"]
 	path = vendor/plugins/path_registry
 	url = git://github.com/fork/path_registry.git
-[submodule "vendor/plugins/categorizable"]
-	path = vendor/plugins/categorizable
-	url = git://github.com/boof/categorizable.git
 [submodule "vendor/misc/blueprint-css"]
 	path = vendor/misc/blueprint-css
 	url = git://github.com/joshuaclayton/blueprint-css.git
@@ -25,9 +22,6 @@
 [submodule "vendor/plugins/column_scope"]
 	path = vendor/plugins/column_scope
 	url = git://github.com/boof/column_scope.git
-[submodule "vendor/plugins/engines"]
-	path = vendor/plugins/engines
-	url = git://github.com/lazyatom/engines.git
 [submodule "vendor/plugins/shadows"]
 	path = vendor/plugins/shadows
 	url = git://github.com/boof/shadows.git
