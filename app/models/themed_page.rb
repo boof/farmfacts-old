@@ -4,7 +4,6 @@ class ThemedPage < ActiveRecord::Base
   belongs_to :theme, :include => :attachments
 
   include Pagificator
-  categorizable
 
   has_many :elements, :class_name => 'ThemedPage::Element', :dependent => :delete_all do
     def available

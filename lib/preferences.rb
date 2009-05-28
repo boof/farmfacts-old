@@ -1,3 +1,5 @@
+require 'singleton'
+
 class Preferences
   include Singleton
 

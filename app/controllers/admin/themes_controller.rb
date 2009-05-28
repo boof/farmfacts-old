@@ -1,7 +1,5 @@
 class Admin::ThemesController < Admin::Base
 
-  Theme.source_path = Rails.root.join 'vendor', 'themes'
-
   def list
     themes_list = Theme.available.sort!
     themes_list.render

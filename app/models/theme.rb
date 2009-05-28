@@ -106,6 +106,7 @@ class Theme < ActiveRecord::Base; CLASS = self
   end
   def self.read_yaml(relative_path, path_prefix)
     definition = CLASS::Definition.load path_prefix + relative_path
+    new 
   end
   def self.find_in_path(path)
     path = Pathname.new path unless Pathname == path

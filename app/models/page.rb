@@ -5,7 +5,7 @@ class Page < ActiveRecord::Base
   extend Bulk::Onlist
 
   on_whitelist :updates => :updated_at
-  categorizable
+
   def self.negotiate(request, scope = :accepted)
     negotiator = Negotiator.new request,
         :locales => Preferences[:FarmFacts].metadata['language'],

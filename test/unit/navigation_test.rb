@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class NavigationTest < ActiveSupport::TestCase
-  include Builder
 
   def test_route_returns_an_array_of_navigations
     with_route do |route|
@@ -28,34 +27,34 @@ class NavigationTest < ActiveSupport::TestCase
 
   # before save callbacks
   def test_that_path_is_completed_from_registered_path_on_save
-    build_navigation_with_registered_path :except => [:path] do |navigation|
+    build_navigation_with_registered_path :label => nil do |navigation|
       navigation.save
-      assert_equal navigation.path, "target.html?count=#{ Builder::RegisteredPathBuilder.count }"
+      assert_equal navigation.path, "test-registered-path-1.en"
     end
   end
   def test_that_label_is_completed_from_registered_path_on_save
-    build_navigation_with_registered_path :except => [:label] do |navigation|
+    build_navigation_with_registered_path :label => nil do |navigation|
       navigation.save
-      assert_equal navigation.label, "Registered Path #{ Builder::RegisteredPathBuilder.count }"
+      assert_equal navigation.label, "Test Registered Path 1"
     end
   end
   def test_that_locale_is_completed_from_parent_on_save
-    build_navigation_with_registered_path :except => [:locale] do |navigation|
-      stub_navigation do |parent|
+    build_navigation_with_registered_path :locale => nil do |navigation|
+      build_navigation(:id => 1, :locale => 'es') do |parent|
         navigation.parent_id = parent.id
         navigation.parent = parent
       end
       navigation.save
 
-      assert_equal navigation.locale, 'en'
+      assert_equal navigation.locale, 'es'
     end
   end
   def test_that_locale_is_completed_from_registered_path_on_save
-    build_navigation_with_registered_path :except => [:locale] do |navigation|
-      navigation.registered_path.scope = 'en'
+    build_navigation_with_registered_path :locale => nil do |navigation|
+      navigation.registered_path.scope = 'es'
       navigation.save
 
-      assert_equal navigation.locale, 'en'
+      assert_equal navigation.locale, 'es'
     end
   end
 
