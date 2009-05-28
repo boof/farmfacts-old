@@ -42,8 +42,6 @@ Factory.sequence :navigation do |n|
 end
 
 Factory.define :navigation_with_registered_path, :default_strategy => :build, :parent => :navigation do |n|
-  rp = Factory.next(:registered_path_with_id)
-
-  n.registered_path rp
-  n.registered_path_id rp.id
+  n.registered_path { |n| Factory.next(:registered_path_with_id) }
+  n.registered_path_id { |n| n.registered_path.id }
 end

@@ -29,13 +29,13 @@ class NavigationTest < ActiveSupport::TestCase
   def test_that_path_is_completed_from_registered_path_on_save
     build_navigation_with_registered_path :label => nil do |navigation|
       navigation.save
-      assert_equal navigation.path, "test-registered-path-1.en"
+      assert_equal navigation.path, navigation.registered_path.path
     end
   end
   def test_that_label_is_completed_from_registered_path_on_save
     build_navigation_with_registered_path :label => nil do |navigation|
       navigation.save
-      assert_equal navigation.label, "Test Registered Path 1"
+      assert_equal navigation.label, navigation.registered_path.label
     end
   end
   def test_that_locale_is_completed_from_parent_on_save
