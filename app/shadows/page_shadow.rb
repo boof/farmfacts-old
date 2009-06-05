@@ -1,4 +1,11 @@
 class PageShadow < Shadows::Base
+
+  def renew
+    @origin.disposition == 'Composition' ? render_composition : render_self
+  end
+
+  # obsolete
+
   def preview
     old_locale, I18n.locale = I18n.locale, @origin.locale
 
@@ -14,4 +21,7 @@ class PageShadow < Shadows::Base
       I18n.locale = old_locale
     end
   end
+
+
+
 end

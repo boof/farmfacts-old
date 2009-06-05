@@ -1,10 +1,20 @@
-ENV["RAILS_ENV"] = "test"
-require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
+ENV['RAILS_ENV'] = 'test'
+
+require File.expand_path("#{ File.dirname __FILE__ }/../config/environment")
 require 'test_help'
 
 class Test::Unit::TestCase
-
   include RR::Adapters::TestUnit
+
+  def initialize_controller(controller_class = ActionController::Base)
+    controller = controller_class.new
+    controller.request  = ActionController::TestRequest.new
+    controller.response = ActionController::TestResponse.new
+    controller.params   = {}
+    controller.send :initialize_current_url
+
+    controller
+  end
 
   def build_navigation(attrs = {})
     n = Factory.next(:navigation)

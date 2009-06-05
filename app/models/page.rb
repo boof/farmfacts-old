@@ -1,8 +1,15 @@
 class Page < ActiveRecord::Base
+
   extend Finder
 
   extend Bulk::Destroy
   extend Bulk::Onlist
+
+  def to_html
+    renew?? to_s(:renew) : to_s
+  end
+
+  composed_of :doctype, :class_name => 'DocType'
 
   on_whitelist :updates => :updated_at
 

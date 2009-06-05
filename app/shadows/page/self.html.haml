@@ -1,5 +1,5 @@
 = @page.doctype
 
-%html
+%html{ @page.doctype.to_hash }
   %head= @page.head
   %body= @page.body
