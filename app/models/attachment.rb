@@ -14,11 +14,11 @@ class Attachment < ActiveRecord::Base
   named_scope :element_icons, :conditions => { :type => 'Attachment::Image::ElementIcon' }
 
   Paperclip.interpolates :normalized_basename do |a, *|
-    filename = "#{ a.original_filename }"
-    basename = filename.gsub(/#{ File.extname filename }$/, '')
+    filename = a.original_filename.mb_chars.
+      normalize(:kd).gsub(/[^\x00-\x7F]/n, '').
+      to_s
 
-    # http://stackoverflow.com/questions/225471/how-do-i-replace-accented-latin-characters-in-ruby
-    basename.mb_chars.normalize(:kd).gsub(/[^\x00-\x7F]/n,'').to_s
+    filename.gsub(/#{ File.extname filename }$/, '')
   end
   Paperclip.interpolates :attaching do |a, *|
     i = a.instance; "#{ i.attaching_type.tableize }/#{ i.public_id }"
@@ -42,7 +42,7 @@ class Attachment < ActiveRecord::Base
 
   protected
   def set_public_id
-    self.public_id = Digest::MD5.hexdigest "#{ Time.now }-#{ attaching_id }"
+    self.public_id = Digest::MD5.hexdigest "#{ attaching_id }"
   end
   before_create :set_public_id
 
