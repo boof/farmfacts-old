@@ -17,7 +17,8 @@ class Attachment < ActiveRecord::Base
     filename = "#{ a.original_filename }"
     basename = filename.gsub(/#{ File.extname filename }$/, '')
 
-    basename.mb_chars.normalize.to_s
+    # http://stackoverflow.com/questions/225471/how-do-i-replace-accented-latin-characters-in-ruby
+    basename.mb_chars.normalize(:kd).gsub(/[^\x00-\x7F]/n,'').to_s
   end
   Paperclip.interpolates :attaching do |a, *|
     i = a.instance; "#{ i.attaching_type.tableize }/#{ i.public_id }"
