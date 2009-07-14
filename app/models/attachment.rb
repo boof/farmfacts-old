@@ -13,10 +13,16 @@ class Attachment < ActiveRecord::Base
   named_scope :images, :conditions => ['attachments.type IN (?)', %w[ Attachment::Image ]]
   named_scope :element_icons, :conditions => { :type => 'Attachment::Image::ElementIcon' }
 
-  Paperclip::Attachment.interpolations[:attaching] = proc do |a, _|
+  Paperclip.interpolates :normalized_basename do |a, *|
+    filename = "#{ a.original_filename }"
+    basename = filename.gsub(/#{ File.extname filename }$/, '')
+
+    basename.mb_chars.normalize.to_s
+  end
+  Paperclip.interpolates :attaching do |a, *|
     i = a.instance; "#{ i.attaching_type.tableize }/#{ i.public_id }"
   end
-  Paperclip::Attachment.interpolations[:type] = proc do |a, _|
+  Paperclip.interpolates :type do |a, *|
     module_names = "#{ a.instance.type }".split '::'
 
     if module_names.empty?
@@ -29,8 +35,8 @@ class Attachment < ActiveRecord::Base
     module_names.map! { |module_name| module_name.tableize }.join '/'
   end
   has_attached_file :attachable,
-    :path => ':rails_root/public/var/:rails_env/attachments/:attaching/:type/:basename.:extension',
-    :url  => '/var/:rails_env/attachments/:attaching/:type/:basename.:extension'
+    :path => ':rails_root/public/var/:rails_env/attachments/:attaching/:type/:normalized_basename.:extension',
+    :url  => '/var/:rails_env/attachments/:attaching/:type/:normalized_basename.:extension'
   validates_attachment_presence :attachable
 
   protected
