@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   # asset extensions that wont be delivered
-  ASSETS = %w[ css flv gif jpeg jpg js png swf exe cgi pl ].
+  ASSETS = %w[ css flv gif jpeg jpg js png swf exe cgi pl php ].
       map! { |e| ".#{ e }" }
 
   def show
@@ -11,8 +11,11 @@ class PagesController < ApplicationController
         cache_page html, "/index#{ ".#{ page.locale }" if page.locale }.html" if page.index?
       end
       render :file => "#{ Rails.public_path }#{ negotiated_page.path }.html"
+    elsif request.path != '/404'
+      logger.info "Could not find #{ request.path } from #{ request.referer }."
+      redirect_to '/404'
     else
-      request.path != '/404' ? redirect_to('/404') : render_404
+      render_404
     end
   end
 
@@ -32,8 +35,10 @@ class PagesController < ApplicationController
 
   protected
   def no_assets
-    ASSETS.include? File.extname(request.path) and
-    render :nothing => true, :status => 404
+    if ASSETS.include? File.extname(request.path)
+      logger.info "Could not find #{ request.path } from #{ request.referer }."
+      render :nothing => true, :status => 404
+    end
   end
   before_filter :no_assets
 
